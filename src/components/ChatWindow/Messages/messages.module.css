@@ -1,0 +1,66 @@
+.messages {
+    /*grid-column: 6 / 17;*/
+    /*grid-row: 1;*/
+    /*margin: 0 auto;*/
+    /*padding: 0;*/
+    /*color: #ff0000;*/
+    background-color: #38333e;
+    color: #dddddd;
+    height: 100%;
+    width: 72vw;
+    padding: 2vmin;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.messageWrap {
+    display: flex;
+    margin: 12px 0;
+}
+
+.fromMe {
+    /*align-items: flex-end;*/
+    justify-content: flex-end;
+}
+
+.notFromMe {
+
+}
+
+.message {
+
+    padding: 18px 20px;
+    border-radius: calc(8px + 1.2vmax);
+    background-color: #2b2834;
+    width: fit-content;
+    max-width: 50%;
+}
+
+
+/*-----------------
+scrollbars
+------------------*/
+.messages::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 18px;
+}
+
+.messages::-webkit-scrollbar-track {
+    background: #2b2834;
+    /*box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);*/
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: #756c8f;
+    /*border: 2px solid #F47F3F;*/
+    /*box-shadow: inset 0 0 4px 1px rgba(255, 155, 0, 0.69);*/
+    border-radius: 18px;
+    height: 18px;
+}
+
+.messages::-webkit-scrollbar-corner {
+    box-shadow: inset 0 0 5px rgba(255, 155, 0, 0.69);
+    background: #2b2834;
+}

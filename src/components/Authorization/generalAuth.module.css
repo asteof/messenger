@@ -1,0 +1,95 @@
+form {
+    /*width: 90%;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    height: fit-content;
+    background-color: #ecffec;
+
+    padding: 0 1vw 1vw 1vw;
+    /*top right bottom left*/
+
+    /*margin: 1vw 0;*/
+    box-sizing: border-box;
+    border-radius: 18px;
+    box-shadow: #55a563 0 0 18px;
+}
+
+
+label {
+    /*margin: 50px;*/
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.labelWrap {
+    margin: 0;
+    padding: 15px 0 8px;
+    width: fit-content;
+}
+
+.fieldWrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 20px;
+    /*min-width: 10vw;*/
+    /*max-width: 16vw;*/
+}
+
+input {
+    font-size: 16px;
+    padding: 4px 8px;
+    width: inherit;
+    background-color: #f8fff8;
+    border: 2px solid #55a563;
+    border-radius: 6px;
+
+}
+
+::placeholder {
+    color: #375822;
+}
+
+.hint {
+    font-size: 12px;
+    color: #888888;
+    margin: 4px 0;
+    width: fit-content;
+    max-width: 18vw;
+}
+
+.loginHint {
+    font-size: 18px;
+    text-align: center;
+}
+
+.submitBtnWrap {
+    text-align: center;
+}
+
+.submitBtn {
+    font-size: 25px;
+    font-weight: 500;
+    padding: 0.8vmin 48px;
+    margin: 1.2vmax;
+    background-color: #a5caa5;
+    border: 2px solid #45794d;
+    border-radius: 8px;
+}
+
+.submitBtn:hover {
+    background-color: #93cb93;
+}
+
+.submitBtn:active {
+    background-color: #b2ff81;
+}
+
+.loginLink, .loginLink:link, .loginLink:visited {
+    font-weight: 500;
+    color: #36a54a;
+}
+
+.loginLink:hover {
+    color: #19c100;
+}
