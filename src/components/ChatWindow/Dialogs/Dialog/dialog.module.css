@@ -10,7 +10,10 @@
     background-color: #97adb1;
 }
 
-.active div, .active:hover div {
+/*.active div, .active:hover div {*/
+/*    background-color: #526164;*/
+/*}*/
+.active, .active:hover {
     background-color: #526164;
 }
 

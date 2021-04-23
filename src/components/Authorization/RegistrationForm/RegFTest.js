@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import s from './registrationForm.module.css';
 import g from '../generalAuth.module.css';
 import {NavLink} from "react-router-dom";
-import API_PATH from "../../constants/API_PATH_DEFAULT";
 import axios from "axios";
 
 // import Sockjs f
@@ -41,9 +40,9 @@ function RegistrationForm(props) {
             email: formData.email,
             password: formData.password
         }
-        // alert(JSON.stringify(registrationData))
+        alert(JSON.stringify(registrationData))
 
-        axios.post(`${API_PATH}/sign-up`, registrationData)
+        axios.post('http://localhost:8080/sign-up', registrationData)
             .then(response => {
                 alert(response)
                 console.log(`${response.data} ${response.status} ${response.data}`)
@@ -55,26 +54,65 @@ function RegistrationForm(props) {
 
     }
 
+    // const sendDetailsToServer = () => {
+    //     if(formData.email.length && formData.password.length) {
+    //         props.showError(null);
+    //         const payload={
+    //             "email":formData.email,
+    //             "password":formData.password,
+    //         }
+    //         axios.post(API_BASE_URL+'/user/register', payload)
+    //             .then(function (response) {
+    //                 if(response.status === 200){
+    //                     setFormData(prevState => ({
+    //                         ...prevState,
+    //                         'successMessage' : 'Registration successful. Redirecting to home page..'
+    //                     }))
+    //                     localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
+    //                     redirectToHome();
+    //                     props.showError(null)
+    //                 } else{
+    //                     props.showError("Some error occurred");
+    //                 }
+    //             })
+    //             .catch(function (error) {
+    //                 console.log(error);
+    //             });
+    //     } else {
+    //         props.showError('Please enter valid username and password')
+    //     }
+    //
+    // }
+    // const redirectToHome = () => {
+    //     props.updateTitle('Home')
+    //     props.history.push('/home');
+    // }
+    // const redirectToLogin = () => {
+    //     props.updateTitle('Login')
+    //     props.history.push('/login');
+    // }
+    // const handleSubmitClick = (e) => {
+    //     e.preventDefault();
+    //     if(formData.password === formData.confirmPassword) {
+    //         // sendDetailsToServer();
+    //         alert("hui")
+    //     } else {
+    //         props.showError('Passwords do not match');
+    //     }
+    // }
+
     return (
         <div className={s.formWrap}>
-            {/*<div style={{margin: 3 + 'vw'}}>*/}
-            {/*    <p>First name {formData.firstname}</p>*/}
-            {/*    <p>Last name {formData.lastname}</p>*/}
-            {/*    <p>Nickname {formData.username}</p>*/}
-            {/*    <p>Email {formData.email}</p>*/}
-            {/*    <p>Phone number {formData.phoneNumber}</p>*/}
-            {/*    <p>Password {formData.password}</p>*/}
-            {/*    <p>Password confirm {formData.passwordConfirm}</p>*/}
-            {/*</div>*/}
+
             <form onSubmit={handleSubmit}>
                 {/*firstname lastname*/}
+                <h3>Personal information</h3>
                 <div className={s.twoFieldsWrap}>
 
                     <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="firstName">First name<span>*</span></label>
                         <input type="text"
                                id="firstname"
-                               placeholder="Adolf"
+                               placeholder="First name*"
                                value={formData.firstname}
                                onChange={handleChange}
                                maxLength={20}
@@ -82,10 +120,9 @@ function RegistrationForm(props) {
                     </div>
 
                     <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="lastName">Last name</label>
                         <input type="text"
                                id="lastname"
-                               placeholder="Obama"
+                               placeholder="Last name*"
                                value={formData.lastname}
                                onChange={handleChange}
                                maxLength={20}
@@ -94,11 +131,12 @@ function RegistrationForm(props) {
 
                 </div>
                 {/*//firstname lastname*/}
+
+
                 <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="username">Username</label>
                     <input type="text"
                            id="username"
-                           placeholder="boobaLover69"
+                           placeholder="Username*"
                            value={formData.username}
                            onChange={handleChange}
                            maxLength={28}
@@ -108,10 +146,9 @@ function RegistrationForm(props) {
                 </div>
 
                 <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="email">Email address</label>
                     <input type="email"
                            id="email"
-                           placeholder="adolf-obama48@gmail.com"
+                           placeholder="Email Address*"
                            value={formData.email}
                            onChange={handleChange}
                            maxLength={50}
@@ -121,25 +158,24 @@ function RegistrationForm(props) {
 
 
                 <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="phoneNumber">Phone number</label>
+                    <label className={g.labelWrap} htmlFor="phoneNumber">Phone number*</label>
                     <input type="text"
                            id="phoneNumber"
-                           placeholder="380 000 000 000"
+                           placeholder="+380 000 000 000"
                            value={formData.phoneNumber}
                            onChange={handleChange}
-                           maxLength={12}
+                           maxLength={13}
                     />
                     <p id="phoneHelp" className={g.hint}>The phone won't be visible to anyone
-                        unless you allow it to be visible.</p>
+                        unless you set it to be visible.</p>
                 </div>
 
                 {/*password confirm*/}
                 <div className={s.twoFieldsWrap}>
                     <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="password">Password</label>
                         <input type="password"
                                id="password"
-                               placeholder="Password"
+                               placeholder="Password*"
                                value={formData.password}
                                onChange={handleChange}
                                maxLength={30}
@@ -147,10 +183,9 @@ function RegistrationForm(props) {
                     </div>
 
                     <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="confirmPassword">Confirm Password</label>
                         <input type="password"
                                id="passwordConfirm"
-                               placeholder="Confirm Password"
+                               placeholder="Repeat Password*"
                                value={formData.passwordConfirm}
                                onChange={handleChange}
                                maxLength={30}

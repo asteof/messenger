@@ -1,24 +1,34 @@
-import React from 'react';
-import s from './dialog.module.css'
-import {NavLink} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import style from './dialog.module.css'
+import * as SockJS from 'sockjs-client'
+import * as Stomp from '@stomp/stompjs'
 
 const Dialog = (props) => {
-    let dialogURL = '/chat/' + props.id;
 
-    const dialogClassDefault = s.dialog;
-    // const dialogClassActive = s.dialog + ' ' + s.active;
-    let dialogClass = dialogClassDefault;
-    //
-    // if (props.isActive === 1) {
-    //     dialogClass = dialogClassActive;
-    // }
+    let dialogClass = style.dialog;
+    const dialogClassActive = `${style.dialog} ${style.active}`;
+
+    const {id, name, selectedDialog, setSelectedDialog} = props
+
+    const selectDialog = () => {
+        // let socket = new WebSocket()
+        // let socket = new SockJS()
+
+
+        console.log(`id ${id}`)
+        console.log(`name ${name}`)
+        console.log(`selectedOption ${selectedDialog}`)
+        console.log(`setSelectedOption ${selectedDialog}`)
+        setSelectedDialog(id)
+    }
 
     return (
-        <NavLink to={dialogURL} className={s.dialogLink} activeClassName={s.active}>
-            <div className={dialogClass}>
-                {props.name}
-            </div>
-        </NavLink>
+        //if the selectedDialog matches with dialog id it displays active CSS class
+        //otherwise it displays usual dialog class
+        <div className={selectedDialog === id ? dialogClassActive : dialogClass}
+             onClick={selectDialog}>
+            {name}
+        </div>
     )
 }
 

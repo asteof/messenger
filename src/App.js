@@ -1,14 +1,14 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
+// import {MessageProvider} from "./components/context/messageContext";
 import Header from "./components/Header/Header";
 import './App.css';
-import React, {useState} from 'react';
+import React from 'react';
 import RegistrationForm from "./components/Authorization/RegistrationForm/RegistrationForm.js"
 import ChatWindow from "./components/ChatWindow/ChatWindow";
 import LoginForm from "./components/Authorization/LoginForm/LoginForm";
-import Test from "./components/test"
-import {BrowserRouter, Route} from "react-router-dom";
-import {MessageProvider} from "./components/context/messageContext";
-
+import Test from "./components/huinya/test"
+import RegF from "./components/Authorization/RegistrationForm/RegFTest";
+import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 
 
 function App(props) {
@@ -31,21 +31,26 @@ function App(props) {
     //messagesData={messagesData}
 
     return (
-        <BrowserRouter>
+        <Router>
             <div className="App">
                 <Header/>
                 <div className="content">
-                    <Route path='/login' render={() => <LoginForm/>}/>
-                    <Route path='/test' render={() => <Test/>}/>
-                    <Route path='/signup' render={() => <RegistrationForm/>}/>
-                    {/*<MessageProvider value={messagesData}>*/}
+                    <Switch>
+                        {/*<Route exact path="/">*/}
+                            {/*{loggedIn ? <Redirect to="/chat"/> : <LoginForm/>}*/}
+                        {/*</Route>*/}
+                        <Route exact path='/' render={() => <LoginForm/>}/>
+                        <Route path='/login' render={() => <LoginForm/>}/>
+                        <Route path='/test' render={() => <Test/>}/>
+                        <Route path='/signup' render={() => <RegistrationForm/>}/>
+                        {/*<MessageProvider value={messagesData}>*/}
                         <Route path='/chat'
-                               render={() => <ChatWindow />}/>
-                    {/*</MessageProvider>*/}
+                               render={() => <ChatWindow/>}/>
+                        {/*</MessageProvider>*/}
+                    </Switch>
                 </div>
-
             </div>
-        </BrowserRouter>
+        </Router>
     );
 }
 

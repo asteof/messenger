@@ -1,12 +1,6 @@
 .dialogs {
-    /*grid-column: 1 / 6;*/
-    /*grid-row: 1;*/
-    /*grid-column-end: 5;*/
     background-color: #758386;
-    /*width: 100%;*/
-    /*font-size: 20px;*/
-    /*height: 100%;*/
-    width: 28vw;
+    width: 24vw;
     /*padding: 2vw;*/
     box-sizing: border-box;
     user-select: none;

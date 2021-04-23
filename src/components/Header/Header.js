@@ -14,6 +14,7 @@ const Header = (props) => {
                 <NavLink to='/signup' className={s.headerLink}>Sign Up</NavLink>
                 <NavLink to='/login' className={s.headerLink}>Login</NavLink>
                 <NavLink to='/chat' className={s.headerLink}>Chat</NavLink>
+                <NavLink to='/test' className={s.headerLink}>Test</NavLink>
             </nav>
             {/*<a href="#" onClick='document.history.go(0)'>Logout</a>*/}
             {/*</div>*/}

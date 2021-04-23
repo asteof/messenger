@@ -4,7 +4,7 @@ form {
     /*flex-direction: column;*/
     /*align-items: center;*/
     height: fit-content;
-    /*background-color: #ecffec;*/
+    background-color: #ecffec;
 
     padding: 0 1vw 1vw 1vw;
     /*top right bottom left*/
@@ -12,9 +12,8 @@ form {
     /*margin: 1vw 0;*/
     box-sizing: border-box;
     border-radius: 18px;
-    /*box-shadow: #55a563 0 0 18px;*/
+    box-shadow: #55a563 0 0 18px;
 }
-
 
 label {
     /*margin: 50px;*/
@@ -31,7 +30,7 @@ label {
 .fieldLabelWrapper {
     display: flex;
     flex-direction: column;
-    margin: 10px 20px;
+    margin: 10px;
     /*min-width: 10vw;*/
     /*max-width: 16vw;*/
 }
@@ -40,27 +39,14 @@ input {
     font-size: 16px;
     padding: 4px 8px;
     width: inherit;
-    /*background-color: #f8fff8;*/
-    /*border: 2px solid #55a563;*/
+    background-color: #f8fff8;
+    border: 2px solid #55a563;
     border-radius: 6px;
 
 }
 
-.fieldLabelWrapper input::placeholder {
+::placeholder {
     color: #375822;
-}
-
-.hint {
-    font-size: 12px;
-    color: #888888;
-    margin: 4px 0;
-    width: fit-content;
-    max-width: 18vw;
-}
-
-.loginHint {
-    font-size: 18px;
-    text-align: center;
 }
 
 .submitBtnWrap {
@@ -70,8 +56,8 @@ input {
 .submitBtn {
     font-size: 25px;
     font-weight: 500;
-    padding: 0.4vmin 48px;
-    margin: 1.2vmax;
+    padding: 0.2vmin 48px;
+    margin: 0.8vmax;
     background-color: #a5caa5;
     border: 2px solid #45794d;
     border-radius: 8px;
@@ -85,16 +71,40 @@ input {
     background-color: #b2ff81;
 }
 
-.loginLink, .loginLink:link, .loginLink:visited {
-    font-weight: 500;
-    color: #36a54a;
+.wrap {
+    border: 1px solid #000;
+    padding: 18px 16px;
+    margin: 18px;
 }
 
-.loginLink:hover {
-    color: #19c100;
+.hui {
+    position: relative;
+    padding: 1vw 4vw;
+    /*overflow: scroll;*/
 }
 
+.hui2 {
+    display: flex;
+}
 
-.response {
-    white-space: pre-wrap;
+.hui2, .hui2 * {
+    margin: 16px 8px;
+}
+
+.cont {
+    width: 10%;
+    box-sizing: content-box;
+    padding: 1vw;
+}
+
+.tokenHolder {
+    margin: 2vw;
+    width: 24vw;
+    height: 10vw;
+    overflow-wrap: break-word;
+}
+.hint {
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0 0 18px 0;
 }
