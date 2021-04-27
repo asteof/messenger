@@ -17,15 +17,11 @@ const Fetch = () => {
     }
 
     useEffect(() => {
-        console.log('uf call')
+        console.log('test.js -> fetch.js useEffect call')
         axios.get(`https://jsonplaceholder.typicode.com/posts/${idFromClick}`)
             .then(response => {
                 setPost(response.data)
                 setPostTitle(response.data.title)
-            })
-            .then(() => {
-                console.log(`post in 2 then\n${JSON.stringify(post)}`)
-                console.log(`post title in 2 then\n${JSON.stringify(postTitle)}`)
             })
             .catch(err => {
                 console.log(err)

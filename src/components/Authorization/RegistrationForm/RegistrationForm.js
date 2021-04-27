@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import s from './registrationForm.module.css';
 import g from '../generalAuth.module.css';
-import {NavLink} from "react-router-dom";
-import API_PATH from "../../constants/API_PATH_DEFAULT";
+import {NavLink, useHistory} from "react-router-dom";
+import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 import axios from "axios";
 
 // import Sockjs f
@@ -18,20 +18,32 @@ function RegistrationForm(props) {
         passwordConfirm: ''
     })
 
+    const [registrationResponse, setRegistrationResponse] = useState({
+        successMessage: '',
+        errorMessage: '',
+        serverResponse: ''
+    })
+
+    const [validatingError, setValidatingError] = useState(false)
+
     const handleChange = e => {
         setFormData(prevFormData => ({
             ...prevFormData, [e.target.id]: e.target.value
         }))
     }
+
+    let history = useHistory()
+
     const handleSubmit = e => {
         e.preventDefault();
         if (formData.password === formData.passwordConfirm) {
-            alert(`hui`)
             sendDataToServer()
         } else {
             alert('pizda')
+            setValidatingError(true)
         }
     }
+
 
     const sendDataToServer = () => {
         const registrationData = {
@@ -39,33 +51,37 @@ function RegistrationForm(props) {
             lastname: formData.lastname,
             username: formData.username,
             email: formData.email,
+            phoneNumber: formData.phoneNumber,
             password: formData.password
         }
         // alert(JSON.stringify(registrationData))
 
         axios.post(`${API_PATH}/sign-up`, registrationData)
             .then(response => {
-                alert(response)
+                alert(JSON.stringify(response))
                 console.log(`${response.data} ${response.status} ${response.data}`)
+                setRegistrationResponse(prevRegResp =>({
+                    ...prevRegResp,
+                    successMessage: `Successfully registered! You will be now redirected to login!`,
+                }))
+                // history.push('/login')
             })
             .catch(error => {
                 alert(error)
                 console.log(error)
+                if (error.response.status === 400) {
+                    setRegistrationResponse(prevRegResp =>({
+                        ...prevRegResp,
+                        errorMessage: `User with this username or email already exists`
+                    }))
+                }
             })
 
     }
 
     return (
         <div className={s.formWrap}>
-            {/*<div style={{margin: 3 + 'vw'}}>*/}
-            {/*    <p>First name {formData.firstname}</p>*/}
-            {/*    <p>Last name {formData.lastname}</p>*/}
-            {/*    <p>Nickname {formData.username}</p>*/}
-            {/*    <p>Email {formData.email}</p>*/}
-            {/*    <p>Phone number {formData.phoneNumber}</p>*/}
-            {/*    <p>Password {formData.password}</p>*/}
-            {/*    <p>Password confirm {formData.passwordConfirm}</p>*/}
-            {/*</div>*/}
+
             <form onSubmit={handleSubmit}>
                 {/*firstname lastname*/}
                 <div className={s.twoFieldsWrap}>

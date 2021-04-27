@@ -1,23 +1,48 @@
-import React from 'react';
-import s from './header.module.css'
+import React, {useEffect, useState} from 'react';
+import style from './header.module.css'
 import {NavLink} from "react-router-dom";
+import CreateDefaultUsers from "../huinya/createDefaultUsers";
 
 const Header = (props) => {
-    return (
-        <header className={s.header}>
 
-            <div className={s.logoWrap}>
-                <p className={s.logo}>Messenger <span>huiessenger</span></p>
+    const {isLoggedIn, setIsLoggedIn} = props
+    const [logoutLinkText, setLogoutLinkText] = useState('Logout')
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            setLogoutLinkText('Logout')
+        }else {
+            setLogoutLinkText('Login')
+        }
+    }, [isLoggedIn])
+
+    const logout = (e) => {
+        if (isLoggedIn === true) {
+            setIsLoggedIn(false)
+            localStorage.removeItem('token')
+        }
+    }
+
+    return (
+        <header className={style.header}>
+
+            <div className={style.logoWrap}>
+                <p className={style.logo}>Messenger <span>huiessenger</span></p>
             </div>
             {/*<div className={s.mess}>*/}
-            <nav className={s.navigation}>
-                <NavLink to='/signup' className={s.headerLink}>Sign Up</NavLink>
-                <NavLink to='/login' className={s.headerLink}>Login</NavLink>
-                <NavLink to='/chat' className={s.headerLink}>Chat</NavLink>
-                <NavLink to='/test' className={s.headerLink}>Test</NavLink>
+            <nav className={style.navigation}>
+                <NavLink to='/signup' className={style.headerLink}>Sign Up</NavLink>
+                <NavLink to='/login' className={style.headerLink}>Login</NavLink>
+                <NavLink to='/chat' className={style.headerLink}>Chat</NavLink>
+                <NavLink to='/test' className={style.headerLink}>Test</NavLink>
+                <CreateDefaultUsers/>
             </nav>
-            {/*<a href="#" onClick='document.history.go(0)'>Logout</a>*/}
+
+            <div className={style.rightBar}>
+                <NavLink to='/login' className={`${style.headerLink} ${style.logoutLink}`} onClick={logout}>{logoutLinkText}</NavLink>
+            </div>
             {/*</div>*/}
+
 
         </header>
     )

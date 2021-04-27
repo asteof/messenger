@@ -2,25 +2,25 @@ import React, {useEffect, useState} from 'react';
 import style from './loginForm.module.css';
 import generalStyle from '../generalAuth.module.css';
 import testStyle from '../../huinya/test.module.css'
-import {NavLink, Redirect, useHistory} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import axios from "axios";
-import API_PATH from "../../constants/API_PATH_DEFAULT";
+import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 import {setLocalWithExpiry} from "../localStorage";
 
 function LoginForm(props) {
     const [loginData, setLoginData] = useState({
-        // email: '',
-        // phoneNumber: '',
         username: '',
         password: ''
     })
     const [JWT_AUTH_TOKEN, setJWT_AUTH_TOKEN] = useState('')
+
     const [loginResponse, setLoginResponse] = useState({
-        isLoggedIn: false,
         successMessage: '',
         errorMessage: '',
         serverResponse: ''
     })
+
+    const {setIsLoggedIn, tokenExpired, setTokenExpired} = props
 
     let history = useHistory()
 
@@ -43,9 +43,7 @@ function LoginForm(props) {
                     console.log(response)
                     console.log(response.data.access_token)
                     console.log('state\n' + JSON.stringify(JWT_AUTH_TOKEN))
-                    // setJWT_AUTH_TOKEN(prevJWT => ({...prevJWT, JWT: response.data.access_token}));
                     setJWT_AUTH_TOKEN(response.data.access_token);
-                    console.log('state after set method\n' + JSON.stringify(JWT_AUTH_TOKEN))
                 }
             })
             .catch(error => {
@@ -59,7 +57,6 @@ function LoginForm(props) {
                             errorMessage: `Cannot log in due to a network error.`,
                             serverResponse: error.toString()
                         }))
-
                         console.log(loginResponse)
                     } else {
                         if (error.response.status === 401) {
@@ -83,15 +80,15 @@ function LoginForm(props) {
     }
 
     useEffect(() => {
-        console.log('use effect called')
+        console.log('LoginForm.js use effect called')
         if (JWT_AUTH_TOKEN !== '') {
             setLoginResponse(prevLoginResponse => ({
                 ...prevLoginResponse,
-                isLoggedIn: true,
                 successMessage: 'Logged in successfully'
             }))
+            setIsLoggedIn(true)
             setLocalWithExpiry('token', JWT_AUTH_TOKEN, 86398);
-            console.log('state in use effect\n' + JSON.stringify(JWT_AUTH_TOKEN))
+            // console.log('state in use effect\n' + JSON.stringify(JWT_AUTH_TOKEN))
             history.push('/chat')
         }
     }, [JWT_AUTH_TOKEN])
@@ -126,29 +123,21 @@ function LoginForm(props) {
                 </div>
 
                 <p className={generalStyle.loginHint}>
-                    Don't have an account?
-                    <NavLink to='/signup' className={generalStyle.loginLink}>Sign Up</NavLink>
+                    Don't have an account? <NavLink
+                    to='/signup'
+                    className={generalStyle.loginLink}>Sign Up</NavLink>
                 </p>
             </form>
-            <div className={testStyle.tokenHolder}>{JSON.stringify(JWT_AUTH_TOKEN)}</div>
             {/*<div className="alert alert-success mt-2" style={{display: loginData.successMessage ? 'block' : 'none' }} role="alert">*/}
             {/*    {loginData.successMessage}*/}
             {/*</div>*/}
-            {/*<div className="mt-2">*/}
-            {/*    <span>Already have an account? </span>*/}
-            {/*    <span className="loginText" onClick={() => redirectToLogin()}>Login here</span>*/}
+
+            {/*<div>*/}
+            {/*<div className={testStyle.tokenHolder}>{JSON.stringify(JWT_AUTH_TOKEN)}</div>*/}
+            {/*    <div className={generalStyle.response}>{loginResponse.successMessage}</div>*/}
+            {/*    <div className={generalStyle.response}>{loginResponse.errorMessage}</div>*/}
+            {/*    <div className={generalStyle.response}><code>{loginResponse.serverResponse}</code></div>*/}
             {/*</div>*/}
-            <div>
-                <div className={generalStyle.response}>{loginResponse.successMessage}</div>
-                <div className={generalStyle.response}>{loginResponse.errorMessage}</div>
-                {/*Server response:*/}
-                <div className={generalStyle.response}><code>{loginResponse.serverResponse}</code>
-                </div>
-                {/*<button type="button">hui</button>*/}
-            </div>
-
-            {/*{loginResponse.isLoggedIn && <Redirect to='/chat'/>}*/}
-
         </div>
     )
 }

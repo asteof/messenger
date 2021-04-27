@@ -9,7 +9,8 @@ export const setLocalWithExpiry = (key, value, ttl) => {
     localStorage.setItem(key, JSON.stringify(item))
 }
 
-export const getLocalExpiry = (key) => {
+//production
+export const getLocalWithExpiry = (key) => {
     const itemStr = localStorage.getItem(key)
     if (!itemStr) {
         return null
@@ -21,12 +22,12 @@ export const getLocalExpiry = (key) => {
         /* If the item is expired, delete the item from storage and return null*/
         localStorage.removeItem(key)
         return null
-    }
+    }//returns value of item
     return item.value
 }
 
 //for testing and debugging purposes
-export const getLocalWithExpiry = (key) => {
+export const getLocalWithExpiryTest = (key) => {
     const itemStr = localStorage.getItem(key)
     // if the item doesn't exist, return null
     if (!itemStr) {
@@ -42,5 +43,6 @@ export const getLocalWithExpiry = (key) => {
         return null
     }
     let newTTL = Math.abs(currentTimestamp.getTime() - item.expiry)
+    //returns array
     return [item.value, newTTL]
 }

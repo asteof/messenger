@@ -3,7 +3,7 @@
     background-color: #282c34;
     color: #e0e0e0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     /*align-items: center;*/
     /*justify-content: center;*/
 }
@@ -27,10 +27,19 @@
 }
 
 .navigation {
-    grid-column: 2/3;
+    grid-column: 2/4;
     display: flex;
     align-items: center;
     justify-content: center;
+    /*margin: 0 auto;*/
+    padding: 0;
+}
+
+.rightBar {
+    grid-column: 4/5;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     /*margin: 0 auto;*/
     padding: 0;
 }
@@ -44,4 +53,8 @@
 
 .headerLink:hover {
     color: #b16000;
+}
+
+.logoutLink {
+
 }

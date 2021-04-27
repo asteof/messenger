@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import style from './test.module.css'
-import {setLocalWithExpiry, getLocalWithExpiry} from "../Authorization/localStorage";
+import {setLocalWithExpiry, getLocalWithExpiryTest} from "../Authorization/localStorage";
 
 const LocalStorog = () => {
     const [createItem, setCreateItem] = useState({
@@ -22,7 +22,7 @@ const LocalStorog = () => {
         TTL: 0
     })
     const getL = () => {
-        let localStorageItem = getLocalWithExpiry(createItem.key)
+        let localStorageItem = getLocalWithExpiryTest(createItem.key)
 
         if (localStorageItem === null) {
             setReceivedItem(() => ({'value': 'No values found for this key', 'TTL': 0}))
@@ -37,7 +37,7 @@ const LocalStorog = () => {
         <div className={style.wrap}>
             <div className={style.hint}>Input key, value.
                 Click "Set" button to create LocalStorage item.
-                Click "Get" button to create LocalStorage item
+                Click "Get" button to retrieve LocalStorage item
             </div>
 
             <div id='display'>{receivedItem.value} <span>{receivedItem.TTL}</span></div>

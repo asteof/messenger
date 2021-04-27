@@ -1,4 +1,4 @@
-.dialog {
+.chat {
     /*width: 100%;*/
     padding: 18px 20px;
     /*border-top: 1px solid #282c34;*/
@@ -6,7 +6,7 @@
     cursor: pointer;
 }
 
-.dialog:hover {
+.chat:hover {
     background-color: #97adb1;
 }
 
@@ -17,7 +17,7 @@
     background-color: #526164;
 }
 
-.dialogLink, .dialogLink:link, .dialogLink:visited{
+.chatLink, .chatLink:link, .chatLink:visited{
     color: #e0e0e0;
 
 }
