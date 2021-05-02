@@ -37,6 +37,11 @@
     /*box-sizing: border-box;*/
 }
 
+.messageForm {
+    position: relative;
+    height: 100%;
+}
+
 .messageArea {
     color: #dddddd;
     font-size: 0.8em;
@@ -56,7 +61,29 @@
     font-weight: 300;
 }
 
+.sendBtn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 18px;
+    margin: 0 1vmax;
+    font-size: 0.9em;
+    border-radius: 100px;
+    border: none;
+    color: #d0d0d0;
+    background-color: #201c24;
 
+    z-index: 5;
+}
+.sendBtn:hover {
+    color: #e0e0e0;
+    background-color: #5f466f;
+}
+
+.sendBtn:active {
+    background-color: #3e2547;
+}
 /*-----------------
 scrollbars
 ------------------*/

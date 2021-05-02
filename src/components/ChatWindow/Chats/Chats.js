@@ -10,32 +10,35 @@ function Chats(props) {
     otherwise it displays usual dialog class */
     const [selectedChat, setSelectedChat] = useState(0)
 
-    const chatsData = props.chatsData
+    const {chatsData, currentUser, setIsLoggedIn} = props
+    // console.log(currentUser)
 
-    let chats = chatsData.map((chat) => (
-            <Chat
-                key={chat.chatId}
-                username={chat.chatUsers}
-                id={chat.chatId}
-                selectedDialog={selectedChat}
-                setSelectedDialog={setSelectedChat}
-            />
-        )
+    let chats = chatsData.map(chat => {
+        //get second user of chat
+        //id of that user != id of current user
+        const secondUser = chat.chatUsers.find(user => user.id !== currentUser.id);
+        // const a = currentUser.usename.charAt(0)
+        // console.log(a)
+        // console.log('Chats.js secondUser',secondUser)
+
+            return (
+                <Chat
+                    key={chat.chatId}
+                    secondUser={secondUser}
+                    chatId={chat.chatId}
+                    selectedChat={selectedChat}
+                    setSelectedChat={setSelectedChat}
+                    setIsLoggedIn={setIsLoggedIn}
+                />
+            )
+        }
     )
 
     return (
         <div className={style.chats}>
             {chats}
-
         </div>
     )
 }
 
 export default Chats;
-
-
-// {/*<Chat name={'Voko'} id={1} isActive={1}/>*/}
-//             {/*<Chat name={'kirpich from the dungeon'} id={2}/>*/}
-//             {/*<Chat name={'Maria Larikova'} id={3}/>*/}
-//             {/*<Chat name={'Danylo Mykhailov'} id={4}/>*/}
-//             {/*hui hui hui*/}

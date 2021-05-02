@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import s from './registrationForm.module.css';
+import s from './RegistrationForm.module.css';
 import g from '../generalAuth.module.css';
 import {NavLink} from "react-router-dom";
 import axios from "axios";
@@ -158,7 +158,7 @@ function RegistrationForm(props) {
 
 
                 <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="phoneNumber">Phone number*</label>
+                    <label className={g.fieldLabel} htmlFor="phoneNumber">Phone number*</label>
                     <input type="text"
                            id="phoneNumber"
                            placeholder="+380 000 000 000"

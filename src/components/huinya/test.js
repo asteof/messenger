@@ -8,7 +8,8 @@ import LocalStorog from "./localStorog";
 import Gavno from "./gavno";
 import CreateDefaultUsers from "./createDefaultUsers";
 import ChatFetch from "./ChatFetch";
-import SimpleGetUser from "./simpleGetUser";
+import SimpleGetUser from "./SimpleGetUser";
+import Arrays from "./arrays";
 
 const Test = () => {
 
@@ -21,6 +22,7 @@ const Test = () => {
             <CreateDefaultUsers/>
             <ChatFetch/>
             <SimpleGetUser/>
+            <Arrays/>
         </div>
     )
 }

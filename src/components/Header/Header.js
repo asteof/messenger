@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import style from './header.module.css'
+import style from './Header.module.css'
 import {NavLink} from "react-router-dom";
 import CreateDefaultUsers from "../huinya/createDefaultUsers";
 
 const Header = (props) => {
 
-    const {isLoggedIn, setIsLoggedIn} = props
+    const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
     const [logoutLinkText, setLogoutLinkText] = useState('Logout')
 
     useEffect(() => {
@@ -20,6 +20,7 @@ const Header = (props) => {
         if (isLoggedIn === true) {
             setIsLoggedIn(false)
             localStorage.removeItem('token')
+            setCurrentUser({})
         }
     }
 
@@ -27,7 +28,7 @@ const Header = (props) => {
         <header className={style.header}>
 
             <div className={style.logoWrap}>
-                <p className={style.logo}>Messenger <span>huiessenger</span></p>
+                <p className={style.logo}>Messenger <span className={style.huiogo}>huiessenger</span></p>
             </div>
             {/*<div className={s.mess}>*/}
             <nav className={style.navigation}>
@@ -39,6 +40,7 @@ const Header = (props) => {
             </nav>
 
             <div className={style.rightBar}>
+                {currentUser.username}
                 <NavLink to='/login' className={`${style.headerLink} ${style.logoutLink}`} onClick={logout}>{logoutLinkText}</NavLink>
             </div>
             {/*</div>*/}

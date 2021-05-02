@@ -1,0 +1,65 @@
+.profileBar {
+    display: flex;
+    align-items: center;
+    background-color: #758386;
+    border-bottom: 2px solid rgba(80, 100, 100, 0.6);
+    /*box-shadow: 0 0 4px 1px rgba(80, 100, 100, 0.69);*/
+}
+
+.profilePicture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    height: calc(50px + 1vmax);
+    width: calc(50px + 1vmax);
+    margin: 1vmin;
+    /*background-color: ;*/
+    filter: contrast(122%);
+    cursor: pointer;
+}
+
+.initials {
+    filter: contrast(100%);
+    font-weight: 500;
+    font-size: calc(1.2em + 1vh);
+}
+
+.fullname {
+    position: relative;
+    padding: 1vmin;
+    margin: 0 calc(10px + 1vmax);
+    color: #000000;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.fullname:hover {
+    text-decoration: underline;
+}
+.fullname:hover .phoneNumber{
+    display: block;
+}
+.phoneNumber {
+    display: none;
+    position: absolute;
+    top: 2.4em;
+    transform: translateX(-50%);
+    left: 50%;
+    /*background-color: #506464;*/
+    padding: 1vmin 1.488vmin;
+    border-radius: 54px;
+    cursor: default;
+}
+
+.phoneNumber:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(80, 100, 100, 0.4);
+    border-radius: 54px;
+    z-index: -1;
+}

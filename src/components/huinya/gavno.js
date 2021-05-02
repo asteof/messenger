@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import style from './test.module.css'
 import Timer from "./timer";
+import RandomColor from "../ChatWindow/ProfileBar/RandomColor";
 
 
 const Gavno = () => {
@@ -27,24 +28,23 @@ const Gavno = () => {
     const [time, setTime] = useState({
         hours: 0, minutes: 0, seconds: 0, milliseconds: 0, unix: 0
     })
-    let d = new Date();
+    // let d = new Date();
+    const [colour, setColour] = useState({})
 
-    // useEffect(() => {
-    //     setTime({
-    //         // hours: d.getHours(),
-    //         // minutes: d.getMinutes(),
-    //         // seconds: d.getSeconds(),
-    //         // milliseconds: d.getMilliseconds()
-    //         unix: d.getTime()
-    //     })
-    // })
+    const click = () => {
+        setHui(prevCount => prevCount + 2)
+        setColour(RandomColor())
+    }
+    // useEffect(()=>{
+    //     // console.log('state colour', colour)
+    // }, [colour])
 
     return (
         <div className={style.wrap}>
             <div className={style.hui2}>
-                <div className={style.cont}>
-                    <p>X {x}</p>
-                    <p>Y {y}</p>
+                <div className={style.cont} style={colour}>
+                    <p className={style.hueDivide}>X {x}</p>
+                    <p className={style.hueDivide}>Y {y}</p>
                 </div>
 
                 {/*<div className={style.cont}>{time.hours}:{time.minutes}:{time.seconds}</div>*/}
@@ -54,7 +54,9 @@ const Gavno = () => {
                     <Timer/>
                 </div>
                 <p>test</p>
-                <button onClick={() => setHui(prevCount => prevCount + 2)}>Count {count}</button>
+                <p><code>{JSON.stringify(colour)}</code></p>
+                <button onClick={click}
+                        style={colour}>Count {count}</button>
             </div>
         </div>
     )

@@ -1,0 +1,83 @@
+.editWrap {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+}
+
+.background {
+    position: absolute;
+    background-color: rgba(24, 24, 24, 0.6);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.editBlock {
+    position: relative;
+    padding: 1vmax 1.2vmax;
+    width: 50%;
+    min-width: 240px;
+    border-radius: 12px;
+    background-color: #282c34;
+    color: #dddddd;
+    z-index: 11;
+}
+
+.formInput {
+    display: flex;
+    flex-direction: column;
+}
+
+.fieldLabel {
+    padding: 12px 0 0 0;
+    font-size: 0.7em;
+}
+
+.fieldLabel:first-letter {
+    text-transform: uppercase;
+}
+
+.inputField {
+    font-size: 1em;
+    padding: 4px 0;
+    margin: 0 0 5px 0;
+    text-decoration: none;
+    background-color: #282c34;
+    color: #dddddd;
+    border: none;
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right, #1d232a 25%, #1d232a 60%, #282c34 100%) 1;
+    /*box-sizing: border-box;*/
+}
+
+.inputField:focus {
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right, rgba(246, 140, 27, 0.88), #282c34 100%) 1;
+}
+
+.confirmation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1vmax 0 0 0;
+}
+
+.editButton {
+    letter-spacing: 0.04em;
+    font-size: 1em;
+    color: #d77600;
+    padding: 1vmin 1.488vmin;
+    border: none;
+    border-radius: 10px;
+    background-color: #282c34;
+}
+
+.editButton:hover .editButton:after {
+    background-color: #ff9e51;
+    opacity: 0.2;
+}

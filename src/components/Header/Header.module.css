@@ -18,10 +18,11 @@
 
 .logo {
     font-family: 'bebas_neuebold', sans-serif;
-    font-size: 3em;
+    font-size: calc(1em + 2vmax);
+    transform: rotate(356deg);
 }
 
-.logo span {
+.huiogo {
     font-family: 'bebas_neuebook', sans-serif;
     font-size: 0.88em;
 }

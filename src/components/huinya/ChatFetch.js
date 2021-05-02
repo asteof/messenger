@@ -36,7 +36,7 @@ const ChatFetch = () => {
 
     return (
         <div className={style.wrap}>
-           <h2>Chats:</h2>
+           <h2>Chats for logged in user:</h2>
             {chatsMap}
         </div>
     )

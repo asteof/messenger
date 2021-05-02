@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import style from './loginForm.module.css';
+import style from './LoginForm.module.css';
 import generalStyle from '../generalAuth.module.css';
-import testStyle from '../../huinya/test.module.css'
+// import testStyle from '../../huinya/test.module.css'
 import {NavLink, useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_PATH} from "../../constants/API_PATH_DEFAULT";
-import {setLocalWithExpiry} from "../localStorage";
+import {getLocalWithExpiry, setLocalWithExpiry} from "../localStorage";
 
 function LoginForm(props) {
     const [loginData, setLoginData] = useState({
@@ -20,7 +20,7 @@ function LoginForm(props) {
         serverResponse: ''
     })
 
-    const {setIsLoggedIn, tokenExpired, setTokenExpired} = props
+    const {setIsLoggedIn} = props
 
     let history = useHistory()
 
@@ -40,9 +40,7 @@ function LoginForm(props) {
         axios.post(`${API_PATH}/login`, formData)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response)
-                    console.log(response.data.access_token)
-                    console.log('state\n' + JSON.stringify(JWT_AUTH_TOKEN))
+                    console.log('loginForm.js response',response)
                     setJWT_AUTH_TOKEN(response.data.access_token);
                 }
             })
@@ -81,40 +79,60 @@ function LoginForm(props) {
 
     useEffect(() => {
         console.log('LoginForm.js use effect called')
+
         if (JWT_AUTH_TOKEN !== '') {
             setLoginResponse(prevLoginResponse => ({
                 ...prevLoginResponse,
                 successMessage: 'Logged in successfully'
             }))
             setIsLoggedIn(true)
+
             setLocalWithExpiry('token', JWT_AUTH_TOKEN, 86398);
-            // console.log('state in use effect\n' + JSON.stringify(JWT_AUTH_TOKEN))
+            // const JWT_header =
+
             history.push('/chat')
         }
+
+
     }, [JWT_AUTH_TOKEN])
+
+    // useEffect(()=>{
+    //     setUser()
+    // })
+    // const setUser = () => {
+    //     let JWT = getLocalWithExpiry('token')
+    //     if (JWT !== null || JWT !== "") {
+    //         const JWT_header = `Bearer ${getLocalWithExpiry('token')}`
+    //         console.log(`LoginForm.js ${JWT}`)
+    //
+    //
+    //     }
+    // }
 
     return (
         <div className={style.formWrap}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={generalStyle.authForm}>
 
                 <div className={generalStyle.fieldLabelWrapper}>
-                    <label className={generalStyle.labelWrap} htmlFor="username">Username</label>
+                    <label className={generalStyle.fieldLabel} htmlFor="username">Username</label>
                     <input type="text"
                            id="username"
                            placeholder="boobaLover69"
                            value={loginData.username}
                            onChange={handleChange}
+                           className={generalStyle.inputField}
                     />
                     {/*<p id="phoneHelp" className={g.hint}>Username</p>*/}
                 </div>
 
                 <div className={generalStyle.fieldLabelWrapper}>
-                    <label className={generalStyle.labelWrap} htmlFor="password">Password</label>
+                    <label className={generalStyle.fieldLabel} htmlFor="password">Password</label>
                     <input type="password"
                            id="password"
                            placeholder="Password"
                            value={loginData.password}
                            onChange={handleChange}
+                           className={generalStyle.inputField}
                     />
                 </div>
 
@@ -143,26 +161,3 @@ function LoginForm(props) {
 }
 
 export default LoginForm
-
-// <div className={g.fieldLabelWrapper}>
-//     <label className={g.labelWrap} htmlFor="email">Email address</label>
-// <input type="email"
-//        id="email"
-//        placeholder="adolf-obama48@gmail.com"
-//        value={loginData.email}
-//        onChange={handleChange}
-// />
-// <p id="emailHelp" className={g.hint}>No one can see your email.</p>
-// </div>
-//
-// <div className={g.fieldLabelWrapper}>
-// <label className={g.labelWrap} htmlFor="phoneNumber">Phone number</label>
-// <input type="text"
-//        id="phoneNumber"
-//        placeholder="380 000 000 000"
-//        value={loginData.phoneNumber}
-//        onChange={handleChange}
-// />
-// <p id="phoneHelp" className={g.hint}>The phone won't be visible to anyone
-//     unless you allow it to be visible.</p>
-// </div>

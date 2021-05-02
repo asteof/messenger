@@ -10,26 +10,12 @@ import Test from "./components/huinya/test"
 // import RegF from "./components/Authorization/RegistrationForm/RegFTest";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {getLocalWithExpiry} from "./components/Authorization/localStorage";
+// import axios from "axios";
+// import {SECURED_API_PATH} from "./components/constants/API_PATH_DEFAULT";
+
+function App() {
 
 
-function App(props) {
-
-    // let messagesData = [
-    //     {id: 1, text: 'Hui', fromMe: false},
-    //     {id: 2, text: 'Pizda', fromMe: true},
-    //     {id: 3, text: 'Skovoroda'},
-    //     {id: 4, text: 'Ponimayu', fromMe: true},
-    //     {id: 5, text: 'Ne ponimayu'},
-    //     {id: 6, text: 'Spravedliva', fromMe: true},
-    //     {id: 7, text: 'Ne spravedliva'},
-    //     {id: 8, text: 'Sliva'},
-    //     {id: 9, text: 'Sliva'},
-    //     {id: 10, text: 'Sliva'},
-    //     {id: 11, text: 'Sliva', fromMe: true},
-    //     {id: 12, text: 'Sliva'},
-    //     {id: 13, text: 'Sliva'}
-    // ]
-    //messagesData={messagesData}
     // const [tokenExpired, setTokenExpired] = useState(false)
     // tokenExpired={tokenExpired}
     // setTokenExpired={setTokenExpired}
@@ -43,6 +29,7 @@ function App(props) {
 
     useEffect(() => {
         const JWT = getLocalWithExpiry('token')
+
         if (JWT !== null && JWT !== "") {
             setIsLoggedIn(true)
         } else if (JWT === null || JWT === "") {
@@ -50,13 +37,21 @@ function App(props) {
         }
     }, [isLoggedIn])
 
+    // useEffect(() => {
+    //     // const JWT = getLocalWithExpiry('token')
+    //     if (isLoggedIn) {
+    //
+    //     }
+    // }, [JWT])
 
     return (
         <Router>
             <div className="App">
                 <Header
                     isLoggedIn={isLoggedIn}
-                    setIsLoggedIn={setIsLoggedIn}/>
+                    setIsLoggedIn={setIsLoggedIn}
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}/>
                 <div className="content">
                     <Switch>
                         {/*if user tries to access / route he will be redirected regardless of isLoggedIn value
@@ -71,7 +66,10 @@ function App(props) {
                         {/*//comment lines marked by 1 to access /login route after authorizing*/}
                         <Route path='/login'>
                             {isLoggedIn === false ?         //1
-                                <LoginForm setIsLoggedIn={setIsLoggedIn}
+                                <LoginForm
+                                    setIsLoggedIn={setIsLoggedIn}
+                                    // currentUser={currentUser}
+                                    // setCurrentUser={setCurrentUser}
                                 />
                                 : <Redirect to="/chat"/>    //1
                             }
@@ -90,6 +88,8 @@ function App(props) {
                             <ChatWindow
                                 isLoggedIn={isLoggedIn}
                                 setIsLoggedIn={setIsLoggedIn}
+                                currentUser={currentUser}
+                                setCurrentUser={setCurrentUser}
                             />
                         </Route>
 

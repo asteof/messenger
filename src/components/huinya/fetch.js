@@ -10,7 +10,6 @@ const Fetch = () => {
     const [id, setId] = useState(idRand)
     const [idFromClick, setIdFromClick] = useState(idRand)
     const [post, setPost] = useState({})
-    const [postTitle, setPostTitle] = useState('')
 
     const handleClick = () => {
         setIdFromClick(id)
@@ -21,7 +20,6 @@ const Fetch = () => {
         axios.get(`https://jsonplaceholder.typicode.com/posts/${idFromClick}`)
             .then(response => {
                 setPost(response.data)
-                setPostTitle(response.data.title)
             })
             .catch(err => {
                 console.log(err)
@@ -35,7 +33,12 @@ const Fetch = () => {
         <div className={style.wrap}>
             <div className={style.fieldLabelWrapper}>
                 <label htmlFor="">number </label>
-                <input type="number" id={'numInput'} value={id} onChange={event => setId(event.target.value)}/>
+                <input type="number"
+                       id={'numInput'}
+                       value={id}
+                       onChange={event => setId(event.target.value)}
+                       className={style.inputField}
+                />
             </div>
 
 

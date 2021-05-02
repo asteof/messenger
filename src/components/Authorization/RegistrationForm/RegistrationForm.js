@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import s from './registrationForm.module.css';
-import g from '../generalAuth.module.css';
+import style from './RegistrationForm.module.css';
+import generalStyle from '../generalAuth.module.css';
 import {NavLink, useHistory} from "react-router-dom";
 import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 import axios from "axios";
+import styl from "../LoginForm/LoginForm.module.css";
 
 // import Sockjs f
 
@@ -80,105 +81,112 @@ function RegistrationForm(props) {
     }
 
     return (
-        <div className={s.formWrap}>
+        <div className={style.formWrap}>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}  className={generalStyle.authForm}>
                 {/*firstname lastname*/}
-                <div className={s.twoFieldsWrap}>
+                <div className={style.twoFieldsWrap}>
 
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="firstName">First name<span>*</span></label>
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        <label className={generalStyle.fieldLabel} htmlFor="firstName">First name<span>*</span></label>
                         <input type="text"
                                id="firstname"
                                placeholder="Adolf"
                                value={formData.firstname}
                                onChange={handleChange}
                                maxLength={20}
+                               className={generalStyle.inputField}
                         />
                     </div>
 
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="lastName">Last name</label>
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        <label className={generalStyle.fieldLabel} htmlFor="lastName">Last name</label>
                         <input type="text"
                                id="lastname"
                                placeholder="Obama"
                                value={formData.lastname}
                                onChange={handleChange}
                                maxLength={20}
+                               className={generalStyle.inputField}
                         />
                     </div>
 
                 </div>
                 {/*//firstname lastname*/}
-                <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="username">Username</label>
+                <div className={generalStyle.fieldLabelWrapper}>
+                    <label className={generalStyle.fieldLabel} htmlFor="username">Username</label>
                     <input type="text"
                            id="username"
                            placeholder="boobaLover69"
                            value={formData.username}
                            onChange={handleChange}
                            maxLength={28}
+                           className={generalStyle.inputField}
                     />
-                    <p className={g.hint}>This will be the display name. Other people will be able to find you with
+                    <p className={generalStyle.hint}>This will be the display name. Other people will be able to find you with
                         this name.</p>
                 </div>
 
-                <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="email">Email address</label>
+                <div className={generalStyle.fieldLabelWrapper}>
+                    <label className={generalStyle.fieldLabel} htmlFor="email">Email address</label>
                     <input type="email"
                            id="email"
                            placeholder="adolf-obama48@gmail.com"
                            value={formData.email}
                            onChange={handleChange}
                            maxLength={50}
+                           className={generalStyle.inputField}
                     />
-                    <p id="emailHelp" className={g.hint}>No one can see your email.</p>
+                    <p id="emailHelp" className={generalStyle.hint}>No one can see your email.</p>
                 </div>
 
 
-                <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="phoneNumber">Phone number</label>
+                <div className={generalStyle.fieldLabelWrapper}>
+                    <label className={generalStyle.fieldLabel} htmlFor="phoneNumber">Phone number</label>
                     <input type="text"
                            id="phoneNumber"
                            placeholder="380 000 000 000"
                            value={formData.phoneNumber}
                            onChange={handleChange}
                            maxLength={12}
+                           className={generalStyle.inputField}
                     />
-                    <p id="phoneHelp" className={g.hint}>The phone won't be visible to anyone
+                    <p id="phoneHelp" className={generalStyle.hint}>The phone won't be visible to anyone
                         unless you allow it to be visible.</p>
                 </div>
 
                 {/*password confirm*/}
-                <div className={s.twoFieldsWrap}>
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="password">Password</label>
+                <div className={style.twoFieldsWrap}>
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        <label className={generalStyle.fieldLabel} htmlFor="password">Password</label>
                         <input type="password"
                                id="password"
                                placeholder="Password"
                                value={formData.password}
                                onChange={handleChange}
                                maxLength={30}
+                               className={generalStyle.inputField}
                         />
                     </div>
 
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="confirmPassword">Confirm Password</label>
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        <label className={generalStyle.fieldLabel} htmlFor="confirmPassword">Confirm Password</label>
                         <input type="password"
                                id="passwordConfirm"
                                placeholder="Confirm Password"
                                value={formData.passwordConfirm}
                                onChange={handleChange}
                                maxLength={30}
+                               className={generalStyle.inputField}
                         />
                     </div>
                 </div>
                 {/*//password confirm*/}
-                <div className={g.submitBtnWrap}>
-                    <button type="submit" className={g.submitBtn}>Sign Up</button>
+                <div className={generalStyle.submitBtnWrap}>
+                    <button type="submit" className={generalStyle.submitBtn}>Sign Up</button>
                 </div>
 
-                <p className={g.loginHint}>Already have an account? <NavLink to='/login' className={g.loginLink}>Log
+                <p className={generalStyle.loginHint}>Already have an account? <NavLink to='/login' className={generalStyle.loginLink}>Log
                     in</NavLink></p>
             </form>
 

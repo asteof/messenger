@@ -1,4 +1,4 @@
-form {
+.testForm {
     /*width: 90%;*/
     /*display: flex;*/
     /*flex-direction: column;*/
@@ -15,13 +15,14 @@ form {
     box-shadow: #55a563 0 0 18px;
 }
 
-label {
-    /*margin: 50px;*/
-    font-size: 21px;
-    font-weight: 500;
+.content {
+    height: fit-content;
+    margin: 0;
 }
 
-.labelWrap {
+.fieldLabel {
+    font-size: 21px;
+    font-weight: 500;
     margin: 0;
     padding: 15px 0 8px;
     width: fit-content;
@@ -35,11 +36,8 @@ label {
     /*max-width: 16vw;*/
 }
 
-.content{
-    height: fit-content;
-}
 
-input {
+.inputField {
     font-size: 16px;
     padding: 4px 8px;
     width: inherit;
@@ -82,6 +80,10 @@ input {
     overflow-wrap: break-word;
 }
 
+.wrap p{
+    margin: 0;
+}
+
 .hui {
     position: relative;
     padding: 1vw 4vw;
@@ -108,8 +110,9 @@ input {
     height: 10vw;
     overflow-wrap: break-word;
 }
+
 .hint {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 300;
     margin: 0 0 18px 0;
 }
@@ -118,14 +121,20 @@ input {
     margin: 4px;
 }
 
-.redSpan{
+.redSpan {
     color: darkred;
+    margin: 0;
 }
 
 .bold {
     font-weight: 600;
 }
 
-.padding{
+.padding {
     padding: 2vw;
+}
+
+.extraSmall {
+    font-size: 10px;
+    overflow-wrap: break-word;
 }

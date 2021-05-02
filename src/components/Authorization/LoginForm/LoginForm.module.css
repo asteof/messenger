@@ -6,6 +6,7 @@
     padding: 3vmax 0;
     height: 100%;
     background-color: #f8fff8;
+    box-sizing: border-box;
 }
 
 
@@ -18,7 +19,7 @@
 }
 
 
-.twoFieldsWrap input {
+.twoFieldsWrap .inputField {
     width: 200px;
 }
 
@@ -29,7 +30,7 @@
         overflow: scroll;
     }
 
-    .twoFieldsWrap input {
+    .twoFieldsWrap .inputField {
         width: 160px;
     }
 }

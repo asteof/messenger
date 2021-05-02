@@ -42,21 +42,30 @@ const Post = () => {
 
     return (
         <div className={style.wrap}>
-            <form action="" onSubmit={submitHandler}>
+            <form className={style.testForm} onSubmit={submitHandler}>
 
                 <div className={style.fieldLabelWrapper}>
                     <label htmlFor="">UserId</label>
-                    <input type="number" id={'userId'} value={userId}
+                    <input type="number"
+                           id={'userId'}
+                           value={userId}
+                           className={style.inputField}
                            onChange={changeHandle}/>
                 </div>
                 <div className={style.fieldLabelWrapper}>
                     <label htmlFor="">Title</label>
-                    <input type="text" id={'title'} value={title}
+                    <input type="text"
+                           id={'title'}
+                           value={title}
+                           className={style.inputField}
                            onChange={changeHandle}/>
                 </div>
                 <div className={style.fieldLabelWrapper}>
                     <label htmlFor="">Body</label>
-                    <input type="text" id='body' value={body}
+                    <input type="text"
+                           id='body'
+                           value={body}
+                           className={style.inputField}
                            onChange={changeHandle}/>
                 </div>
 

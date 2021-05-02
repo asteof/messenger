@@ -19,6 +19,7 @@
     background-color: #60587f;
     width: fit-content;
     max-width: 50%;
+    white-space: pre-wrap;
 }
 
 /*-----------------

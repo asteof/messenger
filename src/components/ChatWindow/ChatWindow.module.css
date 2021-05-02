@@ -5,3 +5,8 @@
     display: flex;
     height: 100%;
 }
+
+.chatSectionWrap{
+    width: 24vw;
+    background-color: #758386;
+}
