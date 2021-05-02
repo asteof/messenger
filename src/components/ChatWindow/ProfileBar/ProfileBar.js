@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import style from './ProfileBar.module.css'
 import RandomColor from "./RandomColor";
-import {toggleBoolean} from "./ChangeDisplayStyle";
+import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
 import Profile from "../Profile/Profile";
 
 const ProfileBar = (props) => {

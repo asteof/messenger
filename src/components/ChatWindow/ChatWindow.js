@@ -10,6 +10,8 @@ import ProfileBar from "./ProfileBar/ProfileBar";
 
 function ChatWindow(props) {
     const [chatsData, setChats] = useState([])
+    const [messages, setMessages] = useState([])
+    const [chatIsSelected, setChatIsSelected] = useState(false)
     const [sessionResponse, setSessionResponse] = useState({
         message: '',
         errorMessage: '',
@@ -18,23 +20,6 @@ function ChatWindow(props) {
 
     const {message, errorMessage, serverResponse} = sessionResponse
     const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
-    let history = useHistory()
-
-    let messagesData = [
-        {id: 1, text: 'Hui', fromMe: false},
-        {id: 2, text: 'Pizda', fromMe: true},
-        {id: 3, text: 'Skovoroda'},
-        {id: 4, text: 'Ponimayu', fromMe: true},
-        {id: 5, text: 'Ne ponimayu'},
-        {id: 6, text: 'Spravedliva', fromMe: true},
-        {id: 7, text: 'Ne spravedliva'},
-        {id: 8, text: 'Sliva'},
-        {id: 9, text: 'Sliva'},
-        {id: 10, text: 'Sliva'},
-        {id: 11, text: 'Sliva', fromMe: true},
-        {id: 12, text: 'Sliva'},
-        {id: 13, text: 'Sliva'}
-    ]
 
 
     useEffect(() => {
@@ -122,10 +107,6 @@ function ChatWindow(props) {
 
     }, [])//useEffect
 
-    // useEffect(() => {
-    //     console.log('ChatWindow.js current user', currentUser)
-    // }, [currentUser])
-
     return (
         isLoggedIn ?
             <div className={style.chatWindow}>
@@ -133,36 +114,17 @@ function ChatWindow(props) {
                     <ProfileBar currentUser={currentUser}/>
                     <Chats chatsData={chatsData}
                            currentUser={currentUser}
-                           setIsLoggedIn={setIsLoggedIn}/>
+                           setIsLoggedIn={setIsLoggedIn}
+                           setMessagesDat={setMessages}
+                           setChatIsSelected={setChatIsSelected}/>
                 </div>
-                <Messages messagesData={messagesData}/>
+                <Messages
+                    chatIsSelected={chatIsSelected}
+                    currentUser={currentUser}
+                    messages={messages}/>
             </div>
             : <Redirect to="/login"/>
     )
-
-    // if (isLoggedIn) {
-    //     if (currentUser === {}) {
-    //         return (
-    //             <div className={style.chatWindow}>
-    //                 <div>
-    //                     Loading...
-    //                 </div>
-    //             </div>
-    //         )
-    //     }
-    //     return (
-    //         <div className={style.chatWindow}>
-    //             <ProfileBar currentUser={currentUser}/>
-    //             <div className={style.chatSectionWrap}>
-    //                 <Chats chatsData={chatsData}
-    //                        currentUser={currentUser}
-    //                        setIsLoggedIn={setIsLoggedIn}/>
-    //             </div>
-    //             <Messages messagesData={messagesData}/>
-    //         </div>
-    //     )
-    // } else return <Redirect to="/login"/>
-
 }
 
 export default ChatWindow;

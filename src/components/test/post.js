@@ -72,11 +72,11 @@ const Post = () => {
                 <button type="submit" className={style.submitBtn}>goo</button>
             </form>
 
-            <div className={style.hui2}>Post <code>{JSON.stringify(post)}</code></div>
-            <div className={style.hui2}>Config <code>{JSON.stringify(response.config)}</code></div>
-            <div className={style.hui2}>Data <code>{JSON.stringify(response.data)}</code></div>
-            <div className={style.hui2}>Status {response.status}</div>
-            <div className={style.hui2}>Error {JSON.stringify(response.error)}</div>
+            <div className={style.hi2}>Post <code>{JSON.stringify(post)}</code></div>
+            <div className={style.hi2}>Config <code>{JSON.stringify(response.config)}</code></div>
+            <div className={style.hi2}>Data <code>{JSON.stringify(response.data)}</code></div>
+            <div className={style.hi2}>Status {response.status}</div>
+            <div className={style.hi2}>Error {JSON.stringify(response.error)}</div>
         </div>
     )
 }

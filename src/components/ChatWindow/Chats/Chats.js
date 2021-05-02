@@ -5,12 +5,12 @@ import Chat from "./Chat/Chat";
 function Chats(props) {
 
     /* selectedChat takes the id of the dialog and passes it to dialog components as props
-    clicking on any chosen dialog sets the selectedChat prop to dialog id
-    if the selectedChat matches with dialog id it displays active CSS class
-    otherwise it displays usual dialog class */
+   clicking on any chosen dialog sets the selectedChat prop to dialog id
+   if the selectedChat matches with dialog id it displays active CSS class
+   otherwise it displays usual dialog class */
     const [selectedChat, setSelectedChat] = useState(0)
 
-    const {chatsData, currentUser, setIsLoggedIn} = props
+    const {chatsData, currentUser, setIsLoggedIn, setMessagesDat, setChatIsSelected} = props
     // console.log(currentUser)
 
     let chats = chatsData.map(chat => {
@@ -28,7 +28,9 @@ function Chats(props) {
                     chatId={chat.chatId}
                     selectedChat={selectedChat}
                     setSelectedChat={setSelectedChat}
+                    setChatIsSelected={setChatIsSelected}
                     setIsLoggedIn={setIsLoggedIn}
+                    setMessagesDat={setMessagesDat}
                 />
             )
         }

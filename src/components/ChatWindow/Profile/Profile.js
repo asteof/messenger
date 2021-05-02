@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import style from './Profile.module.css'
 // import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 // import {getLocalWithExpiry} from "../../Authorization/localStorage";
-import {toggleBoolean} from "../ProfileBar/ChangeDisplayStyle";
+import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
 
 import user from '../../../media/icons/user.svg'
 import phone from '../../../media/icons/phone.svg'

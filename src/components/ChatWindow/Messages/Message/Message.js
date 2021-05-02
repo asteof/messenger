@@ -2,7 +2,7 @@ import React from 'react';
 import style from './message.module.css'
 
 const Message = (props) => {
-    const {fromMe, messageText} = props
+    const {key, fromMe, messageText, recipientName, senderName, sentAt} = props
 
     //if fromMe === true message class is changed to display message in the right
     let messageWrapClass
@@ -18,7 +18,11 @@ const Message = (props) => {
         //         }
         //         return (
         <div className={messageWrapClass}>
-            <div className={style.message}>{messageText}</div>
+            <div className={style.message}>
+                {messageText}
+                <div className={style.messageTime}>{sentAt}</div>
+            </div>
+
         </div>
         //         )
         //     }}
