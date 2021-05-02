@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import style from './LoginForm.module.css';
 import generalStyle from '../generalAuth.module.css';
-// import testStyle from '../../huinya/test.module.css'
+// import testStyle from '../../test/test.module.css'
 import {NavLink, useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_PATH} from "../../constants/API_PATH_DEFAULT";

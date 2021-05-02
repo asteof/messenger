@@ -84,17 +84,17 @@
     margin: 0;
 }
 
-.hui {
+.hi {
     position: relative;
     padding: 1vw 4vw;
     /*overflow: scroll;*/
 }
 
-.hui2 {
+.hi2 {
     display: flex;
 }
 
-.hui2, .hui2 * {
+.hi2, .hi2 * {
     margin: 16px 8px;
 }
 

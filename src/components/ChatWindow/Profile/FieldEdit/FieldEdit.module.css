@@ -25,6 +25,7 @@
     border-radius: 12px;
     background-color: #282c34;
     color: #dddddd;
+    cursor: default;
     z-index: 11;
 }
 
@@ -71,10 +72,11 @@
     letter-spacing: 0.04em;
     font-size: 1em;
     color: #d77600;
-    padding: 1vmin 1.488vmin;
+    margin: 1vmin 1.488vmin;
     border: none;
     border-radius: 10px;
     background-color: #282c34;
+    cursor: pointer;
 }
 
 .editButton:hover .editButton:after {

@@ -5,7 +5,7 @@ import style from './test.module.css'
 import Fetch from "./fetch";
 import Post from "./post";
 import LocalStorog from "./localStorog";
-import Gavno from "./gavno";
+import Other from "./other";
 import CreateDefaultUsers from "./createDefaultUsers";
 import ChatFetch from "./ChatFetch";
 import SimpleGetUser from "./SimpleGetUser";
@@ -15,7 +15,7 @@ const Test = () => {
 
     return (
         <div className={style.content}>
-            <Gavno/>
+            <Other/>
             <Fetch/>
             <Post/>
             <LocalStorog/>

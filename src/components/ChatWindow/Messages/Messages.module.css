@@ -3,14 +3,18 @@
     width: auto;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     overflow: hidden;
     background-color: #38333e;
 }
 
 .messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     background-color: #38333e;
     color: #dddddd;
-
+    height: 100%;
     width: 76vw;
     padding: 2vmin;
     box-sizing: border-box;
@@ -31,22 +35,53 @@
     max-width: 50%;
 }
 
+.selectChatWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: #dddddd;
+    background-color: #38333e;
+}
+
+.selectChat {
+
+    padding: 0.5vmax 1.488vmax;
+}
+
+.selectChat:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1d232a;
+    border-radius: 28px;
+    opacity: 0.42;
+    z-index: -1;
+}
+
 .messageAreaWrap {
+    /*position: absolute;*/
+    bottom: 0;
     width: 76vw;
-    height: auto;
-    /*box-sizing: border-box;*/
+    height: fit-content;
+    box-sizing: border-box;
 }
 
 .messageForm {
     position: relative;
     height: 100%;
+    background-color: #2e2834;
 }
 
 .messageArea {
     color: #dddddd;
     font-size: 0.8em;
     width: 76vw;
-    height: 100%;
+    height: inherit;
     padding: 1em;
     border: none;
     position: relative;
@@ -76,6 +111,7 @@
 
     z-index: 5;
 }
+
 .sendBtn:hover {
     color: #e0e0e0;
     background-color: #5f466f;
@@ -84,6 +120,7 @@
 .sendBtn:active {
     background-color: #3e2547;
 }
+
 /*-----------------
 scrollbars
 ------------------*/

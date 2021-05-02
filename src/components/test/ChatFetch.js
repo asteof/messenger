@@ -27,7 +27,7 @@ const ChatFetch = () => {
 
 
     let chatsMap = chats.map(chat=>
-    <div key={chat.chatId} className={style.hui}>
+    <div key={chat.chatId} className={style.hi}>
         <p className={style.bold}>Chat ID: <span className={style.redSpan}>{chat.chatId}</span></p>
         <p className={style.bold}>Chat participants:</p>
         {chat.chatUsers.map(user=><p key={user.id}>Username: <span className={style.redSpan}>{user.username}</span>, ID: {user.id}</p>)}

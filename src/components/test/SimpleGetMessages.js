@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import style from './test.module.css'
 import {SECURED_API_PATH} from "../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../Authorization/localStorage";
+// import {getLocalWithExpiry} from "../Authorization/localStorage";
 
 const SimpleGetMessages = (props) => {
 
-    const [messages, setMessages] = useState([])
+    const [testMessages, setTestMessages] = useState([])
     const [id, setId] = useState(0)
     const newJWT = props.newJWT
 
@@ -17,14 +17,18 @@ const SimpleGetMessages = (props) => {
             console.log(`SimpleChatFetch.js ${JWT_header}`)
         }
 
-        axios.get(`${SECURED_API_PATH}/chat/${id}`, {
+        axios.get(`${SECURED_API_PATH}/messages/chat/${id}`, {
             headers: {
                 authorization: JWT_header
+            },
+            params: {
+                size: 50,
+                page: 0
             }
         })
             .then(response => {
                 console.log(response.data)
-                setMessages(response.data)
+                setTestMessages(response.data)
             })
             .catch(error => console.log(error, error.response))
 
@@ -32,9 +36,9 @@ const SimpleGetMessages = (props) => {
 
     useEffect(() => {
         console.log('SimpleGetMessages.js uf called')
-    }, [messages])
+    }, [testMessages])
 
-    let messageMap = messages.map(message =>
+    let messageMap = testMessages.map(message =>
         <div key={message.id} className={style.hu}>
             <p>id: <span className={style.redSpan}>{message.id}</span></p>
             <p>Text: {message.text}</p>
@@ -48,7 +52,7 @@ const SimpleGetMessages = (props) => {
             <input type="number" onChange={e=>setId(e.target.value)} className={style.inputField}/>
             <div className={style.hint}>Click "Get messages" to fetch chats from specified chat using temporary JWT</div>
             <p>Messages for chat {id}:</p>
-            <div className={style.hui2}>
+            <div className={style.hi2}>
                 {messageMap}
             </div>
             <button onClick={fetch} className={style.submitBtn}>Get messages</button>

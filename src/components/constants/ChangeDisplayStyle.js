@@ -14,4 +14,12 @@ const toggleBoolean = (setBooleanState) => {
     setBooleanState(prevState => !prevState)
 }
 
-export {displayBlock, displayNone, toggleBoolean}
+const setTrueBoolean = (setBooleanState) => {
+    setBooleanState(prevState => !prevState)
+}
+
+const setFalseBoolean = (setBooleanState) => {
+    setBooleanState(prevState => !prevState)
+}
+
+export {displayBlock, displayNone, toggleBoolean, setTrueBoolean, setFalseBoolean}

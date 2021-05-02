@@ -47,7 +47,7 @@ const SimpleChatFetch = (props) => {
         <div className={style.wrap}>
             <div className={style.hint}>Click "Get chats" to fetch chats from temporary JWT</div>
             <p>Chats for this user:</p>
-            <div className={style.hui2}>
+            <div className={style.hi2}>
             {chatsMap}
             </div>
             <button onClick={fetch} className={style.submitBtn}>Get chats</button>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import style from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import CreateDefaultUsers from "../huinya/createDefaultUsers";
+import CreateDefaultUsers from "../test/createDefaultUsers";
 
 const Header = (props) => {
 

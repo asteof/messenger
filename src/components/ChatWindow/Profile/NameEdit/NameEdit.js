@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import style from '../FieldEdit/FieldEdit.module.css'
-import {toggleBoolean} from "../../ProfileBar/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import axios from "axios";
 import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
 import {getLocalWithExpiry} from "../../../Authorization/localStorage";
@@ -29,7 +29,7 @@ const NameEdit = (props) => {
             axios.put(`${SECURED_API_PATH}/user`, name,
                 {
                     headers: {
-                        authorization: `Bearer: ${JWT}`
+                        authorization: `Bearer ${JWT}`
                     }
                 }
             )

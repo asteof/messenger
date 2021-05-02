@@ -4,7 +4,7 @@ import Timer from "./timer";
 import RandomColor from "../ChatWindow/ProfileBar/RandomColor";
 
 
-const Gavno = () => {
+const Other = () => {
     const [count, setHui] = useState(10)
 
     const [x, setX] = useState(0)
@@ -41,7 +41,7 @@ const Gavno = () => {
 
     return (
         <div className={style.wrap}>
-            <div className={style.hui2}>
+            <div className={style.hi2}>
                 <div className={style.cont} style={colour}>
                     <p className={style.hueDivide}>X {x}</p>
                     <p className={style.hueDivide}>Y {y}</p>
@@ -62,4 +62,4 @@ const Gavno = () => {
     )
 }
 
-export default Gavno
+export default Other

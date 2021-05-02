@@ -6,7 +6,7 @@ import React, {useEffect, useState} from 'react';
 import RegistrationForm from "./components/Authorization/RegistrationForm/RegistrationForm.js"
 import ChatWindow from "./components/ChatWindow/ChatWindow";
 import LoginForm from "./components/Authorization/LoginForm/LoginForm";
-import Test from "./components/huinya/test"
+import Test from "./components/test/test"
 // import RegF from "./components/Authorization/RegistrationForm/RegFTest";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {getLocalWithExpiry} from "./components/Authorization/localStorage";
