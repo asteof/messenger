@@ -1,19 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import style from './Messages.module.css'
 import Message from "./Message/Message";
+import ChatProfileBar from "./ChatProfileBar/ChatProfileBar";
 
 
 const Messages = (props) => {
-    const {chatIsSelected, messages, currentUser} = props
+    const {
+        selectedChat, messages,
+        currentUser, secondChatUser,
+        profilePictureColors
+    } = props
+    const selectedRef = useRef(0)
+    const inputRef = useRef(null)
+
     let date = new Date()
     const [newMessage, setNewMessage] = useState({
         id: 0,
         text: '',
-        senderName: currentUser.username
+        senderName: currentUser.username,
+        sentAt: date.getTime()
     })
-
-    let messagesElement
-    let messageAreaElement
 
 
     const messageInput = event => {
@@ -27,61 +33,98 @@ const Messages = (props) => {
     const addMessage = (event) => {
         event.preventDefault()
 
-        messageAreaElement = document.getElementById('messageArea')
+        let messageAreaElement = document.getElementById('messageArea')
 
         if (newMessage.text !== '') {
             setNewMessage(prevNewMsg => ({
                 ...prevNewMsg,
-                id: date.getTime()
+                id: date.getTime(),
+                senderName: currentUser.username,
+                sentAt: date.getTime()
             }))
-
-            messages.push(newMessage)
-
-            setNewMessage(prevNewMsg => ({
-                ...prevNewMsg,
-                text: ''
-            }))
+            messages.unshift(newMessage)
         }
 
         messageAreaElement.focus()
         messageAreaElement.value = ''
         console.log(newMessage)
-        console.log("Messages.js current user",currentUser)
+        console.log("Messages.js current user", currentUser)
     }
+    // console.log("Messages.js current user", currentUser)
+    console.log("Messages.js secondChatUser", secondChatUser)
 
+    // console.log('Messages.js selectedChat', selectedChat)
 
     useEffect(() => {
-        if (chatIsSelected) {
-            messagesElement = document.getElementById('messages')
-            messagesElement.scrollTo({left: 0, top: (messagesElement.scrollHeight), behavior: "smooth"})
+        console.log(`small uf call
+        selectedChat: ${selectedChat}, selectedRef: ${selectedRef.current}`)
+        if (selectedChat !== selectedRef.current) {
+            selectedRef.current = selectedChat
         }
-        // messageAreaElement.addEventListener('keydown', ()=>sendByEnter())
+    }, [selectedRef.current, selectedChat])
+
+    useEffect(() => {
+        console.log('Messages.js selectedChat useEffect', selectedChat)
+        console.log(`big uf call
+        selectedChat: ${selectedChat}, selectedRef: ${selectedRef.current}`)
+
+        if (selectedRef.current !== 0) {
+            const messagesElement = document.getElementById('messages')
+            messagesElement.scrollTo({left: 0, top: (messagesElement.scrollHeight), behavior: "smooth"})
+            console.log('messagesMap', messagesMap)
+            inputRef.current.focus()
+        }
+    }, [selectedRef.current])
+
+    useEffect(() => {
+        if (selectedRef.current !== 0) {
+            const messagesElement = document.getElementById('messages')
+            messagesElement.scrollTo({left: 0, top: (messagesElement.scrollHeight), behavior: "smooth"})
+            console.log('messagesMap', messagesMap)
+            inputRef.current.focus()
+        }
     }, [newMessage.id])
 
+    for (let i = 0; i < messages.length - 1; i++) {
+        const messageDate_current = new Date(messages[i].sentAt).getDate()
+        const messageDate_next = new Date(messages[i + 1].sentAt).getDate()
+        // console.log(messageDate_current)
+        // console.log(messageDate_next)
+        if (messageDate_current > messageDate_next) {
+            messages[i].dateChange = true
+        }
+    }
 
-    let messagesMap = messages.map(message => {
+    let messagesMap = messages.map((message) => {
         ///sets fromMe to true if sender name equal to current username
         message.fromMe = message.senderName === currentUser.username;
         //sets false otherwise
+        // console.log(messages)
         return <Message
             key={message.id}
             messageText={message.text}
             fromMe={message.fromMe}
+            dateChange={message.dateChange}
             recipientName={message.recipientName}
             senderName={message.senderName}
             sentAt={message.sentAt}
         />
-    });
+    }).reverse();
 
-    if (chatIsSelected) {
-        return (
-            <div className={style.messagesWindow}>
-                <div className={style.messages} id='messages'>
-                    {messagesMap}
-                </div>
+    return (
+        <div className={style.messageSection}>
+            <div className={style.chatProfileBarWrap}>
+                <ChatProfileBar secondChatUser={secondChatUser}
+                                profilePictureColors={profilePictureColors}
+                                selectedChat={selectedChat}/>
+            </div>
 
-                <div className={style.messageAreaWrap}>
-                    <form onSubmit={addMessage} className={style.messageForm}>
+            <div className={style.messages} id='messages'>
+                {messagesMap}
+            </div>
+
+            <div className={style.messageAreaWrap}>
+                <form onSubmit={addMessage} className={style.messageForm}>
                     <textarea
                         className={style.messageArea}
                         id='messageArea'
@@ -91,25 +134,16 @@ const Messages = (props) => {
                         maxLength='800'
                         placeholder='Write a message...'
                         autoFocus
-
+                        ref={inputRef}
                         onChange={messageInput}
                     >
                     </textarea>
-                        <button type='submit' className={style.sendBtn}>Send</button>
+                    <button type='submit' className={style.sendBtn}>Send</button>
+                </form>
+            </div>
 
-                    </form>
-                </div>
-            </div>
-        )
-    } else {
-        return (
-            <div className={style.selectChatWrap}>
-                <div className={style.selectChat}>
-                    Select a chat to start messaging
-                </div>
-            </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Messages;

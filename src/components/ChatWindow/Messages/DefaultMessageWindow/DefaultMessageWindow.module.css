@@ -1,0 +1,29 @@
+
+.selectChatWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: #dddddd;
+    background-color: #38333e;
+}
+
+.selectChat {
+    position: relative;
+    padding: 0.5vmax 1.488vmax;
+    z-index: 1;
+}
+
+.selectChat:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #1d232a;
+    border-radius: 28px;
+    opacity: 0.42;
+    z-index: -1;
+}

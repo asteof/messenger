@@ -1,0 +1,49 @@
+import React, {useEffect, useState} from 'react';
+import style from './ChatProfileBar.module.css'
+import RandomColor from "../../../constants/RandomColor";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import ChatUserProfile from "./ChatUserProfile/ChatUserProfile";
+
+const ChatProfileBar = (props) => {
+    const {secondChatUser, selectedChat, profilePictureColors} = props
+
+    const [showUserProfile, setShowUserProfile] = useState(false)
+
+
+    console.log('ChatProfileBar.js secondChatUser', secondChatUser)
+    // useEffect(() => {
+    // }, [])
+
+    return (
+
+        <div className={style.chatProfileBar}>
+            {/*<div className={style.profilePictureWrap}>*/}
+            <div
+                onClick={() => toggleBoolean(setShowUserProfile)}
+                className={style.chatProfilePicture}
+                style={profilePictureColors[selectedChat]}>
+
+                {secondChatUser &&
+                <p className={style.initials}>
+                    {((secondChatUser.firstname || '').charAt(0) || '').toUpperCase()}
+                    {((secondChatUser.lastname || '').charAt(0) || '').toUpperCase()}
+                </p>
+                }
+                {/*</div>*/}
+            </div>
+
+            <div className={style.fullname}
+                 onClick={() => toggleBoolean(setShowUserProfile)}>
+                {secondChatUser.firstname} {secondChatUser.lastname}
+            </div>
+
+            {showUserProfile &&
+            <ChatUserProfile secondUser={secondChatUser}
+                             setShowUserProfile={setShowUserProfile}
+                             color={profilePictureColors[selectedChat]}
+            />}
+        </div>
+    )
+}
+
+export default ChatProfileBar

@@ -1,6 +1,7 @@
 .chat {
-    /*width: 100%;*/
-    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    padding: 0.69em 0;
     /*border-top: 1px solid #282c34;*/
     /*border-collapse: collapse;*/
     cursor: pointer;
@@ -10,14 +11,109 @@
     background-color: #97adb1;
 }
 
+.profilePicture {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(40px + 1vmax);
+    width: calc(40px + 1vmax);
+    border-radius: 50%;
+    margin: 0 1vmax 0 1vmin;
+    /*background-color: ;*/
+    filter: contrast(122%);
+    cursor: pointer;
+}
+
+.initials {
+    filter: contrast(100%);
+    font-weight: 500;
+    font-size: calc(1.1em + 1vmin);
+}
+
+.chatInfo {
+    width: 75%;
+    /*height: 50px;*/
+    padding: 0 1vmin 0 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.chatUsername {
+    font-weight: 500;
+}
+
+.lastMessage {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    font-size: 0.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: #000000;
+}
+
+.messageTime {
+    padding: 0 0 0 1vmin;
+    color: #2d3e3a;
+}
+
 /*.active div, .active:hover div {*/
 /*    background-color: #526164;*/
 /*}*/
 .active, .active:hover {
+    color: #eeeeee;
     background-color: #526164;
 }
 
-.chatLink, .chatLink:link, .chatLink:visited{
-    color: #e0e0e0;
+.active .lastMessage {
+    color: #bababa;
 
+}
+
+.active .messageTime {
+    color: #7ec4b2;
+}
+
+
+@media screen and (max-width: 800px) {
+    .chat {
+        justify-content: center;
+    }
+
+    .lastMessage {
+        display: none;
+    }
+
+    .profilePicture {
+        height: 40px;
+        width: 40px;
+    }
+
+    .chatInfo {
+        display: none;
+    }
+
+    .initials {
+        font-size: 22px;
+    }
+}
+
+@media screen and (max-width: 860px){
+    .chatInfo {
+        width: unset;
+        padding: 0 1vmin 0 0;
+    }
+
+}
+
+@media screen and (max-width: 1024px){
+    .chatInfo {
+        width: fit-content;
+        /*padding: 0 1vmin 0 0;*/
+    }
+    .messageTime {
+        display: none;
+    }
 }

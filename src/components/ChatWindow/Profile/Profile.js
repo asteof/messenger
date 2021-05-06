@@ -11,10 +11,10 @@ import username from '../../../media/icons/username.svg'
 import edit from '../../../media/icons/edit.svg'
 import close from '../../../media/icons/close.svg'
 import FieldEdit from "./FieldEdit/FieldEdit";
-import NameEdit from "./NameEdit/NameEdit";
+import NameEdit from "./FieldEdit/NameEdit/NameEdit";
 
 const Profile = (props) => {
-    const {currentUser, setShowProfile, color} = props
+    const {currentUser, setCurrentUser, setShowProfile, color} = props
 
     const [options, setOptions] = useState({
         editProperty: '',
@@ -35,8 +35,9 @@ const Profile = (props) => {
         toggleBoolean(setShowNameEdit);
     }
 
-
-    console.log('Profile.js current user', currentUser)
+    useEffect(() => {
+        console.log('ChatProfileBar.js current user', currentUser)
+    }, [currentUser])
 
     return (
         <div className={style.profileWrap}>
@@ -107,13 +108,14 @@ const Profile = (props) => {
                 {/* //profileData*/}
 
                 {showEdit &&
-                <FieldEdit
-                    currentUser={currentUser}
-                    options={options}
-                    setShowEdit={setShowEdit}/>}
+                <FieldEdit currentUser={currentUser}
+                           setCurrentUser={setCurrentUser}
+                           options={options}
+                           setShowEdit={setShowEdit}/>}
 
                 {showNameEdit &&
                 <NameEdit currentUser={currentUser}
+                          setCurrentUser={setCurrentUser}
                           setShowNameEdit={setShowNameEdit}/>}
             </div>
             {/*//profile*/}

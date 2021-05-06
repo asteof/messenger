@@ -54,6 +54,7 @@
     border-bottom: 3px solid;
     border-image: linear-gradient(to right, #1d232a 25%, #1d232a 60%, #282c34 100%) 1;
     /*box-sizing: border-box;*/
+    text-overflow: ellipsis;
 }
 
 .inputField:focus {

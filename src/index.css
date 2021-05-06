@@ -13,6 +13,7 @@
 
 html {
     height: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -26,7 +27,7 @@ body {
 
     font-size: 20px;
     min-height: 100%;
-    /*overflow: hidden;*/
+    overflow-x: hidden;
 }
 
 .content {
@@ -39,6 +40,12 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@media screen and (max-width: 800px){
+    body{
+        overflow: hidden;
+    }
 }
 
 @font-face {

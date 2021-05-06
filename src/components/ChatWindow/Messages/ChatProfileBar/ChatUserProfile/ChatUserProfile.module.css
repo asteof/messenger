@@ -1,4 +1,4 @@
-.profileWrap {
+.userProfileWrap {
     position: absolute;
     top: 0;
     left: 0;
@@ -21,8 +21,8 @@
 .profile {
     position: relative;
     height: 84vh;
-    width: 30vw;
-    min-width: 320px;
+    width: 28vw;
+    min-width: 300px;
     /*max-width: 650px;*/
     display: grid;
     /*grid-template-columns: ;*/
@@ -83,21 +83,12 @@
     grid-row: 5/7;
 }
 
-.phone {
-    grid-row: 7/9;
-}
-
-.password {
-    grid-row: 9/11;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+/*.phone {*/
+/*    grid-row: 7/9;*/
+/*}*/
 
 .fieldWrap {
     display: flex;
-    position: relative;
     width: inherit;
     min-width: inherit;
     align-items: center;
@@ -124,7 +115,7 @@
 .field {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -135,6 +126,57 @@
     color: #7b7b7b;
 }
 
+.contactWrap {
+    grid-row: 8/11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+    padding: 0.6vmin 1.488vmin;
+    background-color: #1b1e23;
+    border: none;
+    border-radius: 10px;
+}
+
+.contact:hover .contactIcon {
+    opacity: 0.9;
+}
+
+.add {
+    color: rgba(119, 208, 71, 0.6);
+}
+
+.remove {
+    color: rgba(208, 71, 71, 0.6);
+}
+
+.add:hover {
+    color: #77d047;
+}
+
+.remove:hover {
+    color: #d04747;
+}
+
+.contact:active{
+    color: #e07b00;
+    fill: #e07b00;
+    stroke: #e07b00;
+}
+
+.contactIcon {
+    width: 1.7em;
+    height: 1.7em;
+    padding: 0.2em 0.6vmax;
+    opacity: 0.48;
+}
+
 .icon {
     width: 1.8em;
     height: 1.8em;
@@ -142,10 +184,6 @@
     opacity: 0.48;
 }
 
-.editIcon {
-    width: 1.488em;
-    visibility: hidden;
-}
 
 .closeIcon {
     position: absolute;
@@ -165,7 +203,8 @@
     .profile {
         /*width: 40vw;*/
     }
-    .profileData{
+
+    .profileData {
         grid-template-rows: repeat(8, 1fr);
     }
 
@@ -181,11 +220,13 @@
         grid-row: 3/4;
     }
 
-    .phone {
-        grid-row: 4/5;
+    .contactWrap {
+        grid-row: 6/9;
     }
+}
 
-    .password {
-        grid-row: 7/9;
+@media screen and (min-width: 320px) {
+    .field {
+        /*font-size: calc(1em + 8 * ((100vw - 320px) / 960));*/
     }
 }

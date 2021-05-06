@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import style from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import CreateDefaultUsers from "../test/createDefaultUsers";
+import CreateDefaultUsers from "../test/CreateDefault/createDefaultUsers";
 
 const Header = (props) => {
 
@@ -36,11 +36,11 @@ const Header = (props) => {
                 <NavLink to='/login' className={style.headerLink}>Login</NavLink>
                 <NavLink to='/chat' className={style.headerLink}>Chat</NavLink>
                 <NavLink to='/test' className={style.headerLink}>Test</NavLink>
-                <CreateDefaultUsers/>
+                {/*<CreateDefaultUsers/>*/}
             </nav>
 
             <div className={style.rightBar}>
-                {currentUser.username}
+                {currentUser.username || ''}
                 <NavLink to='/login' className={`${style.headerLink} ${style.logoutLink}`} onClick={logout}>{logoutLinkText}</NavLink>
             </div>
             {/*</div>*/}

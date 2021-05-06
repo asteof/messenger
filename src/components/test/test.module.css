@@ -74,13 +74,16 @@
 }
 
 .wrap {
-    border: 1px solid #000;
+    /*border: 1px solid #000;*/
+    border: inherit;
     padding: 18px 16px;
-    margin: 18px;
+    margin: 8px;
+    background-color: #eecccc;
+    color: #000000;
     overflow-wrap: break-word;
 }
 
-.wrap p{
+.wrap p {
     margin: 0;
 }
 
@@ -94,6 +97,16 @@
     display: flex;
 }
 
+.hi3 {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.c {
+    width: 30vw;
+}
+
 .hi2, .hi2 * {
     margin: 16px 8px;
 }
@@ -104,7 +117,7 @@
     padding: 1vw;
 }
 
-.tokenHolder {
+.hold {
     margin: 2vw;
     width: 24vw;
     height: 10vw;
@@ -136,5 +149,8 @@
 
 .extraSmall {
     font-size: 10px;
+    overflow-wrap: break-word;
+}
+.break {
     overflow-wrap: break-word;
 }

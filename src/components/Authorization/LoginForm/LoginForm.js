@@ -37,14 +37,16 @@ function LoginForm(props) {
         formData.append('username', loginData.username)
         formData.append('password', loginData.password)
 
-        axios.post(`${API_PATH}/login`, formData)
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('loginForm.js response',response)
-                    setJWT_AUTH_TOKEN(response.data.access_token);
-                }
-            })
-            .catch(error => {
+        if (loginData.username !== '' && loginData.password !== '') {
+
+            axios.post(`${API_PATH}/login`, formData)
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('loginForm.js response', response)
+                        setJWT_AUTH_TOKEN(response.data.access_token);
+                    }
+                })
+                .catch(error => {
                     console.log(error)
                     console.log(error.response)
                     console.log(error.request)
@@ -73,12 +75,12 @@ function LoginForm(props) {
                             console.log(loginResponse)
                         }
                     }
-                }
-            )
+                })//.catch block
+        }//if statement
     }
 
     useEffect(() => {
-        console.log('LoginForm.js use effect called')
+        // console.log('LoginForm.js use effect called')
 
         if (JWT_AUTH_TOKEN !== '') {
             setLoginResponse(prevLoginResponse => ({

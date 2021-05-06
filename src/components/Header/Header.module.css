@@ -1,9 +1,11 @@
 .header {
     height: 12vh;
+    /*min-height: 80px;*/
     background-color: #282c34;
     color: #e0e0e0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    /*font-size: calc(10px + 1.2vmin);*/
     /*align-items: center;*/
     /*justify-content: center;*/
 }
@@ -18,7 +20,7 @@
 
 .logo {
     font-family: 'bebas_neuebold', sans-serif;
-    font-size: calc(1em + 2vmax);
+    font-size: calc(16px + 2vmax);
     transform: rotate(356deg);
 }
 
@@ -48,7 +50,7 @@
 .headerLink, .headerLink:link, .headerLink:visited {
     color: darkorange;
     padding: 0 40px;
-    font-size: 22px;
+    font-size: 1.2em;
     font-weight: 200;
 }
 
@@ -58,4 +60,16 @@
 
 .logoutLink {
 
+}
+
+@media screen and (min-width: 320px){
+    .header {
+        font-size: calc(12px + 8 * ((100vw - 320px) / 1000));
+    }
+}
+
+@media screen and (min-width: 1320px){
+    .header {
+        font-size: 20px;
+    }
 }

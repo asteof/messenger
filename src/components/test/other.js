@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import style from './test.module.css'
 import Timer from "./timer";
-import RandomColor from "../ChatWindow/ProfileBar/RandomColor";
+import RandomColor from "../constants/RandomColor";
 
 
-const Other = () => {
-    const [count, setHui] = useState(10)
+const Other = ({colour, setColour}) => {
+    const [count, setCount] = useState(10)
+
 
     const [x, setX] = useState(0)
     const [y, setY] = useState(0)
@@ -29,10 +30,9 @@ const Other = () => {
         hours: 0, minutes: 0, seconds: 0, milliseconds: 0, unix: 0
     })
     // let d = new Date();
-    const [colour, setColour] = useState({})
 
     const click = () => {
-        setHui(prevCount => prevCount + 2)
+        setCount(prevCount => prevCount + 2)
         setColour(RandomColor())
     }
     // useEffect(()=>{
@@ -43,8 +43,8 @@ const Other = () => {
         <div className={style.wrap}>
             <div className={style.hi2}>
                 <div className={style.cont} style={colour}>
-                    <p className={style.hueDivide}>X {x}</p>
-                    <p className={style.hueDivide}>Y {y}</p>
+                    <p className={style}>X {x}</p>
+                    <p className={style}>Y {y}</p>
                 </div>
 
                 {/*<div className={style.cont}>{time.hours}:{time.minutes}:{time.seconds}</div>*/}
@@ -54,9 +54,13 @@ const Other = () => {
                     <Timer/>
                 </div>
                 <p>test</p>
-                <p><code>{JSON.stringify(colour)}</code></p>
-                <button onClick={click}
-                        style={colour}>Count {count}</button>
+                <p className={style.hold}><code>{JSON.stringify(colour)}</code></p>
+                <div>
+                    <button onClick={click}
+                            className={style.submitBtn}
+                            style={colour}>Count {count}</button>
+                </div>
+
             </div>
         </div>
     )

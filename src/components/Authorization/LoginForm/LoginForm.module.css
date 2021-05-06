@@ -27,7 +27,7 @@
 
 @media only screen and (max-width: 800px) {
     body {
-        overflow: scroll;
+        /*overflow: scroll;*/
     }
 
     .twoFieldsWrap .inputField {

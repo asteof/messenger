@@ -1,0 +1,80 @@
+.chatProfileBar {
+    display: flex;
+    align-items: center;
+    background-color: #2e2834;
+    border-bottom: 2px solid #2e2834;
+    width: 100%;
+    z-index: 8;
+}
+
+/*.profilePictureWrap {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    !*padding: 1vmin 0;*!*/
+/*    height: 4vw;*/
+/*    width: 4vw;*/
+/*    position: relative;*/
+/*}*/
+
+.chatProfilePicture {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(48px + 1vmax);
+    width: calc(48px + 1vmax);
+    border-radius: 50%;
+    margin: 1vmin 1vmin 1vmin 2vmax;
+    /*background-color: ;*/
+    filter: contrast(122%);
+    cursor: pointer;
+}
+
+.initials {
+    filter: contrast(100%);
+    font-weight: 500;
+    /*font-size: calc(1.2em + 1vh);*/
+    font-size: calc(1.1em + 0.9vmax);
+}
+
+.fullname {
+    position: relative;
+    padding: 10px;
+    margin: 0 0 0 1vmin;
+
+    color: #dddddd;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.fullname:hover {
+    text-decoration: underline;
+}
+
+.fullname:hover .phoneNumber {
+    display: block;
+}
+
+@media screen and (max-width: 800px) {
+    .fullname {
+        margin: 0;
+
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .chatProfilePicture {
+        height: 48px;
+        width: 48px;
+    }
+
+    .initials {
+        font-size: 24px;
+    }
+
+    .fullname {
+        /*display: none;*/
+    }
+}
