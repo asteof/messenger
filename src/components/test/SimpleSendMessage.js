@@ -73,7 +73,7 @@ const SimpleSendMessage = (props) => {
                 </button>
 
             </form>
-            <div className={style.hi2 +' '+ style.break}><code>{JSON.stringify(response)}</code></div>
+            <div className={style.flex +' '+ style.break}><code>{JSON.stringify(response)}</code></div>
             <div className={style.extraSmall}>{JSON.stringify(newJWT)}</div>
         </div>
     )

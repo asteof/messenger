@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import style from './test.module.css'
-import {setLocalWithExpiry, getLocalWithExpiryTest} from "../Authorization/localStorage";
+import {setLocalWithExpiry, getLocalWithExpiryTest} from "../constants/localStorage";
 
 const LocalStorog = () => {
     const [createItem, setCreateItem] = useState({

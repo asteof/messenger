@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import style from './test.module.css'
 import Timer from "./timer";
 import RandomColor from "../constants/RandomColor";
+import {getToken} from "../constants/getToken";
+import getMessagesFromChat, {getMessages} from "../constants/getMessagesFromChat";
+import axios from "axios";
 
 
 const Other = ({colour, setColour}) => {
@@ -35,13 +38,44 @@ const Other = ({colour, setColour}) => {
         setCount(prevCount => prevCount + 2)
         setColour(RandomColor())
     }
-    // useEffect(()=>{
-    //     // console.log('state colour', colour)
-    // }, [colour])
+
+
+    const bar = (id)=>{
+        return axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+            .then(response => {
+                console.log(response)
+                return response
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const foo = async () => {
+
+
+        // let result = await bar(); // wait until the promise resolves (*)
+        // let result = await resolveAfter2Seconds(1); // wait until the promise resolves (*)
+        let result = await bar(24)
+
+
+        console.log(result); // "done!"
+    }
+
+
+    const suc = async ()=>{
+        const JWT_header = getToken('test')
+
+        // const hui = getMessagesFromChat(JWT_header, 1)
+        const hui = await getMessages(JWT_header, 1)
+            // .then(response =>{
+            // console.log(response)})
+        console.log(hui)
+    }
 
     return (
         <div className={style.wrap}>
-            <div className={style.hi2}>
+            <div className={style.flex}>
                 <div className={style.cont} style={colour}>
                     <p className={style}>X {x}</p>
                     <p className={style}>Y {y}</p>
@@ -60,7 +94,8 @@ const Other = ({colour, setColour}) => {
                             className={style.submitBtn}
                             style={colour}>Count {count}</button>
                 </div>
-
+                <button onClick={foo}>button</button>
+                <button onClick={suc}>button</button>
             </div>
         </div>
     )

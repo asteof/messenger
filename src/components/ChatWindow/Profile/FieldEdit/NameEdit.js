@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import style from '../FieldEdit.module.css'
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import style from './FieldEdit.module.css'
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../../../../Authorization/localStorage";
+import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
+import {getLocalWithExpiry} from "../../../constants/localStorage";
 
 const NameEdit = (props) => {
     const {currentUser, setCurrentUser, setShowNameEdit} = props
@@ -71,23 +71,6 @@ const NameEdit = (props) => {
             console.log('updateUser', error)
         }
     }
-
-
-    const editRequest = (JWT_header, source) => {
-        axios.put(`${SECURED_API_PATH}/user`, name,
-            {
-                headers: {authorization: JWT_header},
-                cancelToken: source.token
-            })
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-                source.cancel()
-            })
-    }
-
 
     // console.log('NameEdit.js current user', currentUser)
     // console.log('names',currentUser.firstname,currentUser.lastname, typeof currentUser.firstname)

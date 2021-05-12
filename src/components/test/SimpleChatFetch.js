@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import style from './test.module.css'
 import {SECURED_API_PATH} from "../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../Authorization/localStorage";
+import {getLocalWithExpiry} from "../constants/localStorage";
 
 const SimpleChatFetch = (props) => {
 
@@ -47,7 +47,7 @@ const SimpleChatFetch = (props) => {
         <div className={style.wrap}>
             <div className={style.hint}>Click "Get chats" to fetch chats from temporary JWT</div>
             <p>Chats for this user:</p>
-            <div className={style.hi2}>
+            <div className={style.flex}>
             {chatsMap}
             </div>
             <button onClick={fetch} className={style.submitBtn}>Get chats</button>

@@ -18,6 +18,11 @@
       "sizes": "512x512"
     }
   ],
+  "permissions": [
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

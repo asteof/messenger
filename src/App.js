@@ -9,7 +9,7 @@ import LoginForm from "./components/Authorization/LoginForm/LoginForm";
 import Test from "./components/test/test"
 // import RegF from "./components/Authorization/RegistrationForm/RegFTest";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
-import {getLocalWithExpiry} from "./components/Authorization/localStorage";
+import {getLocalWithExpiry} from "./components/constants/localStorage";
 // import axios from "axios";
 // import {SECURED_API_PATH} from "./components/constants/API_PATH_DEFAULT";
 

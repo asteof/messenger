@@ -3,7 +3,7 @@ import style from './FieldEdit.module.css'
 import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import axios from "axios";
 import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../../../Authorization/localStorage";
+import {getLocalWithExpiry} from "../../../constants/localStorage";
 
 const FieldEdit = (props) => {
     const {currentUser, setCurrentUser, setShowEdit, options: {editProperty, displayProperty}} = props

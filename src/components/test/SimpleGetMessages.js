@@ -51,7 +51,7 @@ const SimpleGetMessages = (props) => {
             <input type="number" onChange={e=>setId(e.target.value)} className={style.inputField}/>
             <div className={style.hint}>Click "Get messages" to fetch chats from specified chat using temporary JWT</div>
             <p>Messages for chat {id}:</p>
-            <div className={style.hi2}>
+            <div className={style.flex}>
                 {messageMap}
             </div>
             <button onClick={fetch} className={style.submitBtn}>Get messages</button>

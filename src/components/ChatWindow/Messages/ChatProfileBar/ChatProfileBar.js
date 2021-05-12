@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import style from './ChatProfileBar.module.css'
-import RandomColor from "../../../constants/RandomColor";
 import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import ChatUserProfile from "./ChatUserProfile/ChatUserProfile";
 
@@ -9,10 +8,9 @@ const ChatProfileBar = (props) => {
 
     const [showUserProfile, setShowUserProfile] = useState(false)
 
-
-    console.log('ChatProfileBar.js secondChatUser', secondChatUser)
-    // useEffect(() => {
-    // }, [])
+    // console.log('ChatProfileBar.js secondChatUser', secondChatUser)
+    // // useEffect(() => {
+    // // }, [])
 
     return (
 
@@ -32,9 +30,11 @@ const ChatProfileBar = (props) => {
                 {/*</div>*/}
             </div>
 
-            <div className={style.fullname}
-                 onClick={() => toggleBoolean(setShowUserProfile)}>
-                {secondChatUser.firstname} {secondChatUser.lastname}
+            <div className={style.nameWrap}>
+                <span className={style.name}
+                    onClick={() => toggleBoolean(setShowUserProfile)}>
+                    {secondChatUser.firstname} {secondChatUser.lastname}
+                </span>
             </div>
 
             {showUserProfile &&
@@ -46,4 +46,4 @@ const ChatProfileBar = (props) => {
     )
 }
 
-export default ChatProfileBar
+export default React.memo(ChatProfileBar)

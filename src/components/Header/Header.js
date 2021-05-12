@@ -11,7 +11,7 @@ const Header = (props) => {
     useEffect(() => {
         if (isLoggedIn) {
             setLogoutLinkText('Logout')
-        }else {
+        } else {
             setLogoutLinkText('Login')
         }
     }, [isLoggedIn])
@@ -40,8 +40,14 @@ const Header = (props) => {
             </nav>
 
             <div className={style.rightBar}>
-                {currentUser.username || ''}
-                <NavLink to='/login' className={`${style.headerLink} ${style.logoutLink}`} onClick={logout}>{logoutLinkText}</NavLink>
+                <div className={style.username}>
+                    {currentUser.username || ''}
+                </div>
+                <NavLink to='/login'
+                         className={`${style.logoutLink} ${style.headerLink}`}
+                         onClick={logout}>
+                    {logoutLinkText}
+                </NavLink>
             </div>
             {/*</div>*/}
 

@@ -4,12 +4,16 @@ import Messages from "./Messages/Messages";
 import Chats from "./Chats/Chats";
 import axios from "axios";
 import {SECURED_API_PATH} from "../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../Authorization/localStorage";
+import {getLocalWithExpiry} from "../constants/localStorage";
 import {Redirect} from "react-router-dom";
 import ProfileBar from "./ProfileBar/ProfileBar";
 import DefaultMessageWindow from "./Messages/DefaultMessageWindow/DefaultMessageWindow";
+import {getToken} from "../constants/getToken";
+import getMessagesFromChat from "../constants/getMessagesFromChat";
 
 function ChatWindow(props) {
+    const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
+
     const [chatsData, setChatsData] = useState([])
     const [messages, setMessages] = useState([])
     const [lastMessages, setLastMessages] = useState([])
@@ -26,38 +30,35 @@ function ChatWindow(props) {
         chats: false,
         lastMessages: false
     })
+    const [messageIsSent, setMessageIsSent] = useState({
+        time: 0,
+        isSent: true
+    })
+    const [messageChanged, setMessageChanged] = useState({
+        id: 0,
+        time: 0,
+        edited: false,
+        deleted: false
+    })
 
-    const {message, errorMessage, serverResponse} = sessionResponse
-    const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
+    // const {message, errorMessage, serverResponse} = sessionResponse
+    const cancelToken = axios.CancelToken
+    const source = cancelToken.source()
 
 
+    //initial render, data fetch
     useEffect(() => {
-        const cancelToken = axios.CancelToken
-        const source = cancelToken.source()
 
-        const JWT = getLocalWithExpiry('token')
-        let JWT_header
-        if (JWT !== null && JWT !== "") {
-            JWT_header = `Bearer ${JWT}`
-            console.log(`ChatWindow.js ${JWT_header}`)
+        const JWT_header = getToken('ChatWindow')
+
+        if (isLoggedIn === true && JWT_header !== null) {
+
+            getUser(JWT_header)
+            getChat(JWT_header)
+            getLastMessages(JWT_header)
         } else {
-            // setTokenExpired(true)
-            if (JWT === '') {
-                console.log(JWT)
-                localStorage.removeItem('token')
-            }
             setIsLoggedIn(false)
         }
-
-        if (isLoggedIn === true && JWT_header !== "") {
-
-            getUser(JWT_header, source)
-
-            getChat(JWT_header, source)
-
-            getLastMessages(JWT_header, source)
-        }//if condition
-
 
         return () => {
             source.cancel("axios fetch cancelled")
@@ -70,8 +71,87 @@ function ChatWindow(props) {
 
     }, [])//useEffect
 
+    // rerender component to display message preview, based on sent messages
+    useEffect(() => {
+        const JWT_header = getToken('ChatWindow')
+        if (isLoggedIn === true && JWT_header !== null) {
+            getLastMessages(JWT_header)
+        }
 
-    const getUser = (JWT_header, source) => {
+        return () => {
+            source.cancel("axios fetch cancelled")
+            setSessionResponse(prevSessionResponse => ({
+                ...prevSessionResponse,
+                message: `axios fetch cancelled`,
+                requestCancelled: true
+            }))
+        }
+    }, [messageIsSent])
+
+    // rerender component to display messages after change
+    // and message preview, based on edited or deleted messages
+    useEffect(async () => {
+        const JWT_header = getToken('ChatWindow')
+        //updates lastMessages array if the changed message is last
+        const lastMessageChanged =
+            lastMessages.find(message => message.id === messageChanged.id)
+
+        if (lastMessageChanged) {
+            if (isLoggedIn === true && JWT_header !== null) {
+                getLastMessages(JWT_header)
+            }
+        }
+
+        if (JWT_header!==null) {
+            try {
+                const messages = await getMessagesFromChat(JWT_header, selectedChat)
+                console.log('her', messages)
+                if (messages !== null) {
+                    setMessages(messages)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+
+        return () => {
+            source.cancel("axios fetch cancelled")
+            setSessionResponse(prevSessionResponse => ({
+                ...prevSessionResponse,
+                message: `axios fetch cancelled`,
+                requestCancelled: true
+            }))
+        }
+    }, [messageChanged])
+
+//sets new message data when message gets changed
+//     useEffect(async () => {
+//         // const messagess = getMessages(selectedChat)
+//         //
+//         // messagess
+//         //     .then(response => {
+//         //         console.log(response)
+//         //         if (response === null) {
+//         //             setIsLoggedIn(false)
+//         //             localStorage.removeItem('token')
+//         //         } else {
+//         //             console.log('hui', response)
+//         //             setMessages(response)
+//         //         }
+//         //     })
+//         //     .catch(error => {
+//         //         console.log(error)
+//         //     })
+//
+//         console.log('messageChanged', JSON.stringify(messageChanged))
+//         const JWT_header = getToken()
+//
+//         // await setMessagesAfterChange()
+//
+//     }, [messageChanged])
+
+    const getUser = (JWT_header) => {
         axios.get(`${SECURED_API_PATH}/user`, {
             headers: {authorization: JWT_header},
             cancelToken: source.token
@@ -95,7 +175,7 @@ function ChatWindow(props) {
             })
     }
 
-    const getChat = (JWT_header, source) => {
+    const getChat = (JWT_header) => {
         axios.get(`${SECURED_API_PATH}/chat`, {
                 headers: {authorization: JWT_header},
                 cancelToken: source.token
@@ -137,12 +217,14 @@ function ChatWindow(props) {
                             errorMessage: `Cannot continue due to an error.`,
                             serverResponse: error.toString()
                         }))
+                        setIsLoggedIn(false)
+                        localStorage.removeItem('token')
                     }
                 }
             })
     }
 
-    const getLastMessages = (JWT_header, source) => {
+    const getLastMessages = (JWT_header) => {
         axios.get(`${SECURED_API_PATH}/messages/last/`, {
             headers: {authorization: JWT_header},
             cancelToken: source.token
@@ -157,37 +239,46 @@ function ChatWindow(props) {
             })
             .catch(error => {
                 console.log(error, error.response)
+                setIsLoggedIn(false)
+                localStorage.removeItem('token')
             })
     }
+
 
     return (
         isLoggedIn ?
             <div className={style.chatWindow}>
+
                 <div className={style.chatSectionWrap}>
-                            <ProfileBar currentUser={currentUser}
-                                        setCurrentUser={setCurrentUser}/>
+                    <ProfileBar currentUser={currentUser}
+                                setCurrentUser={setCurrentUser}/>
 
-                    {(dataIsFetched.user && dataIsFetched.chats && dataIsFetched.lastMessages)&&
-                            <Chats chatsData={chatsData}
-                                   currentUser={currentUser}
-                                   setSecondChatUser={setSecondChatUser}
-                                   setIsLoggedIn={setIsLoggedIn}
-                                   setMessages={setMessages}
-                                   lastMessages={lastMessages}
-                                   selectedChat={selectedChat}
-                                   setSelectedChat={setSelectedChat}
-                                   profilePictureColors={profilePictureColors}
-                                   setProfilePictureColors={setProfilePictureColors}/>
+                    {(dataIsFetched.user && dataIsFetched.chats && dataIsFetched.lastMessages) &&
+                    <Chats chatsData={chatsData}
+                           currentUser={currentUser}
+                           setSecondChatUser={setSecondChatUser}
+                           setIsLoggedIn={setIsLoggedIn}
+                           setMessages={setMessages}
+                           lastMessages={lastMessages}
+                           selectedChat={selectedChat}
+                           setSelectedChat={setSelectedChat}
+                           profilePictureColors={profilePictureColors}
+                           setProfilePictureColors={setProfilePictureColors}/>
                     }
-
                 </div>
+
                 <div className={style.messageSectionWrap}>
                     {selectedChat !== 0 ?
                         <Messages selectedChat={selectedChat}
                                   currentUser={currentUser}
                                   secondChatUser={secondChatUser}
                                   profilePictureColors={profilePictureColors}
-                                  messages={messages}/>
+                                  messages={messages}
+                                  messageIsSent={messageIsSent}
+                                  setIsLoggedIn={setIsLoggedIn}
+                                  setMessageIsSent={setMessageIsSent}
+                                  messageChanged={messageChanged}
+                                  setMessageChanged={setMessageChanged}/>
                         :
                         <DefaultMessageWindow/>
                     }
@@ -200,13 +291,3 @@ function ChatWindow(props) {
 }
 
 export default ChatWindow;
-
-
-// else if (error.response.status === 500) {
-//     setSessionResponse(prevSessionResponse => ({
-//         ...prevSessionResponse,
-//         message: `Unknown error. Please log in again`
-//     }))
-//     setIsLoggedIn(false)
-//     console.log(sessionResponse)
-// }

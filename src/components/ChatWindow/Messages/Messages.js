@@ -2,88 +2,146 @@ import React, {useEffect, useRef, useState} from 'react';
 import style from './Messages.module.css'
 import Message from "./Message/Message";
 import ChatProfileBar from "./ChatProfileBar/ChatProfileBar";
-
+import axios from "axios";
+import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
+import MessageMenu from "./Message/MessageMenu/MessageMenu";
+import getMessagesFromChat from "../../constants/getMessagesFromChat";
+import {getToken} from "../../constants/getToken";
 
 const Messages = (props) => {
     const {
-        selectedChat, messages,
+        selectedChat, messages, setMessages,
         currentUser, secondChatUser,
-        profilePictureColors
+        messageIsSent, setMessageIsSent,
+        messageChanged, setMessageChanged,
+        profilePictureColors, setIsLoggedIn
     } = props
     const selectedRef = useRef(0)
-    const inputRef = useRef(null)
+    const messageAreaRef = useRef(null)
+    const messagesRef = useRef(null)
+    const [showMessageMenu, setShowMessageMenu] = useState(false)
+    const [selectedMessage, setSelectedMessage] = useState()
 
-    let date = new Date()
     const [newMessage, setNewMessage] = useState({
-        id: 0,
         text: '',
-        senderName: currentUser.username,
-        sentAt: date.getTime()
+        recipientId: secondChatUser.id,
     })
-
+    const [messageMenuData, setMessageMenuData] = useState({})
 
     const messageInput = event => {
-        // console.log('messageInput method called')
         setNewMessage(prevNewMsg => ({
             ...prevNewMsg,
-            text: event.target.value
+            text: event.target.value,
+            recipientId: secondChatUser.id
         }))
     }
 
-    const addMessage = (event) => {
+    const addMessage = event => {
         event.preventDefault()
 
-        let messageAreaElement = document.getElementById('messageArea')
-
         if (newMessage.text !== '') {
-            setNewMessage(prevNewMsg => ({
-                ...prevNewMsg,
-                id: date.getTime(),
-                senderName: currentUser.username,
-                sentAt: date.getTime()
-            }))
-            messages.unshift(newMessage)
+            console.log('newMessage', newMessage)
+            sendMessage()
         }
 
-        messageAreaElement.focus()
-        messageAreaElement.value = ''
-        console.log(newMessage)
-        console.log("Messages.js current user", currentUser)
+        setNewMessage(prevNewMsg => ({
+            ...prevNewMsg,
+            text: ''
+        }))
+        messageAreaRef.current.focus()
+        messageAreaRef.current.value = ''
+        // console.log("Messages.js current user", currentUser)
+    }
+
+    const sendMessage = () => {
+        console.log('newMessage', newMessage)
+
+        const JWT_header = getToken()
+        const cancelToken = axios.CancelToken
+        const source = cancelToken.source()
+        if (JWT_header !== null) {
+            axios.post(
+                `${SECURED_API_PATH}/messages`,
+                {
+                    text: newMessage.text,
+                    recipientId: newMessage.recipientId
+                },
+                {
+                    headers: {authorization: JWT_header},
+                    cancelToken: source.token
+                })
+                .then(response => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        messages.unshift(response.data)
+                        //every time a response from server is received, messageIsSent changes time
+                        //which makes chat component rerender and display new message preview
+                        setMessageIsSent(prevSent => ({
+                            ...prevSent,
+                            time: response.data.sentAt,
+                            isSent: true
+                        }))
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                    setMessageIsSent(prevSent => ({
+                        ...prevSent,
+                        time: Date.now(),
+                        isSent: false
+                    }))
+                })
+        }
+    }
+
+    const sendByEnter = event => {
+        //fires onKeyDown event for message area
+        //sends message if pressed key is enter
+        //if enter key is pressed while holding shift - add new line
+        if ((event.shiftKey === false && event.code === "Enter")
+            || (event.shiftKey === false && event.code === "NumpadEnter")) {
+            addMessage(event)
+        }
+    };
+
+    const scrollToBottom = () => {
+        if (selectedRef.current !== 0) {
+            messagesRef.current.scrollTo({left: 0, top: (messagesRef.current.scrollHeight), behavior: "smooth"})
+            console.log('messagesMap', messagesMap)
+            messageAreaRef.current.focus()
+        }
     }
     // console.log("Messages.js current user", currentUser)
-    console.log("Messages.js secondChatUser", secondChatUser)
-
+    // console.log("Messages.js secondChatUser", secondChatUser)
     // console.log('Messages.js selectedChat', selectedChat)
 
+    //even the selectedRef and selectedChat
     useEffect(() => {
-        console.log(`small uf call
-        selectedChat: ${selectedChat}, selectedRef: ${selectedRef.current}`)
+        console.log(`selectedChat: ${selectedChat},
+         selectedRef: ${selectedRef.current},
+         currentUser:`, currentUser,
+            'secondUser:', secondChatUser)
+
         if (selectedChat !== selectedRef.current) {
             selectedRef.current = selectedChat
         }
     }, [selectedRef.current, selectedChat])
 
+    //scroll to the bottom message when opening chat
     useEffect(() => {
-        console.log('Messages.js selectedChat useEffect', selectedChat)
-        console.log(`big uf call
-        selectedChat: ${selectedChat}, selectedRef: ${selectedRef.current}`)
+        // console.log(`selectedChat: ${selectedChat},
+        //  selectedRef: ${selectedRef.current},
+        //  currentUser:`, currentUser,
+        //     'secondUser:', secondChatUser)
 
-        if (selectedRef.current !== 0) {
-            const messagesElement = document.getElementById('messages')
-            messagesElement.scrollTo({left: 0, top: (messagesElement.scrollHeight), behavior: "smooth"})
-            console.log('messagesMap', messagesMap)
-            inputRef.current.focus()
-        }
+        scrollToBottom()
     }, [selectedRef.current])
 
+    //scroll to the bottom message after new message was sent
     useEffect(() => {
-        if (selectedRef.current !== 0) {
-            const messagesElement = document.getElementById('messages')
-            messagesElement.scrollTo({left: 0, top: (messagesElement.scrollHeight), behavior: "smooth"})
-            console.log('messagesMap', messagesMap)
-            inputRef.current.focus()
-        }
-    }, [newMessage.id])
+        scrollToBottom()
+    }, [messageIsSent])
+
 
     for (let i = 0; i < messages.length - 1; i++) {
         const messageDate_current = new Date(messages[i].sentAt).getDate()
@@ -102,12 +160,18 @@ const Messages = (props) => {
         // console.log(messages)
         return <Message
             key={message.id}
+            messageId={message.id}
             messageText={message.text}
             fromMe={message.fromMe}
             dateChange={message.dateChange}
             recipientName={message.recipientName}
             senderName={message.senderName}
             sentAt={message.sentAt}
+            showMessageMenu={showMessageMenu}
+            setShowMessageMenu={setShowMessageMenu}
+            setMessageMenuData={setMessageMenuData}
+            selectedMessage={selectedMessage}
+            setSelectedMessage={setSelectedMessage}
         />
     }).reverse();
 
@@ -119,10 +183,12 @@ const Messages = (props) => {
                                 selectedChat={selectedChat}/>
             </div>
 
-            <div className={style.messages} id='messages'>
+            <div className={style.messages} ref={messagesRef}>
                 {messagesMap}
             </div>
 
+
+            {/*messageId={messageId} messageText={messageText} fromMe={fromMe}*/}
             <div className={style.messageAreaWrap}>
                 <form onSubmit={addMessage} className={style.messageForm}>
                     <textarea
@@ -134,22 +200,26 @@ const Messages = (props) => {
                         maxLength='800'
                         placeholder='Write a message...'
                         autoFocus
-                        ref={inputRef}
+                        ref={messageAreaRef}
                         onChange={messageInput}
+                        onKeyDown={sendByEnter}
                     >
                     </textarea>
                     <button type='submit' className={style.sendBtn}>Send</button>
                 </form>
             </div>
 
+            {showMessageMenu &&
+            <MessageMenu
+                messageMenuData={messageMenuData}
+                setShowMessageMenu={setShowMessageMenu}
+                setSelectedMessage={setSelectedMessage}
+                secondChatUser={secondChatUser}
+                setMessageChanged={setMessageChanged}/>
+            }
+
         </div>
     )
 }
 
 export default Messages;
-
-
-// if (e.which === 13 && !e.shiftKey)
-// {
-//
-// }

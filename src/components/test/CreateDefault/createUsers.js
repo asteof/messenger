@@ -41,21 +41,21 @@ const create = () => {
         users('Kostya', 'V', 'voko',
             'voko@gmail.com', '180169696969', '123');
 
-        // setTimeout(() => {
+        setTimeout(() => {
             users('kirpich', '', 'kirpich',
             'kirpich@gmail.com', '280269696969', '123')
-        // }, 800);
-        //
-        // setTimeout(() => {
+        }, 800);
+
+        setTimeout(() => {
             users('Maria', 'Larikova', 'masha_lar',
                 'masha@gmail.com', '380369696969', '123')
-        // }, 1200);
-        //
-        // setTimeout(() => {
+        }, 1200);
+
+        setTimeout(() => {
             users('Danylo', 'from Rivne', 'danylo',
                 'danylo@gmail.com', '480469696969', '123')
-        // }, 1600);
-        return Promise.resolve('users created')
+        }, 1600);
+        // return Promise.resolve('users created')
     // })
 }
 

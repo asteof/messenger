@@ -15,15 +15,23 @@ const Fetch = () => {
         setIdFromClick(id)
     }
 
-    useEffect(() => {
+    useEffect(async () => {
         console.log('test.js -> fetch.js useEffect call')
-        axios.get(`https://jsonplaceholder.typicode.com/posts/${idFromClick}`)
-            .then(response => {
-                setPost(response.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        // axios.get(`https://jsonplaceholder.typicode.com/posts/${idFromClick}`)
+        //     .then(response => {
+        //         setPost(response.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
+        try {
+            const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${idFromClick}`)
+            setPost(response.data)
+        } catch (error){
+            console.log(error)
+        }
+
+
     }, [idFromClick])
 
     // console.log(`post\n${JSON.stringify(post)}`)

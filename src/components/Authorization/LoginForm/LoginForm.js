@@ -5,7 +5,7 @@ import generalStyle from '../generalAuth.module.css';
 import {NavLink, useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_PATH} from "../../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry, setLocalWithExpiry} from "../localStorage";
+import {getLocalWithExpiry, setLocalWithExpiry} from "../../constants/localStorage";
 
 function LoginForm(props) {
     const [loginData, setLoginData] = useState({

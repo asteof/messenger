@@ -7,7 +7,7 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    z-index: 5;
+    z-index: 8;
 }
 
 .background {
@@ -15,7 +15,7 @@
     background-color: rgba(24, 24, 24, 0.6);
     width: 100%;
     height: 100%;
-    z-index: 6;
+    z-index: 8;
 }
 
 .profile {
@@ -29,7 +29,7 @@
     grid-template-rows: repeat(11, 1fr);
     background-color: #282c34;
     border-radius: 18px;
-    z-index: 8;
+    z-index: 10;
 }
 
 .profilePictureWrap {
@@ -93,7 +93,7 @@
     min-width: inherit;
     align-items: center;
     /*justify-content: center;*/
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .fieldWrap:hover .icon {
@@ -117,6 +117,10 @@
     flex-direction: column;
     width: 100%;
     overflow: hidden;
+}
+
+.field span {
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
@@ -133,7 +137,7 @@
     justify-content: center;
 }
 
-.contact {
+.contactBtn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -142,26 +146,19 @@
     background-color: #1b1e23;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
 }
 
-.contact:hover .contactIcon {
+.contactBtn:hover .contactIcon {
     opacity: 0.9;
 }
 
 .add {
-    color: rgba(119, 208, 71, 0.6);
+    color: rgba(119, 208, 71, 0.7);
 }
 
 .remove {
-    color: rgba(208, 71, 71, 0.6);
-}
-
-.add:hover {
-    color: #77d047;
-}
-
-.remove:hover {
-    color: #d04747;
+    color: rgba(208, 71, 71, 0.7);
 }
 
 .contact:active{
@@ -195,9 +192,6 @@
     cursor: pointer;
 }
 
-.closeIcon:hover {
-    opacity: 0.9;
-}
 
 @media screen and (max-width: 800px) {
     .profile {
@@ -228,5 +222,19 @@
 @media screen and (min-width: 320px) {
     .field {
         /*font-size: calc(1em + 8 * ((100vw - 320px) / 960));*/
+    }
+}
+
+@media (hover: hover) {
+    .add:hover {
+        color: #77d047;
+    }
+
+    .remove:hover {
+        color: #d04747;
+    }
+
+    .closeIcon:hover {
+        opacity: 0.9;
     }
 }

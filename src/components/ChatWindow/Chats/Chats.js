@@ -28,7 +28,7 @@ function Chats(props) {
 
             const lastMessage = lastMessages.find(message => message.chatId === chat.chatId);
 
-            console.log(lastMessage)
+            // console.log(lastMessage)
             return (
                 <Chat key={chat.chatId}
 
@@ -47,6 +47,13 @@ function Chats(props) {
         }
     )
 
+    // let sortedChats = chats.sort((a, b)=>{
+    //     const timeA = a.updatedDate;
+    //     const timeB = b.updatedDate;
+    //     console.log(`a.updatedDate ${timeA}`)
+    //     console.log(`b.updatedDate ${timeB}`)
+    // })
+    console.log(chats)
     return (
         <div className={style.chats}>
             {chats}

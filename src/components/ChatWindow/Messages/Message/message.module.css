@@ -1,18 +1,21 @@
 .messageWrap {
     display: flex;
     position: relative;
-    margin: 12px 0;
-    z-index: 3;
+    padding: 12px 0;
+    border-radius: 18px;
+    z-index: 1;
 }
 
 .message {
     padding: 0.44em 1em 2px 1em;
+    margin: 0 0.42vmin;
     /*padding: 10px 20px;*/
     border-radius: 36px;
     background-color: #60587f;
     width: fit-content;
     max-width: 50%;
     white-space: pre-wrap;
+    overflow-wrap: break-word;
 }
 
 .message:after {
@@ -20,7 +23,7 @@
     position: absolute;
     width: 0;
     height: 0;
-    top: 2.488em;
+    top: 3.2em;
     left: 10px;
     transform: rotate(25deg);
     border-top: 0.8em solid #60587f;
@@ -28,6 +31,10 @@
 
     /*box-shadow: 2px 2px 0px 0px #2b2834;*/
     z-index: -1;
+}
+
+.message:hover .optionIcon {
+    opacity: 0.3;
 }
 
 .messageSentAtWrap {
@@ -43,19 +50,37 @@
     -webkit-user-select: none;
 }
 
+.optionIconWrap {
+    display: flex;
+    align-items: center;
+}
+
+.optionIcon {
+    opacity: 0;
+    position: relative;
+    height: 0.82em;
+    padding: 0 0.42vmin;
+    transition: opacity 0.42s;
+}
+
+.optionIconWrap:hover .optionIcon {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 .messageSentAt {
-    padding: 0 0.2em;
+    padding: 0.01em 0.2em;
 }
 
 .messageSentAt:hover + .messageExactSentAt {
     display: flex;
 
     animation-name: showTime;
-    animation-duration: 2.8s;
+    animation-duration: 2.3s;
     animation-fill-mode: forwards;
 
     -webkit-animation-name: showTime;
-    -webkit-animation-duration: 2.8s;
+    -webkit-animation-duration: 2.3s;
     -webkit-animation-fill-mode: forwards;
 }
 
@@ -64,11 +89,13 @@
     opacity: 0;
     position: absolute;
     bottom: -2em;
-
+    left: 0;
+    right: unset;
     /*display: flex;*/
     justify-content: center;
     align-items: center;
     height: fit-content;
+    width: fit-content;
     padding: 8px;
     font-size: 0.88em;
     color: #dedede;
@@ -92,6 +119,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0.4em 0 ;
 }
 
 .dateChange {
@@ -116,6 +144,7 @@
     z-index: -1;
 }
 
+
 /*-----------------
 fromMe styles
 -----------------*/
@@ -135,7 +164,7 @@ fromMe styles
     position: absolute;
     width: 0;
     height: 0;
-    top: 2.488em;
+    top: 3.2em;
     left: unset;
     right: 10px;
     transform: rotate(335deg);
@@ -150,6 +179,19 @@ fromMe styles
 
 .fromMe .messageSentAtWrap {
     color: #8d79bf;
+}
+/*---------------
+selected
+---------------*/
+.selected {
+    /*color: #ff9e51;*/
+    background-color: rgba(255, 158, 81, 0.09);
+    filter: sepia(100%) saturate(120%);
+}
+
+.fromMe .messageExactSentAt {
+    left: unset;
+    right: 0;
 }
 
 /*-----------------

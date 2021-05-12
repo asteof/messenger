@@ -11,7 +11,7 @@
 /*    display: flex;*/
 /*    justify-content: center;*/
 /*    align-items: center;*/
-/*    !*padding: 1vmin 0;*!*/
+/*    padding: 1vmin 0;*/
 /*    height: 4vw;*/
 /*    width: 4vw;*/
 /*    position: relative;*/
@@ -39,8 +39,8 @@
 
 .nameWrap {
     position: relative;
-    padding: 10px;
-    width: calc(100% - (48px + 1vmax));
+    padding: 1vmin;
+    width: calc(88% - (48px + 1vmax - 1vmin));
     /*margin: 0 0 0 1vmin;*/
     /*font-size: calc(0.8em + 1vmin);*/
     /*font-size: calc(0.4em + 0.6vw + 0.8vh);*/
