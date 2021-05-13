@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './chat.module.css'
-// import * as SockJS from 'sockjs-client'
-// import * as Stomp from '@stomp/stompjs'
-import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
+import * as SockJS from 'sockjs-client'
+import * as Stomp from '@stomp/stompjs'
+import {API_PATH} from "../../../constants/API_PATH_DEFAULT";
 // import axios from "axios";
 import getFormattedTime from "../../../constants/getFormattedTime";
 // import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
@@ -46,12 +46,12 @@ const Chat = (props) => {
 
 
         // let socket = new WebSocket()
-        // let socket = new SockJS(`${API_PATH}/ws`)
+        // socket = new SockJS(`${API_PATH}/ws`)
         // let stompClient = Stomp.Stomp.over(socket)
         //
-        // // stompClient.connect({}, function (frame) {
-        // //     stompClient.setConnected(true);
-        // // });
+        // stompClient.connect({}, function (frame) {
+        //     stompClient.setConnected(true);
+        // });
         //
         // stompClient.subscribe('/topic/messages/user/1', function (msg) {
         //     console.log(msg);

@@ -60,7 +60,10 @@ const CreateDefaultUsers = () => {
             })
             .catch(err => {
                 console.log('loginUser.js', err)
-                source.cancel('canceled after error')
+                setJWT(prevJWT => ({
+                    ...prevJWT,
+                    [`is${username}J`]: '-'
+                }))
             })
 
     }
@@ -87,7 +90,13 @@ const CreateDefaultUsers = () => {
                     [`is${username}U`]: '+'
                 }))
             })
-            .catch(error => console.log('getUser.js', error))
+            .catch(error => {
+                console.log('getUser.js', error)
+                setUser(prevUser => ({
+                    ...prevUser,
+                    [`is${username}U`]: '-'
+                }))
+            })
     }
 
     const get4 = () => {
@@ -117,7 +126,10 @@ const CreateDefaultUsers = () => {
                 console.log('sendMessage.js', response.data)
                 // return response.data
             })
-            .catch(error => console.log('sendMessage.js', error, error.response))
+            .catch(error => {
+                console.log('sendMessage.js', error, error.response)
+            })
+
     }
 
     const sendMessagesVoko = (JWT1, voko, kirpich, masha_lar, danylo) => {
@@ -125,7 +137,7 @@ const CreateDefaultUsers = () => {
         message(JWT1, voko, masha_lar)
         message(JWT1, voko, danylo)
         // return Promise.resolve('sent')
-        setSent(pS =>({
+        setSent(pS => ({
             ...pS,
             isvokoS: '+'
         }))
@@ -136,7 +148,7 @@ const CreateDefaultUsers = () => {
         message(JWT2, kirpich, masha_lar)
         message(JWT2, kirpich, danylo)
         // return Promise.resolve('sent')
-        setSent(pS =>({
+        setSent(pS => ({
             ...pS,
             iskirpichS: '+'
         }))
@@ -147,7 +159,7 @@ const CreateDefaultUsers = () => {
         message(JWT3, masha_lar, voko)
         message(JWT3, masha_lar, danylo)
         // return Promise.resolve('sent')
-        setSent(pS =>({
+        setSent(pS => ({
             ...pS,
             ismasha_larS: '+'
         }))
@@ -158,7 +170,7 @@ const CreateDefaultUsers = () => {
         message(JWT4, danylo, masha_lar)
         message(JWT4, danylo, kirpich)
         // return Promise.resolve('sent')
-        setSent(pS =>({
+        setSent(pS => ({
             ...pS,
             isdanyloS: '+'
         }))

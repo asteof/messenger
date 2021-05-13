@@ -9,7 +9,7 @@ const getFormattedTime = (milliseconds) => {
     const optionsGeneral = {
         hour: 'numeric',
         minute: 'numeric',
-        hour12: false
+        hourCycle: 'h23'
     }
     const optionsExact = {
         year: 'numeric',
@@ -19,7 +19,7 @@ const getFormattedTime = (milliseconds) => {
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric',
-        hour12: false
+        hourCycle: 'h23'
     }
 
     const messageSentAt = Intl.DateTimeFormat('default', optionsGeneral).format(date)

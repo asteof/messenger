@@ -54,7 +54,7 @@ function ChatWindow(props) {
         if (isLoggedIn === true && JWT_header !== null) {
 
             getUser(JWT_header)
-            getChat(JWT_header)
+            getChats(JWT_header)
             getLastMessages(JWT_header)
         } else {
             setIsLoggedIn(false)
@@ -75,6 +75,7 @@ function ChatWindow(props) {
     useEffect(() => {
         const JWT_header = getToken('ChatWindow')
         if (isLoggedIn === true && JWT_header !== null) {
+            getChats(JWT_header)
             getLastMessages(JWT_header)
         }
 
@@ -98,6 +99,7 @@ function ChatWindow(props) {
 
         if (lastMessageChanged) {
             if (isLoggedIn === true && JWT_header !== null) {
+                getChats(JWT_header)
                 getLastMessages(JWT_header)
             }
         }
@@ -112,6 +114,8 @@ function ChatWindow(props) {
             } catch (error) {
                 console.log(error)
             }
+
+
         }
 
 
@@ -124,32 +128,6 @@ function ChatWindow(props) {
             }))
         }
     }, [messageChanged])
-
-//sets new message data when message gets changed
-//     useEffect(async () => {
-//         // const messagess = getMessages(selectedChat)
-//         //
-//         // messagess
-//         //     .then(response => {
-//         //         console.log(response)
-//         //         if (response === null) {
-//         //             setIsLoggedIn(false)
-//         //             localStorage.removeItem('token')
-//         //         } else {
-//         //             console.log('hui', response)
-//         //             setMessages(response)
-//         //         }
-//         //     })
-//         //     .catch(error => {
-//         //         console.log(error)
-//         //     })
-//
-//         console.log('messageChanged', JSON.stringify(messageChanged))
-//         const JWT_header = getToken()
-//
-//         // await setMessagesAfterChange()
-//
-//     }, [messageChanged])
 
     const getUser = (JWT_header) => {
         axios.get(`${SECURED_API_PATH}/user`, {
@@ -175,7 +153,7 @@ function ChatWindow(props) {
             })
     }
 
-    const getChat = (JWT_header) => {
+    const getChats = (JWT_header) => {
         axios.get(`${SECURED_API_PATH}/chat`, {
                 headers: {authorization: JWT_header},
                 cancelToken: source.token

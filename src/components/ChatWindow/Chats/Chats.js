@@ -21,7 +21,13 @@ function Chats(props) {
     // console.log('Chats.js current user', currentUser)
 
 
-    let chats = chatsData.map(chat => {
+    let chats = chatsData
+        .sort((a, b) => {
+        const timeA = a.modifyDate;
+        const timeB = b.modifyDate;
+        return timeB - timeA
+    })
+        .map(chat => {
             //get second user of chat to display his name
             //id of that user != id of current user
             const secondUser = chat.chatUsers.find(user => user.id !== currentUser.id);
