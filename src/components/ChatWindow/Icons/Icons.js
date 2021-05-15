@@ -44,29 +44,16 @@ function Icons(props) {
     //     )
     // // console.log(chats)
 
-    const searchUser = event =>{
-        event.preventDefault()
-
-    }
+    // const searchUser = event =>{
+    //     event.preventDefault()
+    //
+    // }
 
     return (
-        <div className={style.searchBarWrap}>
-            <form onSubmit={searchUser}>
-                <div className={style.searchBar}>
-                    <input type="text"
-                           className={style.searchField}
-                           value={username}
-                           onChange={e => setUsername(e.target.value)}
-                           placeholder='Find users by username'/>
-                    <span className={style.warning}>At least 3 symbols</span>
-                    <span className={style.validationFail}>
-                        Only letters, numbers and underscores are accepted
-                    </span>
-                    <button>
-                        <img src="" alt="Search" className={style.searchIcon}/>
-                    </button>
-                </div>
-            </form>
+        <div className={style.icons}>
+               <div>
+                   <img src="" alt=""/>
+               </div>
         </div>
     )
 }

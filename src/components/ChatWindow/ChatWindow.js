@@ -10,7 +10,7 @@ import DefaultMessageWindow from "./Messages/DefaultMessageWindow/DefaultMessage
 import {getBearerToken} from "../constants/getBearerToken";
 import getMessagesFromChat from "../constants/getMessagesFromChat";
 import {webSocketInstance} from "../constants/webSocketInstance";
-import Icons from "./SearchBar/Icons";
+import Icons from "./Icons/Icons";
 
 function ChatWindow(props) {
     const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
