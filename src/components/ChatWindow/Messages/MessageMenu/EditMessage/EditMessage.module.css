@@ -2,8 +2,8 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 30vw;
-    min-width: 250px;
+    width: 28vw;
+    min-width: 280px;
     color: #dddddd;
     padding: 2vmin 0;
     top: 50%;
@@ -53,6 +53,8 @@
     border-image: radial-gradient(#ff9e51 69%, rgba(29, 35, 42, 0) 96%) 1;
     background-origin: border-box;
     background-clip: content-box, border-box;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .confirmation {
@@ -74,3 +76,20 @@
     cursor: pointer;
 }
 
+/*-----------------
+scrollbars
+------------------*/
+.area::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 18px;
+}
+
+.area::-webkit-scrollbar-track {
+    background: unset;
+}
+
+.area::-webkit-scrollbar-thumb {
+    background-color: #3e446a;
+    border-radius: 18px;
+    height: 5px;
+}

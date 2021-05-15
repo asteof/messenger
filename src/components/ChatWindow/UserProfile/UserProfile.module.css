@@ -21,9 +21,8 @@
 .profile {
     position: relative;
     height: 84vh;
-    width: 28vw;
     min-width: 300px;
-    /*max-width: 650px;*/
+    min-height: 250px;
     display: grid;
     /*grid-template-columns: ;*/
     grid-template-rows: repeat(11, 1fr);
@@ -82,10 +81,6 @@
 .email {
     grid-row: 5/7;
 }
-
-/*.phone {*/
-/*    grid-row: 7/9;*/
-/*}*/
 
 .fieldWrap {
     display: flex;
@@ -193,13 +188,38 @@
 }
 
 
+@media screen and (max-width: 1500px) {
+    .profile {
+        /*width: 40vw;*/
+        min-width: 340px;
+        /*height: 56vh;*/
+    }
+    .field {
+        font-size: calc(10px + 0.6vmin + 0.3vmax + 0.1em);
+    }
+}
+
 @media screen and (max-width: 800px) {
     .profile {
         /*width: 40vw;*/
+        min-width: 300px;
+        height: 64vh;
     }
 
     .profileData {
         grid-template-rows: repeat(8, 1fr);
+    }
+
+    .fieldWrap {
+        padding: 0.2em 0;
+    }
+
+    .field {
+        font-size: calc(11px + 0.8vmin + 0.4vmax);
+    }
+
+    .icon {
+        width: 28px;
     }
 
     .name {
@@ -214,8 +234,12 @@
         grid-row: 3/4;
     }
 
+    .phone {
+        grid-row: 4/5;
+    }
+
     .contactWrap {
-        grid-row: 6/9;
+        grid-row: 6/8;
     }
 }
 
@@ -236,5 +260,13 @@
 
     .closeIcon:hover {
         opacity: 0.9;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-width: 800px) {
+    .profile {
+        /*font-size: calc(10px + 0.8vmin + 0.4vmax);*/
+        min-width: 300px;
+        height: 80vh;
     }
 }

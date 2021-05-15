@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './MessageMenu.module.css'
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import DeleteMessage from "./DeleteMessage/DeleteMessage";
 import EditMessage from "./EditMessage/EditMessage";
 
 const MessageMenu = (props) => {
     const {
-        messageMenuData, setShowMessageMenu,
+        messageMenuData, setShowMessageMenu,setMessagesPage,
         setSelectedMessage, secondChatUser, setMessageChanged
     } = props
 
@@ -68,6 +68,7 @@ const MessageMenu = (props) => {
 
     useEffect(() => {
         messageMenuRef.current.focus()
+        setMessagesPage(1)
     }, [])
 
     return (

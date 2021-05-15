@@ -1,24 +1,24 @@
 import React, {useEffect, useRef, useState} from 'react';
-import style from './ChatUserProfile.module.css'
-import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
+import style from './UserProfile.module.css'
+import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
 import axios from "axios";
 // import {getLocalWithExpiry} from "../../Authorization/localStorage";
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
-import {getLocalWithExpiry} from "../../../../constants/localStorage";
+import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
+import {getLocalWithExpiry} from "../../constants/localStorage";
 
-import user from '../../../../../media/icons/user.svg'
-import email from '../../../../../media/icons/email.svg'
-import username from '../../../../../media/icons/username.svg'
-import addContactIcon from '../../../../../media/icons/add-contact.svg'
-import removeContactIcon from '../../../../../media/icons/remove-contact.svg'
+import user from '../../../media/icons/user.svg'
+import email from '../../../media/icons/email.svg'
+import username from '../../../media/icons/username.svg'
+import addContactIcon from '../../../media/icons/add-contact.svg'
+import removeContactIcon from '../../../media/icons/remove-contact.svg'
 
-const ChatUserProfile = (props) => {
+const UserProfile = (props) => {
     const {secondUser, setShowUserProfile, color} = props
     const userProfileRef = useRef(null)
     const [isContact, setIsContact] = useState(false)
 
     useEffect(() => {
-        console.log('ChatUserProfile.js secondUser', secondUser)
+        console.log('UserProfile.js secondUser', secondUser)
         isUserContact()
         userProfileRef.current.focus()
     }, [])
@@ -199,4 +199,4 @@ const ChatUserProfile = (props) => {
     )
 }
 
-export default ChatUserProfile
+export default UserProfile

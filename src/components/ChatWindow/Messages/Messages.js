@@ -4,17 +4,19 @@ import Message from "./Message/Message";
 import ChatProfileBar from "./ChatProfileBar/ChatProfileBar";
 import axios from "axios";
 import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
-import MessageMenu from "./Message/MessageMenu/MessageMenu";
-import getMessagesFromChat from "../../constants/getMessagesFromChat";
-import {getToken} from "../../constants/getToken";
+import MessageMenu from "./MessageMenu/MessageMenu";
+import {getBearerToken} from "../../constants/getBearerToken";
+import getMessagesFromChat, {getMessages} from "../../constants/getMessagesFromChat";
+import loadMessage from '../../../media/icons/load-message.svg'
 
 const Messages = (props) => {
     const {
-        selectedChat, messages, setMessages,
+        selectedChat, messages,
         currentUser, secondChatUser,
         messageIsSent, setMessageIsSent,
-        messageChanged, setMessageChanged,
-        profilePictureColors, setIsLoggedIn
+        messagesPage, setMessagesPage,
+        setMessageChanged, receivedMessage,
+        profilePictureColors
     } = props
     const selectedRef = useRef(0)
     const messageAreaRef = useRef(null)
@@ -23,16 +25,14 @@ const Messages = (props) => {
     const [selectedMessage, setSelectedMessage] = useState()
 
     const [newMessage, setNewMessage] = useState({
-        text: '',
-        recipientId: secondChatUser.id,
+        text: ''
     })
     const [messageMenuData, setMessageMenuData] = useState({})
 
     const messageInput = event => {
         setNewMessage(prevNewMsg => ({
             ...prevNewMsg,
-            text: event.target.value,
-            recipientId: secondChatUser.id
+            text: event.target.value
         }))
     }
 
@@ -56,7 +56,7 @@ const Messages = (props) => {
     const sendMessage = () => {
         console.log('newMessage', newMessage)
 
-        const JWT_header = getToken()
+        const JWT_header = getBearerToken()
         const cancelToken = axios.CancelToken
         const source = cancelToken.source()
         if (JWT_header !== null) {
@@ -64,7 +64,7 @@ const Messages = (props) => {
                 `${SECURED_API_PATH}/messages`,
                 {
                     text: newMessage.text,
-                    recipientId: newMessage.recipientId
+                    recipientId: secondChatUser.id
                 },
                 {
                     headers: {authorization: JWT_header},
@@ -78,6 +78,7 @@ const Messages = (props) => {
                         //which makes chat component rerender and display new message preview
                         setMessageIsSent(prevSent => ({
                             ...prevSent,
+                            id: response.data.id,
                             time: response.data.sentAt,
                             isSent: true
                         }))
@@ -104,11 +105,17 @@ const Messages = (props) => {
         }
     };
 
-    const scrollToBottom = () => {
+    const scrollToBottom = (str) => {
         if (selectedRef.current !== 0) {
             messagesRef.current.scrollTo({left: 0, top: (messagesRef.current.scrollHeight), behavior: "smooth"})
-            console.log('messagesMap', messagesMap)
+            console.log(`messagesMap ${str}`, messagesMap)
             messageAreaRef.current.focus()
+        }
+    }
+    const scrollToTop = () => {
+        if (selectedRef.current !== 0) {
+            messagesRef.current.scrollTo(0, -messagesRef.current.scrollHeight)
+            console.log(`messages load more`, messages)
         }
     }
     // console.log("Messages.js current user", currentUser)
@@ -134,20 +141,50 @@ const Messages = (props) => {
         //  currentUser:`, currentUser,
         //     'secondUser:', secondChatUser)
 
-        scrollToBottom()
+        scrollToBottom('chat opened')
     }, [selectedRef.current])
 
-    //scroll to the bottom message after new message was sent
+    // scroll to the bottom message after new message was sent
     useEffect(() => {
-        scrollToBottom()
+        if (messageIsSent.id !== 0) {
+            scrollToBottom('message sent')
+        }
     }, [messageIsSent])
 
+    useEffect(() => {
+        if (receivedMessage.id !== 0 && selectedChat === receivedMessage.chatId) {
+            messages.unshift(receivedMessage)
+            scrollToBottom('message received')
+        }
+    }, [receivedMessage])
+
+    useEffect(() => {
+        scrollToTop()
+    }, [messagesPage])
+
+    const loadMore = async () => {
+        const JWT_header = getBearerToken()
+        if (JWT_header !== null) {
+            try {
+                const newMessagesPage = await getMessagesFromChat(JWT_header, selectedChat, messagesPage, 'messages')
+                if (newMessagesPage !== null) {
+                    newMessagesPage.forEach(newMsg => messages.push(newMsg))
+                    setMessagesPage(prevPage => prevPage + 1)
+                }
+                console.log('Chat.js newMessagesPage', newMessagesPage)
+                console.log('Chat.js newMessages array', messages)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        // if (newMessagesPage !== null) {
+        //     messages.push(newMessagesPage)
+        // }
+    }
 
     for (let i = 0; i < messages.length - 1; i++) {
         const messageDate_current = new Date(messages[i].sentAt).getDate()
         const messageDate_next = new Date(messages[i + 1].sentAt).getDate()
-        // console.log(messageDate_current)
-        // console.log(messageDate_next)
         if (messageDate_current > messageDate_next) {
             messages[i].dateChange = true
         }
@@ -166,6 +203,7 @@ const Messages = (props) => {
             dateChange={message.dateChange}
             recipientName={message.recipientName}
             senderName={message.senderName}
+            changedAt={message.changedAt}
             sentAt={message.sentAt}
             showMessageMenu={showMessageMenu}
             setShowMessageMenu={setShowMessageMenu}
@@ -184,6 +222,15 @@ const Messages = (props) => {
             </div>
 
             <div className={style.messages} ref={messagesRef}>
+                {(messages.length >= 60 && messages.length % 60 === 0) &&
+                <div className={style.loadMoreWrap}>
+                    <button className={style.loadMoreBtn}
+                            onClick={loadMore}>
+                        <img src={loadMessage}
+                             className={style.loadIcon}
+                             alt="Load messages"/>Load more
+                    </button>
+                </div>}
                 {messagesMap}
             </div>
 
@@ -215,7 +262,8 @@ const Messages = (props) => {
                 setShowMessageMenu={setShowMessageMenu}
                 setSelectedMessage={setSelectedMessage}
                 secondChatUser={secondChatUser}
-                setMessageChanged={setMessageChanged}/>
+                setMessageChanged={setMessageChanged}
+                setMessagesPage={setMessagesPage}/>
             }
 
         </div>

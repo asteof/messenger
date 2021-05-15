@@ -4,7 +4,6 @@ import generalStyle from '../generalAuth.module.css';
 import {NavLink, useHistory} from "react-router-dom";
 import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 import axios from "axios";
-import styl from "../LoginForm/LoginForm.module.css";
 
 // import Sockjs f
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import axios from "axios";
 import style from './test.module.css'
 import {SECURED_API_PATH} from "../constants/API_PATH_DEFAULT";

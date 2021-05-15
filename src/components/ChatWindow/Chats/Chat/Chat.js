@@ -1,30 +1,28 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import style from './chat.module.css'
 import * as SockJS from 'sockjs-client'
-import * as Stomp from '@stomp/stompjs'
+import {Client} from '@stomp/stompjs'
 import {API_PATH} from "../../../constants/API_PATH_DEFAULT";
-// import axios from "axios";
 import getFormattedTime from "../../../constants/getFormattedTime";
-// import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import RandomColor from "../../../constants/RandomColor";
 import getMessagesFromChat from '../../../constants/getMessagesFromChat'
-import {getToken} from "../../../constants/getToken";
+import {getBearerToken} from "../../../constants/getBearerToken";
 
 const Chat = (props) => {
-    const [messageTime, setMessageTime] = useState(null)
-    let chatClass = style.chat;     //ordinary chat style
-    const chatClassActive = `${style.chat} ${style.active}`;    //chat style when selected
-
     const {
-        chatId,
-        secondUser, setSecondChatUser,
+        chatId, setReceivedMessage, receivedMessage,
+        secondUser, setSecondChatUser, currentUser,
         selectedChat, setSelectedChat,
         setIsLoggedIn, setMessages, lastMessage,
         profilePictureColors, setProfilePictureColors
     } = props
 
+    const [messageTime, setMessageTime] = useState(null)
+    let chatClass = style.chat;     //ordinary chat style
+    const chatClassActive = `${style.chat} ${style.active}`;    //chat style when selected
+
     const selectChat = async () => {
-        const JWT_header = getToken()
+        const JWT_header = getBearerToken()
         if (JWT_header !== null) {
             try {
                 const messages = await getMessagesFromChat(JWT_header, chatId)
@@ -34,49 +32,39 @@ const Chat = (props) => {
                     setIsLoggedIn(false)
                     localStorage.removeItem('token')
                 }
-                console.log(messages)
+                console.log('Chat.js messages array', messages)
             } catch (e) {
                 console.log(e)
             }
-
         } else {
             setIsLoggedIn(false)
             localStorage.removeItem('token')
         }
 
-
-        // let socket = new WebSocket()
-        // socket = new SockJS(`${API_PATH}/ws`)
-        // let stompClient = Stomp.Stomp.over(socket)
-        //
-        // stompClient.connect({}, function (frame) {
-        //     stompClient.setConnected(true);
-        // });
-        //
-        // stompClient.subscribe('/topic/messages/user/1', function (msg) {
-        //     console.log(msg);
-        // });
-        //
-        // stompClient.send("/app/chat", {}, JSON.stringify({'text' : "hello kirill", 'senderId' : 1, 'recipientId': 2}));
         setSecondChatUser(secondUser)
         // console.log(secondUser)
         setSelectedChat(chatId)
     }
+
+
 
     useEffect(() => {
         setProfilePictureColors(prevColors => ({
             ...prevColors,
             [chatId]: RandomColor()
         }))
+        // console.log(`Chat.js currentUser ${chatId}`, currentUser)
     }, [])
 
     useEffect(() => {
         const [messageSentAt] = getFormattedTime(lastMessage.sentAt)
-        // console.log(messageSentAt)
         setMessageTime(messageSentAt)
     }, [lastMessage])
 
-    //добавить в чатДТО поле с датой последнего сообщения, чтобы сортировать чаты по дате
+    useEffect(() => {
+        if (receivedMessage.id !== 0)
+            console.log(receivedMessage)
+    }, [receivedMessage])
 
     return (
         //if the selectedDialog matches with dialog id it displays active CSS class
@@ -95,9 +83,14 @@ const Chat = (props) => {
             <div className={style.chatInfo}>
                 <div className={style.chatUsername}>{secondUser.username}</div>
                 <div className={style.lastMessageWrap}>
+                    {lastMessage.senderName === currentUser.username ?
                         <span className={style.lastMessage}>
-                            {lastMessage.text || ''}
+                            <span className={style.lastMessageFromMe}>You:</span> {lastMessage.text}
+                        </span> :
+                        <span className={style.lastMessage}>
+                            {lastMessage.text}
                         </span>
+                    }
                     <span className={style.messageTime}>{messageTime || ''}</span>
                 </div>
             </div>

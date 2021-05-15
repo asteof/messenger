@@ -11,6 +11,8 @@ import ChatFetch from "./ChatFetch";
 import Simpler from "./Simpler";
 import Arrays from "./arrays";
 import RandomColor from "../constants/RandomColor";
+import Socket from "./socket";
+import SendN from "./sendN";
 
 const Test = () => {
     const [colour, setColour] = useState(RandomColor())
@@ -23,12 +25,14 @@ const Test = () => {
         <div className={style.content} style={color}>
             <Other setColour={setColour} colour={colour}/>
             <CreateDefaultUsers/>
+            <SendN/>
             <Fetch/>
             <Post/>
             <LocalStorog/>
             <ChatFetch/>
             <Simpler/>
             <Arrays/>
+            <Socket/>
         </div>
     )
 }

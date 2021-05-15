@@ -34,7 +34,7 @@
 }
 
 .message:hover .optionIcon {
-    opacity: 0.3;
+    opacity: 0.4;
 }
 
 .messageSentAtWrap {
@@ -50,9 +50,16 @@
     -webkit-user-select: none;
 }
 
-.optionIconWrap {
+.iconWrap {
     display: flex;
     align-items: center;
+}
+
+.iconWrap span{
+    color: #ffffff;
+    opacity: 0.4;
+    font-weight: 300;
+    padding: 0 0.28vmin;
 }
 
 .optionIcon {
@@ -63,9 +70,17 @@
     transition: opacity 0.42s;
 }
 
-.optionIconWrap:hover .optionIcon {
+.iconWrap:hover .optionIcon {
     opacity: 0.8;
     cursor: pointer;
+}
+
+.editIcon{
+    opacity: 0.4;
+    position: relative;
+    height: 0.82em;
+    padding: 0 0.42vmin;
+    transition: opacity 0.42s;
 }
 
 .messageSentAt {
@@ -88,12 +103,13 @@
     display: none;
     opacity: 0;
     position: absolute;
-    bottom: -2em;
+    bottom: -2.2em;
     left: 0;
     right: unset;
     /*display: flex;*/
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    /*align-items: center;*/
     height: fit-content;
     width: fit-content;
     padding: 8px;

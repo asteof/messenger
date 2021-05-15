@@ -8,7 +8,6 @@ const message = (newJWT, currentUser, secondUser) => {
         if (typeof currentUser !== "undefined") {
             message = {
                 text: `${currentUser.username} to ${secondUser.username}`,
-                senderId: currentUser.id,
                 recipientId: secondUser.id
             }
         }

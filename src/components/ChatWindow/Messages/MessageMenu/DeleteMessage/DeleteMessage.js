@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './DeleteMessage.module.css'
-import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../../../constants/ChangeDisplayStyle";
-import {getToken} from "../../../../../constants/getToken";
+import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {getBearerToken} from "../../../../constants/getBearerToken";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
 
 const DeleteMessage = (props) => {
     const {
@@ -20,7 +20,7 @@ const DeleteMessage = (props) => {
     const fullname = `${secondChatUser.firstname} ${secondChatUser.lastname}`
 
     const deleteMessage = () => {
-        const JWT_header = getToken('contextMenu')
+        const JWT_header = getBearerToken('contextMenu')
         if (JWT_header !== '') {
             console.log('hui')
             axios.delete(
@@ -63,7 +63,7 @@ const DeleteMessage = (props) => {
              ref={deleteMessageRef}
              onKeyDown={closeOnEscape} tabIndex='0'>
             <div className={style.warning}>
-                Delete message {messageId}?
+                Delete message?
                 Message will be removed both
                 for you and {fullname}
                 <p>

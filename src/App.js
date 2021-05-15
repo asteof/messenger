@@ -25,7 +25,9 @@ function App() {
     */
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    const [currentUser, setCurrentUser] = useState({})
+    const [currentUser, setCurrentUser] = useState({
+        id: 0
+    })
 
     useEffect(() => {
         const JWT = getLocalWithExpiry('token')
@@ -37,12 +39,6 @@ function App() {
         }
     }, [isLoggedIn])
 
-    // useEffect(() => {
-    //     // const JWT = getLocalWithExpiry('token')
-    //     if (isLoggedIn) {
-    //
-    //     }
-    // }, [JWT])
 
     return (
         <Router>

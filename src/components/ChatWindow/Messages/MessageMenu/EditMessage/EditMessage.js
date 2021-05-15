@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './EditMessage.module.css'
-import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../../../constants/ChangeDisplayStyle";
-import {getToken} from "../../../../../constants/getToken";
+import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {getBearerToken} from "../../../../constants/getBearerToken";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
 
 const EditMessage = (props) => {
     const {
@@ -21,7 +21,7 @@ const EditMessage = (props) => {
     }
 
     const editMessage = () => {
-        const JWT_header = getToken('editMessage')
+        const JWT_header = getBearerToken('editMessage')
         if (JWT_header !== '') {
             console.log('hui')
             axios.put(

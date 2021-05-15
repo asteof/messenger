@@ -51,34 +51,37 @@
 
     color: #000000;
 }
-.lastMessage{
+
+.lastMessage {
     width: 68%;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.lastMessageFromMe {
+    color: #ff8f3c;
+    font-weight: 200;
+}
+
 .messageTime {
     padding: 0 1vmin;
     color: #2d3e3a;
 }
 
-/*.active div, .active:hover div {*/
-/*    background-color: #526164;*/
-/*}*/
 .active, .active:hover {
     color: #eeeeee;
     background-color: #526164;
 }
 
-.active .lastMessage {
-    color: #bababa;
-
+.active .lastMessage, .active .lastMessageFromMe {
+    color: #bfbfbf;
 }
 
 .active .messageTime {
     color: #7ec4b2;
 }
-@media screen and (min-width: 1025px) and (max-width: 1345px){
-    .chatInfo{
+
+@media screen and (min-width: 1025px) and (max-width: 1345px) {
+    .chatInfo {
         width: 72%;
     }
 }
@@ -106,7 +109,7 @@
     }
 }
 
-@media screen and (max-width: 860px){
+@media screen and (max-width: 860px) {
     .chatInfo {
         /*width: unset;*/
         /*padding: 0;*/
@@ -114,12 +117,13 @@
 
 }
 
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 1024px) {
     .chatInfo {
         width: 65%;
         padding: 0;
     }
-    .lastMessage{
+
+    .lastMessage {
         width: 100%;
     }
 

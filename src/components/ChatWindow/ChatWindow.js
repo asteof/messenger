@@ -4,12 +4,13 @@ import Messages from "./Messages/Messages";
 import Chats from "./Chats/Chats";
 import axios from "axios";
 import {SECURED_API_PATH} from "../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../constants/localStorage";
 import {Redirect} from "react-router-dom";
 import ProfileBar from "./ProfileBar/ProfileBar";
 import DefaultMessageWindow from "./Messages/DefaultMessageWindow/DefaultMessageWindow";
-import {getToken} from "../constants/getToken";
+import {getBearerToken} from "../constants/getBearerToken";
 import getMessagesFromChat from "../constants/getMessagesFromChat";
+import {webSocketInstance} from "../constants/webSocketInstance";
+import Icons from "./SearchBar/Icons";
 
 function ChatWindow(props) {
     const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
@@ -30,7 +31,13 @@ function ChatWindow(props) {
         chats: false,
         lastMessages: false
     })
+    const [messagesPage, setMessagesPage] = useState(1)
+    const [receivedMessage, setReceivedMessage] = useState({
+        id: 0,
+        time: 0
+    })
     const [messageIsSent, setMessageIsSent] = useState({
+        id: 0,
         time: 0,
         isSent: true
     })
@@ -40,19 +47,14 @@ function ChatWindow(props) {
         edited: false,
         deleted: false
     })
-
     // const {message, errorMessage, serverResponse} = sessionResponse
     const cancelToken = axios.CancelToken
     const source = cancelToken.source()
 
-
     //initial render, data fetch
     useEffect(() => {
-
-        const JWT_header = getToken('ChatWindow')
-
+        const JWT_header = getBearerToken('ChatWindow initial')
         if (isLoggedIn === true && JWT_header !== null) {
-
             getUser(JWT_header)
             getChats(JWT_header)
             getLastMessages(JWT_header)
@@ -67,13 +69,22 @@ function ChatWindow(props) {
                 message: `axios fetch cancelled`,
                 requestCancelled: true
             }))
+            // client.deactivate().then(r => console.log(r));
         }
 
     }, [])//useEffect
 
+    //sets WebSocket connection after successful user setting
+    useEffect(() => {
+        if (currentUser.id !== 0) {
+            webSocketInstance(setReceivedMessage, currentUser.id)
+            // console.log('chatWindow.js currentUser', currentUser)
+        }
+    }, [currentUser.id])
+
     // rerender component to display message preview, based on sent messages
     useEffect(() => {
-        const JWT_header = getToken('ChatWindow')
+        const JWT_header = getBearerToken('ChatWindow message sent')
         if (isLoggedIn === true && JWT_header !== null) {
             getChats(JWT_header)
             getLastMessages(JWT_header)
@@ -89,35 +100,43 @@ function ChatWindow(props) {
         }
     }, [messageIsSent])
 
-    // rerender component to display messages after change
-    // and message preview, based on edited or deleted messages
-    useEffect(async () => {
-        const JWT_header = getToken('ChatWindow')
-        //updates lastMessages array if the changed message is last
-        const lastMessageChanged =
-            lastMessages.find(message => message.id === messageChanged.id)
+    /* rerender component to display chats and message preview,
+     based on edited or deleted messages */
+    useEffect(() => {
+        const fetchData = async () => {
+            const JWT_header = getBearerToken('ChatWindow message changed')
+            //updates lastMessages array if the changed message is last
+            const lastMessageChanged =
+                lastMessages.find(message => message.id === messageChanged.id)
 
-        if (lastMessageChanged) {
-            if (isLoggedIn === true && JWT_header !== null) {
-                getChats(JWT_header)
-                getLastMessages(JWT_header)
-            }
-        }
-
-        if (JWT_header!==null) {
-            try {
-                const messages = await getMessagesFromChat(JWT_header, selectedChat)
-                console.log('her', messages)
-                if (messages !== null) {
-                    setMessages(messages)
+            if (lastMessageChanged) {
+                if (isLoggedIn === true && JWT_header !== null) {
+                    getChats(JWT_header)
+                    getLastMessages(JWT_header)
                 }
-            } catch (error) {
-                console.log(error)
             }
 
-
+            if (JWT_header !== null && messageChanged.id !== 0) {
+                try {
+                    const messages = await getMessagesFromChat(JWT_header, selectedChat)
+                    console.log('her', messages)
+                    if (messages !== null) {
+                        setMessages(messages)
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
         }
+        fetchData()
+    }, [messageChanged])
 
+    //rerender component to display messages after receiving a new message
+    useEffect(() => {
+        const JWT_header = getBearerToken('ChatWindow message sent')
+        if (isLoggedIn === true && JWT_header !== null) {
+            getLastMessages(JWT_header)
+        }
 
         return () => {
             source.cancel("axios fetch cancelled")
@@ -127,7 +146,7 @@ function ChatWindow(props) {
                 requestCancelled: true
             }))
         }
-    }, [messageChanged])
+    }, [receivedMessage])
 
     const getUser = (JWT_header) => {
         axios.get(`${SECURED_API_PATH}/user`, {
@@ -135,7 +154,7 @@ function ChatWindow(props) {
             cancelToken: source.token
         })
             .then(response => {
-                console.log('ChatWindow.js response.data', response.data)
+                // console.log('ChatWindow.js getUser response.data', response.data)
                 setCurrentUser(response.data)
                 setDataIsFetched(prevData => ({
                     ...prevData,
@@ -217,8 +236,8 @@ function ChatWindow(props) {
             })
             .catch(error => {
                 console.log(error, error.response)
-                setIsLoggedIn(false)
-                localStorage.removeItem('token')
+                // setIsLoggedIn(false)
+                // localStorage.removeItem('token')
             })
     }
 
@@ -231,6 +250,8 @@ function ChatWindow(props) {
                     <ProfileBar currentUser={currentUser}
                                 setCurrentUser={setCurrentUser}/>
 
+                    {/*<Icons/>*/}
+
                     {(dataIsFetched.user && dataIsFetched.chats && dataIsFetched.lastMessages) &&
                     <Chats chatsData={chatsData}
                            currentUser={currentUser}
@@ -241,7 +262,9 @@ function ChatWindow(props) {
                            selectedChat={selectedChat}
                            setSelectedChat={setSelectedChat}
                            profilePictureColors={profilePictureColors}
-                           setProfilePictureColors={setProfilePictureColors}/>
+                           setProfilePictureColors={setProfilePictureColors}
+                           receivedMessage={receivedMessage}
+                           setReceivedMessage={setReceivedMessage}/>
                     }
                 </div>
 
@@ -253,9 +276,10 @@ function ChatWindow(props) {
                                   profilePictureColors={profilePictureColors}
                                   messages={messages}
                                   messageIsSent={messageIsSent}
-                                  setIsLoggedIn={setIsLoggedIn}
                                   setMessageIsSent={setMessageIsSent}
-                                  messageChanged={messageChanged}
+                                  messagesPage={messagesPage}
+                                  setMessagesPage={setMessagesPage}
+                                  receivedMessage={receivedMessage}
                                   setMessageChanged={setMessageChanged}/>
                         :
                         <DefaultMessageWindow/>

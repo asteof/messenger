@@ -165,7 +165,9 @@
 .padding {
     padding: 2vw;
 }
-
+.nopadding {
+    padding: 0;
+}
 .extraSmall {
     font-size: 10px;
     overflow-wrap: break-word;

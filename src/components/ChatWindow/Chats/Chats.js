@@ -12,6 +12,7 @@ function Chats(props) {
     const {
         chatsData,
         currentUser,
+        setReceivedMessage,receivedMessage,
         setSecondChatUser,
         setIsLoggedIn,
         setMessages, lastMessages,
@@ -23,43 +24,40 @@ function Chats(props) {
 
     let chats = chatsData
         .sort((a, b) => {
-        const timeA = a.modifyDate;
-        const timeB = b.modifyDate;
-        return timeB - timeA
-    })
+            const timeA = a.modifyDate;
+            const timeB = b.modifyDate;
+            return timeB - timeA
+        })
         .map(chat => {
-            //get second user of chat to display his name
-            //id of that user != id of current user
-            const secondUser = chat.chatUsers.find(user => user.id !== currentUser.id);
+                //get second user of chat to display his name
+                //id of that user != id of current user
+                const secondUser = chat.chatUsers.find(user => user.id !== currentUser.id);
 
-            const lastMessage = lastMessages.find(message => message.chatId === chat.chatId);
+                const lastMessage = lastMessages.find(message => message.chatId === chat.chatId);
 
-            // console.log(lastMessage)
-            return (
-                <Chat key={chat.chatId}
+                // console.log(lastMessage)
+                return (
+                    <Chat key={chat.chatId}
 
-                      secondUser={secondUser}
-                      setSecondChatUser={setSecondChatUser}
-                      chatId={chat.chatId}
-                      selectedChat={selectedChat}
-                      setSelectedChat={setSelectedChat}
-                      setIsLoggedIn={setIsLoggedIn}
-                      setMessages={setMessages}
-                      lastMessage={lastMessage}
-                      profilePictureColors={profilePictureColors}
-                      setProfilePictureColors={setProfilePictureColors}
-                />
-            )
-        }
-    )
+                          secondUser={secondUser}
+                          currentUser={currentUser}
+                          setSecondChatUser={setSecondChatUser}
+                          chatId={chat.chatId}
+                          selectedChat={selectedChat}
+                          setSelectedChat={setSelectedChat}
+                          setIsLoggedIn={setIsLoggedIn}
+                          setMessages={setMessages}
+                          setReceivedMessage={setReceivedMessage}
+                          receivedMessage={receivedMessage}
+                          lastMessage={lastMessage}
+                          profilePictureColors={profilePictureColors}
+                          setProfilePictureColors={setProfilePictureColors}
+                    />
+                )
+            }
+        )
+    // console.log(chats)
 
-    // let sortedChats = chats.sort((a, b)=>{
-    //     const timeA = a.updatedDate;
-    //     const timeB = b.updatedDate;
-    //     console.log(`a.updatedDate ${timeA}`)
-    //     console.log(`b.updatedDate ${timeB}`)
-    // })
-    console.log(chats)
     return (
         <div className={style.chats}>
             {chats}

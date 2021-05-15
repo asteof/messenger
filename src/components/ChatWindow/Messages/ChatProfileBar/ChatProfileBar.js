@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import style from './ChatProfileBar.module.css'
 import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
-import ChatUserProfile from "./ChatUserProfile/ChatUserProfile";
+import UserProfile from "../../UserProfile/UserProfile";
 
 const ChatProfileBar = (props) => {
     const {secondChatUser, selectedChat, profilePictureColors} = props
@@ -38,9 +38,9 @@ const ChatProfileBar = (props) => {
             </div>
 
             {showUserProfile &&
-            <ChatUserProfile secondUser={secondChatUser}
-                             setShowUserProfile={setShowUserProfile}
-                             color={profilePictureColors[selectedChat]}
+            <UserProfile secondUser={secondChatUser}
+                         setShowUserProfile={setShowUserProfile}
+                         color={profilePictureColors[selectedChat]}
             />}
         </div>
     )

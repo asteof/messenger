@@ -22,6 +22,42 @@
     overflow-x: hidden;
 }
 
+.loadMoreWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4em;
+}
+
+.loadMoreBtn {
+    /*width: 20%;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3em 1vmax;
+    font-size: 1em;
+    color: #dedede;
+    background-color: #41354e;
+    border: none;
+    box-shadow: 0 0 5px 0 #ff9e51;
+    border-radius: 8px;
+}
+
+.loadIcon {
+    width: 2em;
+    height: 2em;
+    padding: 0 0.4em 0 0;
+    opacity: 0.9;
+}
+
+.loadMoreBtn:hover {
+    box-shadow: 0 0 20px 4px #ff9e51;
+}
+
+.loadMoreBtn:active {
+    box-shadow: 0 0 20px 8px #ff9e51;
+}
+
 .messageWrap {
     display: flex;
     margin: 12px 0;
@@ -34,9 +70,11 @@
     width: fit-content;
     max-width: 50%;
 }
-.chatProfileBarWrap{
+
+.chatProfileBarWrap {
     height: fit-content;
 }
+
 .messageAreaWrap {
     /*position: absolute;*/
     bottom: 0;
@@ -100,9 +138,10 @@ media queries
 ------------*/
 
 @media screen and (max-width: 800px) {
-    .messages{
+    .messages {
         /*overflow-y: scroll;*/
     }
+
     .messages, .messageAreaWrap, .messageForm, .messageArea {
         width: 100%;
     }
@@ -142,7 +181,7 @@ scrollbars
     /*border: 2px solid #F47F3F;*/
     /*box-shadow: inset 0 0 4px 1px rgba(255, 155, 0, 0.69);*/
     border-radius: 18px;
-    height: 5px;
+    /*height: 5px;*/
 }
 
 .messages::-webkit-scrollbar-corner {

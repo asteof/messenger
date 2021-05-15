@@ -9,7 +9,8 @@ const getFormattedTime = (milliseconds) => {
     const optionsGeneral = {
         hour: 'numeric',
         minute: 'numeric',
-        hourCycle: 'h23'
+        // hourCycle: 'h23',
+        hour12: false
     }
     const optionsExact = {
         year: 'numeric',
