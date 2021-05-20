@@ -4,7 +4,6 @@ import style from './test.module.css'
 
 const Post = () => {
 
-
     const [response, setResponse] = useState({
         config: {},
         data: {},

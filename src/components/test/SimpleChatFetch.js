@@ -16,17 +16,13 @@ const SimpleChatFetch = (props) => {
             console.log(`SimpleChatFetch.js ${JWT_header}`)
         }
 
-        axios.get(`${SECURED_API_PATH}/chat`, {
-            headers: {
-                authorization: JWT_header
-            }
-        })
+        axios.get(`${SECURED_API_PATH}/chat`,
+            {headers: {authorization: JWT_header}})
             .then(response => {
                 console.log(response.data)
                 setChats(response.data)
             })
             .catch(error => console.log(error, error.response))
-
     }
 
     useEffect(() => {
@@ -34,7 +30,7 @@ const SimpleChatFetch = (props) => {
     }, [chats])
 
     chatsMap = chats.map(chat =>
-        <div key={chat.chatId} className={style.hu2}>
+        <div key={chat.chatId}>
             <p>Chat ID: <span className={style.redSpan}>{chat.chatId}</span></p>
             <p>Chat participants:</p>
             {chat.chatUsers.map(user => <p key={user.id}><span className={style.redSpan}>{user.username}</span>,
@@ -47,7 +43,7 @@ const SimpleChatFetch = (props) => {
             <div className={style.hint}>Click "Get chats" to fetch chats from temporary JWT</div>
             <p>Chats for this user:</p>
             <div className={style.flex}>
-            {chatsMap}
+                {chatsMap}
             </div>
             <button onClick={fetch} className={style.submitBtn}>Get chats</button>
             <div className={style.extraSmall}>{JSON.stringify(newJWT)}</div>

@@ -21,7 +21,6 @@ const message = (newJWT, currentUser, secondUser) => {
         })
         .catch(error => console.log('sendMessage.js', error, error.response))
 }
-
 const sendMessages = (JWT1, JWT2, JWT3, JWT4, voko, kirpich, masha_lar, danylo) => {
 
     message(JWT1, voko, kirpich)

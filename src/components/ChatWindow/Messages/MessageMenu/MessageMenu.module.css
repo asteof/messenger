@@ -36,7 +36,7 @@
     bottom: 0;
     left: 0;
     border-radius: 18px;
-    background-color: #1d232a;
+    background-color: #241d2a;
     opacity: 0.6;
     z-index: -1;
 }
@@ -44,12 +44,11 @@
 .menuElement {
     /*border-radius: 18px;*/
     padding: 1vmin 1.2em;
-    /*background-color: #1d232a;*/
     cursor: pointer;
 }
 
 .menuElement:hover {
-    background-color: rgba(29, 35, 42, 0.6);
+    background-color: rgba(36, 29, 42, 0.6);
 }
 
 .back{

@@ -1,21 +1,11 @@
 .profileBar {
     display: flex;
     align-items: center;
-    background-color: #758386;
-    border-bottom: 2px solid rgba(80, 100, 100, 0.6);
+    background-color: #443c4c;
+    border-bottom: 2px solid rgba(51, 39, 57, 0.6);
     /*height: 5vmax;*/
     /*box-shadow: 0 0 4px 1px rgba(80, 100, 100, 0.69);*/
 }
-
-/*.profilePictureWrap {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    padding: 1vmin 0;*/
-/*    height: 4vw;*/
-/*    width: 4vw;*/
-/*    position: relative;*/
-/*}*/
 
 .profilePicture {
     position: relative;
@@ -45,7 +35,7 @@
     /*font-size: calc(0.8em + 1vmin);*/
     /*font-size: calc(0.4em + 0.6vw + 0.8vh);*/
     /*font-size: calc(0.4em + 0.6vw + 0.8vh);*/
-    color: #000000;
+    color: #dddddd;
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -63,6 +53,7 @@
 
 .name {
     /*font-weight: 500;*/
+    color: #dddddd;
     overflow: hidden;
     width: 100%;
 }

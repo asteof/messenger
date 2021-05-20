@@ -31,7 +31,6 @@ const LocalStorog = () => {
         }
     }
 
-
     return (
         <div className={style.wrap}>
             <div className={style.hint}>Input key, value.

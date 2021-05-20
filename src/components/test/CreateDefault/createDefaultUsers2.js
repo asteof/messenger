@@ -15,7 +15,7 @@ const CreateDefaultUsers = () => {
         iskirpichJ: '',
         ismasha_larJ: '',
         isdanyloJ: ''
-    })
+    });
     const {isvokoJ, iskirpichJ, ismasha_larJ, isdanyloJ} = JWT
 
     const [user, setUser] = useState({

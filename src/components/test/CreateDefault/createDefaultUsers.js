@@ -107,7 +107,7 @@ const CreateDefaultUsers = () => {
     }
 
     const sendMessagesVoko = (JWT1, voko, kirpich, masha_lar, danylo) => {
-        message(JWT1, voko, kirpich)
+        message(JWT1, voko, kirpich);
         message(JWT1, voko, masha_lar)
         message(JWT1, voko, danylo)
     }

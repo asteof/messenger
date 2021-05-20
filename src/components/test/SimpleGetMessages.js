@@ -38,7 +38,7 @@ const SimpleGetMessages = (props) => {
     }, [testMessages])
 
     let messageMap = testMessages.map(message =>
-        <div key={message.id} className={style.hu}>
+        <div key={message.id}>
             <p>id: <span className={style.redSpan}>{message.id}</span></p>
             <p>Text: {message.text}</p>
             <p>sender <span className={style.redSpan}>{message.senderName}</span></p>
@@ -60,4 +60,4 @@ const SimpleGetMessages = (props) => {
     )
 }
 
-export default SimpleGetMessages
+export default SimpleGetMessages;

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import axios from "axios";
 import style from './test.module.css'
 import {getBearerToken} from "../constants/getBearerToken";
@@ -79,4 +79,4 @@ const SendN = () => {
     )
 }
 
-export default SendN
+export default SendN;

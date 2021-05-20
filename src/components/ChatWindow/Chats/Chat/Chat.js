@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import style from './chat.module.css'
-import * as SockJS from 'sockjs-client'
-import {Client} from '@stomp/stompjs'
-import {API_PATH} from "../../../constants/API_PATH_DEFAULT";
 import getFormattedTime from "../../../constants/getFormattedTime";
 import RandomColor from "../../../constants/RandomColor";
 import getMessagesFromChat from '../../../constants/getMessagesFromChat'
@@ -10,14 +7,20 @@ import {getBearerToken} from "../../../constants/getBearerToken";
 
 const Chat = (props) => {
     const {
-        chatId, setReceivedMessage, receivedMessage,
+        chatId, receivedMessage,
         secondUser, setSecondChatUser, currentUser,
         selectedChat, setSelectedChat,
         setIsLoggedIn, setMessages, lastMessage,
         profilePictureColors, setProfilePictureColors
     } = props
 
+    const secondUserId = secondUser.id
+
+    console.log(lastMessage)
+
     const [messageTime, setMessageTime] = useState(null)
+    const [lastMessageIsFetched, setLastMessageIsFetched] = useState(false)
+
     let chatClass = style.chat;     //ordinary chat style
     const chatClassActive = `${style.chat} ${style.active}`;    //chat style when selected
 
@@ -46,19 +49,22 @@ const Chat = (props) => {
         setSelectedChat(chatId)
     }
 
-
-
     useEffect(() => {
         setProfilePictureColors(prevColors => ({
             ...prevColors,
-            [chatId]: RandomColor()
+            [secondUserId]: RandomColor()
         }))
-        // console.log(`Chat.js currentUser ${chatId}`, currentUser)
+        console.log(`Chat.js currentUser ${chatId}`, currentUser)
+        console.log(`Chat.js secondUser ${chatId}`, secondUser)
+        console.log(`Chat.js ProfilePictureColors ${chatId}`, profilePictureColors)
     }, [])
 
     useEffect(() => {
+        if (lastMessage!==undefined){
+         setLastMessageIsFetched(true)
         const [messageSentAt] = getFormattedTime(lastMessage.sentAt)
         setMessageTime(messageSentAt)
+        }
     }, [lastMessage])
 
     useEffect(() => {
@@ -72,7 +78,7 @@ const Chat = (props) => {
         <div className={selectedChat === chatId ? chatClassActive : chatClass}
              onClick={selectChat}>
             <div className={style.profilePicture}
-                 style={profilePictureColors[chatId]}>
+                 style={profilePictureColors[secondUserId]}>
                 {secondUser &&
                 <span className={style.initials}>
                         {((secondUser.firstname || '').charAt(0) || '').toUpperCase()}
@@ -82,6 +88,7 @@ const Chat = (props) => {
 
             <div className={style.chatInfo}>
                 <div className={style.chatUsername}>{secondUser.username}</div>
+                {lastMessageIsFetched &&
                 <div className={style.lastMessageWrap}>
                     {lastMessage.senderName === currentUser.username ?
                         <span className={style.lastMessage}>
@@ -93,6 +100,7 @@ const Chat = (props) => {
                     }
                     <span className={style.messageTime}>{messageTime || ''}</span>
                 </div>
+                }
             </div>
 
         </div>

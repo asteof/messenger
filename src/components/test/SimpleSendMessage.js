@@ -27,9 +27,8 @@ const SimpleSendMessage = (props) => {
             console.log(`SimpleChatFetch.js ${JWT_header}`)
         }
 
-        axios.post(`${SECURED_API_PATH}/messages/`, message, {
-            headers: {authorization: JWT_header}
-        })
+        axios.post(`${SECURED_API_PATH}/messages/`, message,
+            {headers: {authorization: JWT_header}})
             .then(response => {
                 console.log(response.data)
                 setResponse(response.data)
@@ -38,13 +37,7 @@ const SimpleSendMessage = (props) => {
                 console.log(error, error.response)
                 setResponse(error.response)
             })
-
     }
-
-    // useEffect(() => {
-    //     console.log('SimpleGetMessages.js uf called')
-    // }, [testMessages])
-
 
     return (
         <div className={style.wrap}>
@@ -73,7 +66,7 @@ const SimpleSendMessage = (props) => {
                 </button>
 
             </form>
-            <div className={style.flex +' '+ style.break}><code>{JSON.stringify(response)}</code></div>
+            <div className={style.flex + ' ' + style.break}><code>{JSON.stringify(response)}</code></div>
             <div className={style.extraSmall}>{JSON.stringify(newJWT)}</div>
         </div>
     )

@@ -17,7 +17,6 @@ const SimpleLogin = (props) => {
         let formData = new FormData()
         formData.append('username', login)
         formData.append('password', '123')
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         axios.post(`${API_PATH}/login`, formData, {cancelToken: source.token})
             .then(response => {
                 if (response.status === 200) {
@@ -56,4 +55,4 @@ const SimpleLogin = (props) => {
     )
 }
 
-export default SimpleLogin
+export default SimpleLogin;

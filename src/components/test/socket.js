@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import style from './test.module.css'
 import SockJS from 'sockjs-client'
-import {Client, Message} from '@stomp/stompjs'
+import {Client} from '@stomp/stompjs'
 import {API_PATH} from "../constants/API_PATH_DEFAULT";
 
 const Socket = () => {
@@ -13,77 +13,8 @@ const Socket = () => {
         err: ''
     })
     const {con, err, cls, msg} = socketData
-    //
-    // const sock = () => {
-    //     let socket = new SockJS(`${API_PATH}/ws`);
-    //
-    //     socket.onopen = (ev) => {
-    //         console.log('suc', ev)
-    //         setSocketData(sSD => ({
-    //             ...sSD,
-    //             con: JSON.stringify(ev.currentTarget)
-    //         }))
-    //         socket.send('hui')
-    //     }
-    //
-    //     socket.onmessage = (ev) => smessage(ev)
-    //
-    //     socket.onerror = (ev) => serror(ev)
-    //
-    //     socket.onclose = (ev) => sclose(ev)
-    // }
-    //
-    //
-    //
-    // const smessage = (ev) => {
-    //     console.log('smessage', ev.data)
-    //     setSocketData(sSD => ({
-    //         ...sSD,
-    //         msg: JSON.stringify(ev.currentTarget)
-    //     }))
-    // }
-    //
-    // const sclose = (ev) => {
-    //     console.log('close', ev)
-    //     setSocketData(sSD => ({
-    //         ...sSD,
-    //         cls: JSON.stringify(ev.currentTarget)
-    //     }))
-    //
-    //     if (ev.code !== 1000) {
-    //         if (navigator.onLine) {
-    //             console.log('offline')
-    //         }
-    //         setSocketData(sSD => ({
-    //             ...sSD,
-    //             err: ev.data
-    //         }))
-    //     }
-    // }
-    //
-    // const serror = (ev) => {
-    //     console.log('close', ev)
-    //     setSocketData(sSD => ({
-    //         ...sSD,
-    //         err: JSON.stringify(ev.currentTarget)
-    //     }))
-    // }
-    //
-    // const send = (socket, data) => {
-    //     socket.send(data)
-    // }
-    // const closes = () => {
-    //     if (socket.readyState === WebSocket.OPEN) {
-    //         socket.close();
-    //     }
-    // }
-
-    function mySocketFactory() {
-        return new SockJS(`${API_PATH}/ws`);
-    }
 
     const connectWs = () => {
-        // const socket = new SockJS(`${API_PATH}/ws`)
 
         const client = new Client({
             debug: function (str) {
@@ -105,6 +36,9 @@ const Socket = () => {
             const onmessage = (message) => {
                 if (message.body) {
                     alert('got message with body ' + message.body);
+                    setSocketData(prev=>({
+                        ...prev, msg: message.body
+                    }))
                 } else {
                     alert('got empty message');
                 }
@@ -126,13 +60,7 @@ const Socket = () => {
         };
 
         client.activate();
-
-
-        const hui = () => {
-            client.deactivate();
-        }
     }
-
 
     return (
         <div className={style.wrap}>
@@ -144,14 +72,6 @@ const Socket = () => {
                     onClick={connectWs}>
                 Socket
             </button>
-            {/*<button className={style.submitBtn}*/}
-            {/*        onClick={send}>*/}
-            {/*    Senb*/}
-            {/*</button>*/}
-            {/*<button className={style.submitBtn}*/}
-            {/*        onClick={closes}>*/}
-            {/*    Close*/}
-            {/*</button>*/}
         </div>
     )
 }

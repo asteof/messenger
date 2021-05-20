@@ -1,21 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import style from './FieldEdit.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../../../constants/localStorage";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
+import {getBearerToken} from "../../../../constants/getBearerToken";
 
 const FieldEdit = (props) => {
     const {currentUser, setCurrentUser, setShowEdit, options: {editProperty, displayProperty}} = props
     const [value, setValue] = useState('')
-
-    //использовать useRef для создания текущих значений текущего пользователя (валидация изменений)
+    const userValueRef = useRef('')
 
     const getUserValueToChange = () => {
         for (const [key, value] of Object.entries(currentUser)) {
-            // console.log(`FieldEdit.js ${key}: ${value}`);
-            // console.log(value,options);
-            // console.log(editProperty, displayProperty);
+            console.log(`FieldEdit.js ${key}: ${value}`);
+            console.log(editProperty, displayProperty);
             if (key === editProperty) {
                 console.log(value)
                 return value
@@ -27,28 +25,28 @@ const FieldEdit = (props) => {
         toggleBoolean(setShowEdit)
     }
 
-    let valueToChange
     useEffect(() => {
-        valueToChange = getUserValueToChange()
+        const valueToChange = getUserValueToChange()
         setValue(valueToChange)
+        userValueRef.current = valueToChange
     }, [])
 
     const edit = async event => {
         event.preventDefault()
+        if (userValueRef.current !== value) {
+            console.log(userValueRef, value)
 
-        const JWT = getLocalWithExpiry('token')
-        if (JWT !== null && JWT !== '') {
-            let JWT_header = `Bearer ${JWT}`
-            const cancelToken = axios.CancelToken
-            const source = cancelToken.source()
-
-            await updateUser(JWT_header, setCurrentUser, source)
+            const JWT_header = getBearerToken()
+            if (JWT_header !== null) {
+                const cancelToken = axios.CancelToken
+                const source = cancelToken.source()
+                await updateUser(JWT_header, source)
+            }
         }
         closeEdit()
     }
 
-
-    const updateUser = async (JWT_header, setCurrentUser, source) => {
+    const updateUser = async (JWT_header, source) => {
         try {
             //first request is PUT, to change user data
             const updateUser = await axios.put(

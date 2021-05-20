@@ -15,7 +15,6 @@ const users = (firstname, lastname, username, email, phoneNumber, password) => {
         password
     }
     console.log(userData)
-    // debugger
     axios.post(`${API_PATH}/sign-up`, userData, {cancelToken:source.token})
         .then(response => {
             console.log(response)

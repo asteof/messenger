@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import style from './FieldEdit.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../../../constants/localStorage";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
+import {getBearerToken} from "../../../../constants/getBearerToken";
 
 const NameEdit = (props) => {
     const {currentUser, setCurrentUser, setShowNameEdit} = props
@@ -11,7 +11,8 @@ const NameEdit = (props) => {
         firstname: currentUser.firstname,
         lastname: currentUser.lastname
     })
-
+    const firstnameRef = useRef(currentUser.firstname)
+    const lastnameRef = useRef(currentUser.lastname)
     const inputHandle = event => {
         setName(prevName => ({
             ...prevName,
@@ -26,27 +27,28 @@ const NameEdit = (props) => {
     const edit = async event => {
         event.preventDefault()
 
-        const JWT = getLocalWithExpiry('token')
-        if (JWT !== null && JWT !== '') {
-            let JWT_header = `Bearer ${JWT}`
-            const cancelToken = axios.CancelToken
-            const source = cancelToken.source()
-
-            await updateUser(JWT_header, setCurrentUser, source)
+        if (firstnameRef.current !== name.firstname
+            || lastnameRef.current !== name.lastname) {
+            const JWT_header = getBearerToken()
+            if (JWT_header !== null) {
+                await updateUser(JWT_header)
+            }
         }
         closeEdit()
     }
 
-    const updateUser = async (JWT_header, setCurrentUser, source) => {
+    console.log(firstnameRef, lastnameRef, name)
+
+    const updateUser = async (JWT_header) => {
         try {
             //first request is PUT, to change user data
             const updateUser = await axios.put(
                 `${SECURED_API_PATH}/user`,
                 name,
-                {headers: {authorization: JWT_header}, cancelToken: source.token}
+                {headers: {authorization: JWT_header}}
             )
             const updateUserResponse = updateUser.status
-            console.log(updateUserResponse)
+            // console.log(updateUserResponse)
 
             //when response is received if response.status is 200 fires second request
             if (updateUserResponse === 202) {
@@ -54,18 +56,15 @@ const NameEdit = (props) => {
                     //second request gets user with updated data
                     const setUpdatedUser = await axios.get(
                         `${SECURED_API_PATH}/user`,
-                        {headers: {authorization: JWT_header}, cancelToken: source.token}
+                        {headers: {authorization: JWT_header}}
                     )
                     const updatedUser = setUpdatedUser.data
-                    console.log(updatedUser)
+                    // console.log(updatedUser)
                     //after receiving the response user is set for the app
                     setCurrentUser(updatedUser)
                 } catch (error) {
                     console.log('setUpdatedUser error', error)
-                    source.cancel()
                 }
-            } else {
-                source.cancel()
             }
         } catch (error) {
             console.log('updateUser', error)

@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    /*background-color: #f8fff8;*/
+    background-color: #443c4c;
 }
 
 .twoFieldsWrap {
@@ -15,14 +15,13 @@
     /*margin: 0 3vw;*/
 }
 
-
 .twoFieldsWrap input {
-    width: 200px;
+    /*width: 200px;*/
+    width: 100%;
 }
-
 
 @media only screen and (max-width: 800px) {
     .twoFieldsWrap .inputField {
-        width: 160px;
+        /*width: 160px;*/
     }
 }

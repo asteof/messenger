@@ -41,7 +41,6 @@ const getMessagesFromChat = (JWT_header, chatId, page = 0, file = 'none') => {
 //     // else return undefined
 // }
 
-
 const getMessages = async (chatId, page = 0) => {
     const JWT_header = getBearerToken()
     if (JWT_header !== null) {

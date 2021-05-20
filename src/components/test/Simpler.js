@@ -14,7 +14,6 @@ const Simpler = () => {
     return (
         <div className={style.wrap}>
             <SimpleLogin setNewJWT={setNewJWT}/>
-            {/*{newJWT}*/}
             <SimpleGetUser newJWT={newJWT}
                            testCurrentUser={testCurrentUser}
                            setTestCurrentUser={setTestCurrentUser}/>

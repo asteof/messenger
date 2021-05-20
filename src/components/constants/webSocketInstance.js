@@ -28,7 +28,8 @@ const webSocketInstance = (setReceivedMessage, currentUserId) => {
             }
         }
 
-        let subscription = client.subscribe(`/topic/messages/user/${currentUserId}`, onmessage);
+        // let subscription =
+            client.subscribe(`/topic/messages/user/${currentUserId}`, onmessage);
 
     };
 

@@ -10,7 +10,8 @@ import DefaultMessageWindow from "./Messages/DefaultMessageWindow/DefaultMessage
 import {getBearerToken} from "../constants/getBearerToken";
 import getMessagesFromChat from "../constants/getMessagesFromChat";
 import {webSocketInstance} from "../constants/webSocketInstance";
-import Icons from "./Icons/Icons";
+import MenuIcons from "./MenuIcons/MenuIcons";
+import RandomColor from "../constants/RandomColor";
 
 function ChatWindow(props) {
     const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
@@ -47,6 +48,13 @@ function ChatWindow(props) {
         edited: false,
         deleted: false
     })
+    const [menuMessageSent, setMenuMessageSent] = useState({
+        id: 0,
+        time: 0,
+        recipientId: 0,
+        chatId: 0
+    })
+    const [chatIsDeleted, setChatIsDeleted] = useState(0)
     // const {message, errorMessage, serverResponse} = sessionResponse
     const cancelToken = axios.CancelToken
     const source = cancelToken.source()
@@ -69,7 +77,6 @@ function ChatWindow(props) {
                 message: `axios fetch cancelled`,
                 requestCancelled: true
             }))
-            // client.deactivate().then(r => console.log(r));
         }
 
     }, [])//useEffect
@@ -78,7 +85,10 @@ function ChatWindow(props) {
     useEffect(() => {
         if (currentUser.id !== 0) {
             webSocketInstance(setReceivedMessage, currentUser.id)
-            // console.log('chatWindow.js currentUser', currentUser)
+            setProfilePictureColors(prevColors => ({
+                ...prevColors,
+                [currentUser.id]: RandomColor()
+            }))
         }
     }, [currentUser.id])
 
@@ -128,7 +138,7 @@ function ChatWindow(props) {
                 }
             }
         }
-        fetchData()
+        fetchData().then()
     }, [messageChanged])
 
     //rerender component to display messages after receiving a new message
@@ -147,6 +157,35 @@ function ChatWindow(props) {
             }))
         }
     }, [receivedMessage])
+
+    //rerender components to display new message sent from menu
+    useEffect(() => {
+        if (menuMessageSent.id !== 0) {
+            const JWT_header = getBearerToken('ChatWindow menu message sent')
+            if (isLoggedIn === true && JWT_header !== null) {
+                getChats(JWT_header)
+                getLastMessages(JWT_header)
+                if (selectedChat === menuMessageSent.chatId) {
+                    getMessagesFromChat(JWT_header, selectedChat)
+                        .then(response => setMessages(response))
+                }
+            }
+            console.log(menuMessageSent)
+        }
+    }, [menuMessageSent])
+
+
+    useEffect(() => {
+        if (chatIsDeleted !== 0) {
+            const JWT_header = getBearerToken('ChatWindow menu message sent')
+            if (isLoggedIn === true && JWT_header !== null) {
+                getChats(JWT_header)
+                setSelectedChat(0)
+            }
+            console.log(chatIsDeleted)
+        }
+        console.log(sessionResponse)
+    }, [chatIsDeleted])
 
     const getUser = (JWT_header) => {
         axios.get(`${SECURED_API_PATH}/user`, {
@@ -231,16 +270,14 @@ function ChatWindow(props) {
                 setLastMessages(response.data)
                 setDataIsFetched(prevData => ({
                     ...prevData,
+                    time: Date.now(),
                     lastMessages: true
                 }))
             })
             .catch(error => {
                 console.log(error, error.response)
-                // setIsLoggedIn(false)
-                // localStorage.removeItem('token')
             })
     }
-
 
     return (
         isLoggedIn ?
@@ -248,9 +285,14 @@ function ChatWindow(props) {
 
                 <div className={style.chatSectionWrap}>
                     <ProfileBar currentUser={currentUser}
+                                profilePictureColors={profilePictureColors}
                                 setCurrentUser={setCurrentUser}/>
 
-                    {/*<Icons/>*/}
+                    <MenuIcons profilePictureColors={profilePictureColors}
+                               setMenuMessageSent={setMenuMessageSent}
+                               currentUser={currentUser}
+                               setIsLoggedIn={setIsLoggedIn}
+                               setCurrentUser={setCurrentUser}/>
 
                     {(dataIsFetched.user && dataIsFetched.chats && dataIsFetched.lastMessages) &&
                     <Chats chatsData={chatsData}
@@ -263,8 +305,7 @@ function ChatWindow(props) {
                            setSelectedChat={setSelectedChat}
                            profilePictureColors={profilePictureColors}
                            setProfilePictureColors={setProfilePictureColors}
-                           receivedMessage={receivedMessage}
-                           setReceivedMessage={setReceivedMessage}/>
+                           receivedMessage={receivedMessage}/>
                     }
                 </div>
 
@@ -280,6 +321,7 @@ function ChatWindow(props) {
                                   messagesPage={messagesPage}
                                   setMessagesPage={setMessagesPage}
                                   receivedMessage={receivedMessage}
+                                  setChatIsDeleted={setChatIsDeleted}
                                   setMessageChanged={setMessageChanged}/>
                         :
                         <DefaultMessageWindow/>

@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-// import {MessageProvider} from "./components/context/messageContext";
 import Header from "./components/Header/Header";
 import './App.css';
 import React, {useEffect, useState} from 'react';
@@ -7,11 +5,8 @@ import RegistrationForm from "./components/Authorization/RegistrationForm/Regist
 import ChatWindow from "./components/ChatWindow/ChatWindow";
 import LoginForm from "./components/Authorization/LoginForm/LoginForm";
 import Test from "./components/test/test"
-// import RegF from "./components/Authorization/RegistrationForm/RegFTest";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {getLocalWithExpiry} from "./components/constants/localStorage";
-// import axios from "axios";
-// import {SECURED_API_PATH} from "./components/constants/API_PATH_DEFAULT";
 
 function App() {
 
@@ -24,7 +19,7 @@ function App() {
     according to value of this state user is redirected to /chat or to /login pages
     */
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+    const [registrationSuccess, setRegistrationSuccess] = useState(false)
     const [currentUser, setCurrentUser] = useState({
         id: 0
     })
@@ -64,7 +59,8 @@ function App() {
                             {isLoggedIn === false ?         //1
                                 <LoginForm
                                     setIsLoggedIn={setIsLoggedIn}
-                                    // currentUser={currentUser}
+                                    currentUser={currentUser}
+                                    registrationSuccess={registrationSuccess}
                                     // setCurrentUser={setCurrentUser}
                                 />
                                 : <Redirect to="/chat"/>    //1
@@ -77,7 +73,11 @@ function App() {
 
                         {/* this route forbids user to go to /signup page after he had authorized*/}
                         <Route path='/signup'>
-                            {isLoggedIn ? <Redirect to="/chat"/> : <RegistrationForm/>}
+                            {isLoggedIn ?
+                                <Redirect to="/chat"/>
+                                : <RegistrationForm
+                                    currentUser={currentUser}
+                                    setRegistrationSuccess={setRegistrationSuccess}/>}
                         </Route>
 
                         <Route path='/chat'>

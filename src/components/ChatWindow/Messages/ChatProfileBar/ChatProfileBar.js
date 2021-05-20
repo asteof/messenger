@@ -1,46 +1,40 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import style from './ChatProfileBar.module.css'
 import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
-import UserProfile from "../../UserProfile/UserProfile";
+import UserProfile from "../../Menu/UserProfile/UserProfile";
 
 const ChatProfileBar = (props) => {
-    const {secondChatUser, selectedChat, profilePictureColors} = props
+    const {secondUser, profilePictureColors, chatId, setChatIsDeleted} = props
 
     const [showUserProfile, setShowUserProfile] = useState(false)
 
-    // console.log('ChatProfileBar.js secondChatUser', secondChatUser)
-    // // useEffect(() => {
-    // // }, [])
-
     return (
-
         <div className={style.chatProfileBar}>
-            {/*<div className={style.profilePictureWrap}>*/}
-            <div
-                onClick={() => toggleBoolean(setShowUserProfile)}
-                className={style.chatProfilePicture}
-                style={profilePictureColors[selectedChat]}>
+            <div onClick={() => toggleBoolean(setShowUserProfile)}
+                 className={style.chatProfilePicture}
+                 style={profilePictureColors[secondUser.id]}>
 
-                {secondChatUser &&
+                {secondUser &&
                 <p className={style.initials}>
-                    {((secondChatUser.firstname || '').charAt(0) || '').toUpperCase()}
-                    {((secondChatUser.lastname || '').charAt(0) || '').toUpperCase()}
+                    {((secondUser.firstname || '').charAt(0) || '').toUpperCase()}
+                    {((secondUser.lastname || '').charAt(0) || '').toUpperCase()}
                 </p>
                 }
-                {/*</div>*/}
             </div>
 
             <div className={style.nameWrap}>
                 <span className={style.name}
-                    onClick={() => toggleBoolean(setShowUserProfile)}>
-                    {secondChatUser.firstname} {secondChatUser.lastname}
+                      onClick={() => toggleBoolean(setShowUserProfile)}>
+                    {secondUser.firstname} {secondUser.lastname}
                 </span>
             </div>
 
             {showUserProfile &&
-            <UserProfile secondUser={secondChatUser}
+            <UserProfile user={secondUser}
+                         setChatIsDeleted={setChatIsDeleted}
                          setShowUserProfile={setShowUserProfile}
-                         color={profilePictureColors[selectedChat]}
+                         chatId={chatId}
+                         color={profilePictureColors[secondUser.id]}
             />}
         </div>
     )

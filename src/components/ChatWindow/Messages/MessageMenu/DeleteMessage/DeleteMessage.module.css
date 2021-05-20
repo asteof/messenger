@@ -20,11 +20,10 @@
     bottom: 0;
     left: 0;
     border-radius: 18px;
-    background-color: #1d232a;
+    background-color: #241d2a;
     opacity: 0.6;
     z-index: -1;
 }
-
 
 .warning{
     font-size: 0.98em;

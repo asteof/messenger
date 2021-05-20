@@ -13,11 +13,8 @@ const SimpleGetUser = (props) => {
             console.log(`getUser.js ${JWT_header}`)
         }
 
-        axios.get(`${SECURED_API_PATH}/user`, {
-            headers: {
-                authorization: JWT_header
-            }
-        })
+        axios.get(`${SECURED_API_PATH}/user`,
+            {headers: {authorization: JWT_header}})
             .then(response => {
                 console.log(response)
                 console.log(response.data)
@@ -46,4 +43,4 @@ const SimpleGetUser = (props) => {
         </div>
     )
 }
-export default SimpleGetUser
+export default SimpleGetUser;

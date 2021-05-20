@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './FieldEdit.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../../../constants/localStorage";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
+import {getLocalWithExpiry} from "../../../../constants/localStorage";
 
-import eyeIcon from '../../../../media/icons/eye-icon.svg'
-import noEyeIcon from '../../../../media/icons/no-eye-icon.svg'
+import eyeIcon from '../../../../../media/icons/eye-icon.svg'
+import noEyeIcon from '../../../../../media/icons/no-eye-icon.svg'
 
 const NameEdit = (props) => {
     const {setShowPasswordChange} = props
@@ -133,7 +133,6 @@ const NameEdit = (props) => {
                                  onClick={togglePassword}/>
                         </div>
                     </div>
-                    {/*<img src={hui} alt=""/>*/}
                     <div className={style.formInput}>
                         <label htmlFor="confirmPassword" className={style.fieldLabel}>Confirm new password</label>
                         <div className={style.passwordFieldWrap}>

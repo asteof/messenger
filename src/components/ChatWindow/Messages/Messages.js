@@ -6,7 +6,7 @@ import axios from "axios";
 import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
 import MessageMenu from "./MessageMenu/MessageMenu";
 import {getBearerToken} from "../../constants/getBearerToken";
-import getMessagesFromChat, {getMessages} from "../../constants/getMessagesFromChat";
+import getMessagesFromChat from "../../constants/getMessagesFromChat";
 import loadMessage from '../../../media/icons/load-message.svg'
 
 const Messages = (props) => {
@@ -16,7 +16,7 @@ const Messages = (props) => {
         messageIsSent, setMessageIsSent,
         messagesPage, setMessagesPage,
         setMessageChanged, receivedMessage,
-        profilePictureColors
+        profilePictureColors, setChatIsDeleted
     } = props
     const selectedRef = useRef(0)
     const messageAreaRef = useRef(null)
@@ -106,12 +106,13 @@ const Messages = (props) => {
     };
 
     const scrollToBottom = (str) => {
-        if (selectedRef.current !== 0) {
-            messagesRef.current.scrollTo({left: 0, top: (messagesRef.current.scrollHeight), behavior: "smooth"})
+        if (selectedChat !== 0) {
+            messagesRef.current.scrollTo({left: 0, top: (messagesRef.current.scrollHeight), behavior: 'smooth'})
             console.log(`messagesMap ${str}`, messagesMap)
             messageAreaRef.current.focus()
         }
     }
+
     const scrollToTop = () => {
         if (selectedRef.current !== 0) {
             messagesRef.current.scrollTo(0, -messagesRef.current.scrollHeight)
@@ -132,7 +133,7 @@ const Messages = (props) => {
         if (selectedChat !== selectedRef.current) {
             selectedRef.current = selectedChat
         }
-    }, [selectedRef.current, selectedChat])
+    }, [selectedChat])
 
     //scroll to the bottom message when opening chat
     useEffect(() => {
@@ -140,9 +141,9 @@ const Messages = (props) => {
         //  selectedRef: ${selectedRef.current},
         //  currentUser:`, currentUser,
         //     'secondUser:', secondChatUser)
-
-        scrollToBottom('chat opened')
-    }, [selectedRef.current])
+        if (selectedChat !== 0)
+            scrollToBottom('chat opened')
+    }, [selectedChat])
 
     // scroll to the bottom message after new message was sent
     useEffect(() => {
@@ -216,9 +217,10 @@ const Messages = (props) => {
     return (
         <div className={style.messageSection}>
             <div className={style.chatProfileBarWrap}>
-                <ChatProfileBar secondChatUser={secondChatUser}
-                                profilePictureColors={profilePictureColors}
-                                selectedChat={selectedChat}/>
+                <ChatProfileBar secondUser={secondChatUser}
+                                chatId={selectedChat}
+                                setChatIsDeleted={setChatIsDeleted}
+                                profilePictureColors={profilePictureColors}/>
             </div>
 
             <div className={style.messages} ref={messagesRef}>

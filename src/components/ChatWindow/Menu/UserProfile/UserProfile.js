@@ -1,40 +1,46 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './UserProfile.module.css'
-import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
 import axios from "axios";
-// import {getLocalWithExpiry} from "../../Authorization/localStorage";
-import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
-import {getLocalWithExpiry} from "../../constants/localStorage";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 
-import user from '../../../media/icons/user.svg'
-import email from '../../../media/icons/email.svg'
-import username from '../../../media/icons/username.svg'
-import addContactIcon from '../../../media/icons/add-contact.svg'
-import removeContactIcon from '../../../media/icons/remove-contact.svg'
+import userIcon from '../../../../media/icons/user.svg'
+import email from '../../../../media/icons/email.svg'
+import username from '../../../../media/icons/username.svg'
+import addContactIcon from '../../../../media/icons/add-contact.svg'
+import removeContactIcon from '../../../../media/icons/remove-contact.svg'
+import deleteChatIcon from '../../../../media/icons/delete-chat.svg'
+import {getBearerToken} from "../../../constants/getBearerToken";
+import DeleteChat from "./DeleteChat/DeleteChat";
 
 const UserProfile = (props) => {
-    const {secondUser, setShowUserProfile, color} = props
+    const {
+        user, setShowUserProfile, color,
+        parentRef, addRef, chatId, setChatIsDeleted
+    } = props
     const userProfileRef = useRef(null)
+    const [showDeleteChat, setShowDelete] = useState(false)
     const [isContact, setIsContact] = useState(false)
+    const [isFromChat, setIsFromChat] = useState(false)
 
     useEffect(() => {
-        console.log('UserProfile.js secondUser', secondUser)
+        console.log('UserProfile.js user', user)
+        console.log(chatId)
+        console.log(color)
         isUserContact()
         userProfileRef.current.focus()
+        if (chatId !== undefined) {
+            setIsFromChat(true)
+        }
     }, [])
 
     const isUserContact = () => {
         const cancelToken = axios.CancelToken
         const source = cancelToken.source()
 
-        const JWT = getLocalWithExpiry('token')
-        let JWT_header
-        if (JWT !== null && JWT !== '') {
-            JWT_header = `Bearer ${JWT}`
-            console.log(`ChatUserProfile.js ${JWT_header}`)
-        }
-        if (JWT_header !== '') {
-            axios.get(`${SECURED_API_PATH}/contacts/present/${secondUser.id}`,
+        const JWT_header = getBearerToken()
+        if (JWT_header !== null) {
+            axios.get(`${SECURED_API_PATH}/contacts/present/${user.id}`,
                 {headers: {authorization: JWT_header}, cancelToken: source.token})
                 .then(response => {
                     console.log(response)
@@ -52,14 +58,9 @@ const UserProfile = (props) => {
         const cancelToken = axios.CancelToken
         const source = cancelToken.source()
 
-        const JWT = getLocalWithExpiry('token')
-        let JWT_header
-        if (JWT !== null && JWT !== '') {
-            JWT_header = `Bearer ${JWT}`
-            console.log(`ChatUserProfile.js ${JWT_header}`)
-        }
-        if (JWT_header !== '') {
-            axios.post(`${SECURED_API_PATH}/contacts/${secondUser.id}`, {},
+        const JWT_header = getBearerToken()
+        if (JWT_header !== null) {
+            axios.post(`${SECURED_API_PATH}/contacts/${user.id}`, {},
                 {headers: {authorization: JWT_header}, cancelToken: source.token})
                 .then(response => {
                     console.log(response)
@@ -69,7 +70,6 @@ const UserProfile = (props) => {
                 .catch(error => {
                     console.log(error)
                 })
-
         }
     }
 
@@ -77,14 +77,9 @@ const UserProfile = (props) => {
         const cancelToken = axios.CancelToken
         const source = cancelToken.source()
 
-        const JWT = getLocalWithExpiry('token')
-        let JWT_header = ''
-        if (JWT !== null && JWT !== '') {
-            JWT_header = `Bearer ${JWT}`
-            console.log(`ChatUserProfile.js ${JWT_header}`)
-        }
-        if (JWT_header !== '') {
-            axios.delete(`${SECURED_API_PATH}/contacts/${secondUser.id}`,
+        const JWT_header = getBearerToken()
+        if (JWT_header !== null) {
+            axios.delete(`${SECURED_API_PATH}/contacts/${user.id}`,
                 {headers: {authorization: JWT_header}, cancelToken: source.token})
                 .then(response => {
                     console.log(response)
@@ -95,7 +90,6 @@ const UserProfile = (props) => {
                     console.log(error)
                 })
         }
-
     }
 
     const closeOnEscape = (event) => {
@@ -105,7 +99,17 @@ const UserProfile = (props) => {
     }
 
     const closeUserProfile = () => {
+        if (parentRef && addRef) {
+            parentRef.style.display = 'block'
+            addRef.style.display = 'block'
+        }
         toggleBoolean(setShowUserProfile)
+    }
+
+    const openDeleteChat = () => {
+        if (isFromChat) {
+            toggleBoolean(setShowDelete)
+        }
     }
 
     return (
@@ -129,12 +133,10 @@ const UserProfile = (props) => {
 
                 <div className={style.profilePictureWrap}>
                     <div className={style.profilePicture} style={color}>
-                        {/*{secondUser !== {} &&*/}
                         <p className={style.initials}>
-                            {((secondUser.firstname || '').charAt(0) || '').toUpperCase()}
-                            {((secondUser.lastname || '').charAt(0) || '').toUpperCase()}
+                            {((user.firstname || '').charAt(0) || '').toUpperCase()}
+                            {((user.lastname || '').charAt(0) || '').toUpperCase()}
                         </p>
-                        {/*}*/}
                     </div>
                 </div>
                 {/*//profilePictureWrap*/}
@@ -142,9 +144,9 @@ const UserProfile = (props) => {
                 <div className={style.profileData}>
 
                     <div className={`${style.name} ${style.fieldWrap}`}>
-                        <img src={user} alt="Name" className={style.icon}/>
+                        <img src={userIcon} alt="Name" className={style.icon}/>
                         <div className={style.field}>
-                            <span>{secondUser.firstname} {secondUser.lastname}</span>
+                            <span>{user.firstname} {user.lastname}</span>
                             <span className={style.fieldHint}>Name</span>
                         </div>
                         <div className={style.icon}/>
@@ -153,7 +155,7 @@ const UserProfile = (props) => {
                     <div className={`${style.username} ${style.fieldWrap}`}>
                         <img src={username} alt="User" className={style.icon}/>
                         <div className={style.field}>
-                            <span>{secondUser.username}</span>
+                            <span>{user.username}</span>
                             <span className={style.fieldHint}>Username</span>
                         </div>
                         <div className={style.icon}/>
@@ -162,7 +164,7 @@ const UserProfile = (props) => {
                     <div className={`${style.email} ${style.fieldWrap}`}>
                         <img src={email} alt="Email" className={style.icon}/>
                         <div className={style.field}>
-                            <span>{secondUser.email}</span>
+                            <span>{user.email}</span>
                             <span className={style.fieldHint}>Email</span>
                         </div>
                         <div className={style.icon}/>
@@ -171,30 +173,47 @@ const UserProfile = (props) => {
 
                     <div className={style.contactWrap}>
                         {isContact ?    //if user is in contacts, "remove contact" button is displayed
-                            <button className={`${style.contactBtn} ${style.remove}`}
+                            <button className={`${style.button} ${style.remove}`}
                                     onClick={removeContact}>
                                 <img src={removeContactIcon}
-                                     className={style.contactIcon}
+                                     className={style.buttonIcon}
                                      alt="Remove contact"/>Remove contact
                             </button> :
                             //if user is not in contacts, "Add contact" button is displayed
-                            <button className={`${style.contactBtn} ${style.add}`}
+                            <button className={`${style.button} ${style.add}`}
                                     onClick={addContact}>
                                 <img src={addContactIcon}
-                                     className={style.contactIcon}
+                                     className={style.buttonIcon}
                                      alt="Add contact"/>
                                 Add contact
                             </button>
+                        }
+                        {isFromChat &&
+                        <button className={`${style.button}
+                         ${style.remove}
+                          ${style.deleteChat}`}
+                                onClick={openDeleteChat}>
+                            <img src={deleteChatIcon}
+                                 className={style.buttonIcon}
+                                 alt="Delete chat"/>
+                            Delete chat
+                        </button>
                         }
                     </div>
 
                 </div>
                 {/* //profileData*/}
 
+                {showDeleteChat &&
+                <DeleteChat user={user}
+                            chatId={chatId}
+                            setChatIsDeleted={setChatIsDeleted}
+                            setShowDelete={setShowDelete}/>}
+
             </div>
             {/*//profile*/}
 
-            <div className={style.background} onClick={() => toggleBoolean(setShowUserProfile)}/>
+            <div className={style.background} onClick={closeUserProfile}/>
         </div>
     )
 }

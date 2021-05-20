@@ -1,22 +1,34 @@
 import React, {useEffect, useState} from 'react';
 import style from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import CreateDefaultUsers from "../test/CreateDefault/createDefaultUsers";
+import logoutOrange from '../../media/icons/logout-orange.svg'
+import loginOrange from '../../media/icons/login.svg'
 
 const Header = (props) => {
 
     const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
-    const [logoutLinkText, setLogoutLinkText] = useState('Logout')
+    const [logoutLink, setLogoutLink] = useState({
+        link: 'Logout',
+        pic: logoutOrange,
+    })
 
     useEffect(() => {
         if (isLoggedIn) {
-            setLogoutLinkText('Logout')
+            setLogoutLink(prev => ({
+                ...prev,
+                link: 'Logout',
+                pic: logoutOrange
+            }))
         } else {
-            setLogoutLinkText('Login')
+            setLogoutLink(prev => ({
+                ...prev,
+                link: 'Login',
+                pic: loginOrange
+            }))
         }
     }, [isLoggedIn])
 
-    const logout = (e) => {
+    const logout = () => {
         if (isLoggedIn === true) {
             setIsLoggedIn(false)
             localStorage.removeItem('token')
@@ -28,16 +40,9 @@ const Header = (props) => {
         <header className={style.header}>
 
             <div className={style.logoWrap}>
-                <p className={style.logo}>Messenger <span className={style.huiogo}>huiessenger</span></p>
+                <p className={style.logo}>Messenger <span className={style.memogo}>memessenger</span></p>
             </div>
-            {/*<div className={s.mess}>*/}
-            <nav className={style.navigation}>
-                <NavLink to='/signup' className={style.headerLink}>Sign Up</NavLink>
-                <NavLink to='/login' className={style.headerLink}>Login</NavLink>
-                <NavLink to='/chat' className={style.headerLink}>Chat</NavLink>
-                <NavLink to='/test' className={style.headerLink}>Test</NavLink>
-                {/*<CreateDefaultUsers/>*/}
-            </nav>
+
 
             <div className={style.rightBar}>
                 <div className={style.username}>
@@ -46,11 +51,12 @@ const Header = (props) => {
                 <NavLink to='/login'
                          className={`${style.logoutLink} ${style.headerLink}`}
                          onClick={logout}>
-                    {logoutLinkText}
+                    {logoutLink.link}
+                    <img src={logoutLink.pic}
+                         className={style.icon}
+                         alt="Logout"/>
                 </NavLink>
             </div>
-            {/*</div>*/}
-
 
         </header>
     )

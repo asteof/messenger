@@ -1,32 +1,91 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import style from './LoginForm.module.css';
 import generalStyle from '../generalAuth.module.css';
 import {NavLink, useHistory} from "react-router-dom";
 import axios from "axios";
 import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 import {setLocalWithExpiry} from "../../constants/localStorage";
+import eyeIcon from '../../../media/icons/eye-icon.svg'
+import noEyeIcon from '../../../media/icons/no-eye-icon.svg'
+import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
+import {loginUsernameValidation} from "../../constants/validation";
 
 function LoginForm(props) {
+    const {setIsLoggedIn, currentUser, registrationSuccess} = props
+    const username = currentUser.username !== undefined ? currentUser.username : ''
     const [loginData, setLoginData] = useState({
-        username: '',
-        password: ''
+        username,
+        password: '',
+        usernameError: '',
+        passwordError: ''
     })
-    const [JWT_AUTH_TOKEN, setJWT_AUTH_TOKEN] = useState('')
-
-    const [loginResponse, setLoginResponse] = useState({
-        successMessage: '',
-        errorMessage: '',
-        serverResponse: ''
-    })
-
-    const {setIsLoggedIn} = props
-
     let history = useHistory()
+    const [showNotify, setShowNotify] = useState(false)
+    const [notifyText, setNotifyText] = useState('')
+    const [JWT_AUTH_TOKEN, setJWT_AUTH_TOKEN] = useState('')
+    const usernameRef = useRef(null)
+    const passwordRef = useRef(null)
+
+    const [showPassword, setShowPassword] = useState({
+        p: 'password',
+        pp: eyeIcon,
+    })
+
+    const togglePassword = () => {
+        if (showPassword.p === 'password') {
+            setShowPassword(prevShow => ({
+                ...prevShow,
+                p: 'text',
+                pp: noEyeIcon
+            }))
+        } else {
+            setShowPassword(prevShow => ({
+                ...prevShow,
+                p: 'password',
+                pp: eyeIcon
+            }))
+        }
+        passwordRef.current.focus()
+    }
+
+    const closeNotify = () => {
+        toggleBoolean(setShowNotify)
+        setNotifyText('')
+    }
 
     const handleChange = e => {
         setLoginData(prevLoginData => ({
             ...prevLoginData, [e.target.id]: e.target.value
         }))
+    }
+
+    useEffect(() => {
+        if (notifyText !== '')
+            toggleBoolean(setShowNotify)
+    }, [notifyText])
+
+    const validate = () => {
+        const usernameValid = loginUsernameValidation(loginData.username)
+        if (typeof usernameValid === 'string') {
+            setLoginData(prev => ({
+                ...prev,
+                usernameError: usernameValid
+            }))
+            return false
+        }
+        if (loginData.password === '') {
+            setLoginData(prev => ({
+                ...prev,
+                passwordError: 'Password cannot be empty'
+            }))
+            return false
+        }
+        setLoginData(prev => ({
+            ...prev,
+            usernameError: '',
+            passwordError: ''
+        }))
+        return true
     }
 
     const handleSubmit = async e => {
@@ -36,105 +95,93 @@ function LoginForm(props) {
         formData.append('username', loginData.username)
         formData.append('password', loginData.password)
 
-        if (loginData.username !== '' && loginData.password !== '') {
+        const isValid = validate()
+        if (isValid) {
 
-            axios.post(`${API_PATH}/login`, formData)
-                .then(response => {
-                    if (response.status === 200) {
-                        console.log('loginForm.js response', response)
-                        setJWT_AUTH_TOKEN(response.data.access_token);
-                    }
-                })
-                .catch(error => {
-                    console.log(error)
-                    console.log(error.response)
-                    console.log(error.request)
+            if (loginData.username !== '' && loginData.password !== '') {
 
-                    if (typeof error.response === 'undefined') {
-                        setLoginResponse(prevLoginResponse => ({
-                            ...prevLoginResponse,
-                            errorMessage: `Cannot log in due to a network error.`,
-                            serverResponse: error.toString()
-                        }))
-                        console.log(loginResponse)
-                    } else {
-                        if (error.response.status === 401) {
-                            setLoginResponse(prevLoginResponse => ({
-                                ...prevLoginResponse,
-                                errorMessage: `Username or password are incorrect`
-                                // serverResponse: error.toString()
-                            }))
-                            console.log(loginResponse)
-                        } else {
-                            setLoginResponse(prevLoginResponse => ({
-                                ...prevLoginResponse,
-                                errorMessage: `Cannot log in due to an error.`,
-                                serverResponse: error.toString()
-                            }))
-                            console.log(loginResponse)
+                axios.post(`${API_PATH}/login`, formData)
+                    .then(response => {
+                        if (response.status === 200) {
+                            console.log('loginForm.js response', response)
+                            setJWT_AUTH_TOKEN(response.data.access_token);
                         }
-                    }
-                })//.catch block
-        }//if statement
+                    })
+                    .catch(error => {
+                            console.log(error)
+                            console.log(error.response)
+                            if (typeof error.response === 'undefined') {
+                                setNotifyText(`Cannot login due to a network error. ${error.toString()}`)
+                            } else {
+                                if (error.response.status === 401) {
+                                    setNotifyText(`Username or password are incorrect`)
+                                } else {
+                                    setNotifyText(`Cannot login due to an error. ${error.toString()}`)
+                                }
+                            }
+                        }
+                    )//.catch block
+            }//if fields not empty
+        }//if isValid
     }
 
     useEffect(() => {
-        // console.log('LoginForm.js use effect called')
+        usernameRef.current.focus()
+        if (registrationSuccess) {
+            setNotifyText('Successfully registered! You can now log in')
+            toggleBoolean(setShowNotify)
+        }
+    }, [])
 
+    useEffect(() => {
         if (JWT_AUTH_TOKEN !== '') {
-            setLoginResponse(prevLoginResponse => ({
-                ...prevLoginResponse,
-                successMessage: 'Logged in successfully'
-            }))
             setIsLoggedIn(true)
-
             setLocalWithExpiry('token', JWT_AUTH_TOKEN, 86398);
-            // const JWT_header =
-
             history.push('/chat')
         }
-
-
     }, [JWT_AUTH_TOKEN])
-
-    // useEffect(()=>{
-    //     setUser()
-    // })
-    // const setUser = () => {
-    //     let JWT = getLocalWithExpiry('token')
-    //     if (JWT !== null || JWT !== "") {
-    //         const JWT_header = `Bearer ${getLocalWithExpiry('token')}`
-    //         console.log(`LoginForm.js ${JWT}`)
-    //
-    //
-    //     }
-    // }
 
     return (
         <div className={style.formWrap}>
-            <form onSubmit={handleSubmit} className={generalStyle.authForm}>
+            <form onSubmit={handleSubmit} className={style.authForm}>
 
                 <div className={generalStyle.fieldLabelWrapper}>
-                    <label className={generalStyle.fieldLabel} htmlFor="username">Username</label>
+                    {loginData.usernameError ?
+                        <div className={generalStyle.validationError}>{loginData.usernameError}</div> :
+                        <label className={generalStyle.fieldLabel} htmlFor="username">Username</label>
+                    }
                     <input type="text"
                            id="username"
-                           placeholder="boobaLover69"
+                           name='username'
+                           ref={usernameRef}
+                           placeholder="doge69"
                            value={loginData.username}
                            onChange={handleChange}
+                           maxLength={25}
                            className={generalStyle.inputField}
                     />
-                    {/*<p id="phoneHelp" className={g.hint}>Username</p>*/}
                 </div>
 
                 <div className={generalStyle.fieldLabelWrapper}>
-                    <label className={generalStyle.fieldLabel} htmlFor="password">Password</label>
-                    <input type="password"
-                           id="password"
-                           placeholder="Password"
-                           value={loginData.password}
-                           onChange={handleChange}
-                           className={generalStyle.inputField}
-                    />
+                    {loginData.passwordError ?
+                        <div className={generalStyle.validationError}>{loginData.passwordError}</div> :
+                        <label className={generalStyle.fieldLabel} htmlFor="password">Password</label>
+                    }
+                    <div className={generalStyle.passwordWrap}>
+                        <input type={showPassword.p}
+                               id="password"
+                               placeholder="Password"
+                               value={loginData.password}
+                               ref={passwordRef}
+                               onChange={handleChange}
+                               maxLength={30}
+                               className={generalStyle.inputField}
+                        />
+                        <img src={showPassword.pp}
+                             alt="Show password"
+                             className={generalStyle.passwordIcon}
+                             onClick={togglePassword}/>
+                    </div>
                 </div>
 
                 <div className={generalStyle.submitBtnWrap}>
@@ -147,16 +194,23 @@ function LoginForm(props) {
                     className={generalStyle.loginLink}>Sign Up</NavLink>
                 </p>
             </form>
-            {/*<div className="alert alert-success mt-2" style={{display: loginData.successMessage ? 'block' : 'none' }} role="alert">*/}
-            {/*    {loginData.successMessage}*/}
-            {/*</div>*/}
 
-            {/*<div>*/}
-            {/*<div className={testStyle.tokenHolder}>{JSON.stringify(JWT_AUTH_TOKEN)}</div>*/}
-            {/*    <div className={generalStyle.response}>{loginResponse.successMessage}</div>*/}
-            {/*    <div className={generalStyle.response}>{loginResponse.errorMessage}</div>*/}
-            {/*    <div className={generalStyle.response}><code>{loginResponse.serverResponse}</code></div>*/}
-            {/*</div>*/}
+            {showNotify &&
+            <div className='notify'>
+                <div className='closeIcon'
+                     onClick={closeNotify}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF"
+                         strokeWidth="2"
+                         strokeLinecap="round" strokeLinejoin="round">
+                        <g>
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </g>
+                    </svg>
+                </div>
+                <span>{notifyText}</span>
+            </div>
+            }
         </div>
     )
 }

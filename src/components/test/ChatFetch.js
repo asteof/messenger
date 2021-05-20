@@ -25,7 +25,6 @@ const ChatFetch = () => {
             .catch(error => console.log(error))
     }, [])
 
-
     let chatsMap = chats.map(chat=>
     <div key={chat.chatId} className={style.hi}>
         <p className={style.bold}>Chat ID: <span className={style.redSpan}>{chat.chatId}</span></p>

@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import style from './EditMessage.module.css'
-import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import {getBearerToken} from "../../../../constants/getBearerToken";
 import axios from "axios";
 import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
@@ -22,8 +22,7 @@ const EditMessage = (props) => {
 
     const editMessage = () => {
         const JWT_header = getBearerToken('editMessage')
-        if (JWT_header !== '') {
-            console.log('hui')
+        if (JWT_header !== null) {
             axios.put(
                 `${SECURED_API_PATH}/messages/${messageId}`,
                 {text: newMessage},
@@ -38,12 +37,12 @@ const EditMessage = (props) => {
                         edited: true
                     }))
                 }
-
+                closeMessageMenu()
             }).catch(error => {
                 console.log(error)
+                closeMessageMenu()
             })
         }
-        closeMessageMenu()
     }
 
     const closeMessageMenu = () => {

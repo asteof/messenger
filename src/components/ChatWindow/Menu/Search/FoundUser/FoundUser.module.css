@@ -1,0 +1,150 @@
+.foundWrap {
+    display: flex;
+    position: relative;
+    width: inherit;
+    min-width: inherit;
+    align-items: center;
+    padding: 0.8em 0.6em;
+
+}
+
+.foundWrap:hover .icon {
+    /*opacity: 0.69;*/
+}
+
+.foundWrap:hover .fieldHint {
+    color: #999999;
+}
+
+.foundWrap:hover {
+    background-color: #3c3546;
+}
+
+.foundWrap:hover .contactField {
+    width: 32%;
+}
+
+.foundWrap:hover .buttons {
+    display: flex;
+}
+
+.profilePicture {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(48px + 1vmax);
+    width: calc(48px + 1vmax);
+    border-radius: 50%;
+    margin: 0 1vmin 0 1vmin;
+    filter: contrast(122%);
+    cursor: pointer;
+}
+
+.initials {
+    filter: contrast(100%);
+    font-weight: 600;
+    font-size: calc(1.3em + 1.1vmin);
+}
+
+.contactField {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1vmin;
+    width: 70%;
+    white-space: nowrap;
+}
+
+.username {
+    font-weight: 600;
+    font-size: 1.1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fullname {
+    font-size: 0.8em;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.buttons {
+    display: none;
+    /*display: flex;*/
+    margin-left: auto;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: unset;
+    padding: 0 0.2em;
+    margin: 0 0.4em;
+    border: none;
+    cursor: pointer;
+}
+
+.icon {
+    width: 2.8em;
+    height: 2.8em;
+    opacity: 0.48;
+}
+
+.button:hover .icon {
+    opacity: 0.9;
+}
+
+.button:hover + .hint {
+    display: block;
+    animation-name: showHint;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+.hint {
+    display: none;
+    visibility: hidden;
+    position: absolute;
+    width: fit-content;
+    padding: 1px 6px;
+    bottom: -0.6em;
+    right: 0;
+    font-weight: 300;
+    font-size: 0.6em;
+    z-index: 25;
+}
+
+.hint:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(24, 24, 24, 0.6);
+    border-radius: 18px;
+    z-index: -1;
+}
+
+@keyframes showHint {
+    99% {
+        visibility: hidden;
+    }
+    100% {
+        visibility: visible;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .profilePicture {
+        height: 44px;
+        width: 44px;
+    }
+    .icon{
+        width: 2em;
+        height: 2em;
+    }
+}

@@ -9,8 +9,8 @@ const getFormattedTime = (milliseconds) => {
     const optionsGeneral = {
         hour: 'numeric',
         minute: 'numeric',
-        // hourCycle: 'h23',
-        hour12: false
+        hourCycle: 'h23',
+        // hour12: false
     }
     const optionsExact = {
         year: 'numeric',
@@ -30,4 +30,4 @@ const getFormattedTime = (milliseconds) => {
     return [messageSentAt, messageExactSentAt, messageSentDate]
 }
 
-export default getFormattedTime
+export default getFormattedTime;

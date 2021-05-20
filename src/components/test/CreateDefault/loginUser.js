@@ -17,7 +17,6 @@ const login = (username) => {
                 console.log('Token successfully acquired (loginUser.js)', response)
                 resp = response.data.access_token
                 console.log('resp', resp)
-                // return response
             }
         })
         .catch(err => {

@@ -4,50 +4,73 @@
     /*flex-direction: column;*/
     /*align-items: center;*/
     height: fit-content;
-    background-color: #ecffec;
-
+    color: #dddddd;
+    background-color: #302b36;
     padding: 0 1vw 1vw 1vw;
+    font-size: calc(10px + 0.4vw + 0.5vh);
     /*top right bottom left*/
-
     /*margin: 1vw 0;*/
     box-sizing: border-box;
     border-radius: 18px;
-    box-shadow: #55a563 0 0 18px;
+    box-shadow: #FF8C00 0 0 22px 2px;
 }
 
 
 .fieldLabel {
     margin: 0;
-    padding: 15px 0 8px;
+    padding: 0.8em 0 0.4vmin;
     width: fit-content;
-    font-size: 21px;
+    font-size: 1em;
     font-weight: 500;
 }
 
 .fieldLabelWrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin: 10px 20px;
+    margin: 0.4em 1em;
     /*min-width: 10vw;*/
     /*max-width: 16vw;*/
 }
 
 .inputField {
-    font-size: 16px;
+    font-size: 0.9em;
     padding: 4px 8px;
     width: inherit;
-    background-color: #f8fff8;
-    border: 2px solid #55a563;
+    background-color: unset;
+    color: #dedede;
+    border: none;
+    border-bottom: 3px solid;
+    border-image: linear-gradient(to right, #24202b 25%, #24202b 40%, #302b36 100%) 1;
+    text-overflow: ellipsis;
     border-radius: 6px;
-
 }
 
-.fieldLabelWrapper input::placeholder {
-    color: #375822;
+.inputField:focus {
+    border-image: linear-gradient(to right, rgba(246, 140, 27, 0.88), #302b36 98%) 1;
 }
+
+.inputField::placeholder {
+    color: #ffffff;
+    font-size: 0.94em;
+    opacity: 0.6;
+}
+
+.inputField:focus::placeholder {
+    opacity: 0.4;
+}
+
+.match, .match:focus {
+    border-image: linear-gradient(to right, rgba(49, 246, 27, 0.88), #302b36 98%) 1;
+}
+
+.noMatch, .noMatch:focus {
+    border-image: linear-gradient(to right, rgba(246, 27, 27, 0.88), #302b36 98%) 1;
+}
+
 
 .hint {
-    font-size: 12px;
+    font-size: 0.7em;
     color: #888888;
     margin: 4px 0;
     width: inherit;
@@ -55,7 +78,8 @@
 }
 
 .loginHint {
-    font-size: 18px;
+    font-size: 1em;
+    padding: 0.2em 0.6em;
     text-align: center;
 }
 
@@ -64,33 +88,115 @@
 }
 
 .submitBtn {
-    font-size: 25px;
+    font-size: 1.4em;
     font-weight: 500;
     padding: 0.4vmin 48px;
     margin: 1.2vmax;
-    background-color: #a5caa5;
-    border: 2px solid #45794d;
+    background-color: #b493cb;
+    border: 2px solid #5f4579;
     border-radius: 8px;
 }
 
 .submitBtn:hover {
-    background-color: #93cb93;
+    background-color: #bba5ca;
 }
 
 .submitBtn:active {
-    background-color: #b2ff81;
+    background-color: #cb81ff;
 }
 
 .loginLink, .loginLink:link, .loginLink:visited {
     font-weight: 500;
-    color: #36a54a;
+    color: #9f40c2;
 }
 
 .loginLink:hover {
-    color: #19c100;
+    color: #7100c1;
+}
+.passwordWrap{
+    /*position: relative;*/
+    display: flex;
+    align-items: center;
+
+}
+.passwordIcon {
+    /*visibility: hidden;*/
+    opacity: 0.1;
+    /*position: absolute;*/
+    /*transform: translateY(-50%);*/
+    /*top: 50%;*/
+    width: 3em;
+    right: 0;
+    cursor: pointer;
+    transition: opacity 1s;
 }
 
+.inputField:focus ~ .passwordIcon {
+    visibility: visible;
+    opacity: 0.9;
+}
+.validationError {
+    /*position: absolute;*/
+    top: 0;
+    width: 100%;
+    max-width: 280px;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 0.68em;
+    margin: 0;
+    padding: 0.8em 0 0.4vmin;
+    font-weight: 300;
+    color: #e33c3c;
+}
 
 .response {
     white-space: pre-wrap;
+}
+
+@media screen and (min-width: 320px) {
+    .authForm {
+        width: calc(300px + 420 * ((100vw - 320px) / 1500));
+    }
+}
+
+@media screen and (min-width: 1820px) {
+    .authForm {
+        width: 720px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .authForm {
+        /*font-size: 0.8em;*/
+        /*height: 50vh;*/
+    }
+    .fieldLabelWrapper{
+        margin: 0.9em 1em;
+    }
+    .fieldLabel{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 812px) and (orientation: landscape){
+    .authForm {
+        /*font-size: 0.8em;*/
+        /*height: 50vh;*/
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .fieldLabelWrapper{
+        margin: 0.4em 1em;
+    }
+
+    .fieldLabel{
+        display: none;
+    }
+
+    .submitBtn{
+        margin: 0.2em;
+    }
 }

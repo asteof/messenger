@@ -1,14 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './Profile.module.css'
-// import {API_PATH} from "../../constants/API_PATH_DEFAULT";
-// import {getLocalWithExpiry} from "../../Authorization/localStorage";
-import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 
-import user from '../../../media/icons/user.svg'
-import phone from '../../../media/icons/phone.svg'
-import email from '../../../media/icons/email.svg'
-import username from '../../../media/icons/username.svg'
-import edit from '../../../media/icons/edit.svg'
+import user from '../../../../media/icons/user.svg'
+import phone from '../../../../media/icons/phone.svg'
+import email from '../../../../media/icons/email.svg'
+import username from '../../../../media/icons/username.svg'
+import edit from '../../../../media/icons/edit.svg'
 import FieldEdit from "./FieldEdit/FieldEdit";
 import NameEdit from "./FieldEdit/NameEdit";
 import PasswordChange from "./FieldEdit/PasswordChange";
@@ -50,9 +48,8 @@ const Profile = (props) => {
             closeProfile()
         }
     }
-
     useEffect(() => {
-        console.log('ChatProfileBar.js current user', currentUser);
+        console.log('Profile.js current user', currentUser);
         profileRef.current.focus()
     }, [])
 
@@ -158,7 +155,7 @@ const Profile = (props) => {
             </div>
             {/*//profile*/}
 
-            <div className={style.background} onClick={() => toggleBoolean(setShowProfile)}/>
+            <div className={style.background} onClick={closeProfile}/>
         </div>
     )
 }

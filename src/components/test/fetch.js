@@ -32,10 +32,7 @@ const Fetch = () => {
                 console.log(error)
             }
         }
-
         foo()
-
-
     }, [idFromClick])
 
     // console.log(`post\n${JSON.stringify(post)}`)

@@ -6,7 +6,7 @@ import EditMessage from "./EditMessage/EditMessage";
 
 const MessageMenu = (props) => {
     const {
-        messageMenuData, setShowMessageMenu,setMessagesPage,
+        messageMenuData, setShowMessageMenu, setMessagesPage,
         setSelectedMessage, secondChatUser, setMessageChanged
     } = props
 
@@ -104,8 +104,9 @@ const MessageMenu = (props) => {
 
                 </div>
                 {/*  messageMenu  */}
+
                 {showDeleteMessage &&
-                <DeleteMessage messageMenuData={messageMenuData}
+                <DeleteMessage messageId={messageId}
                                setShowMessageMenu={setShowMessageMenu}
                                secondChatUser={secondChatUser}
                                setMessageChanged={setMessageChanged}/>}

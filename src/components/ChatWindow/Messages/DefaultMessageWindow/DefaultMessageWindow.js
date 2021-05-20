@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './DefaultMessageWindow.module.css'
 
-function DefaultMessageWindow() {
+const DefaultMessageWindow = () => {
 
     return (
         <div className={style.selectChatWrap}>

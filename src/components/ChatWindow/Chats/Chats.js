@@ -12,7 +12,7 @@ function Chats(props) {
     const {
         chatsData,
         currentUser,
-        setReceivedMessage,receivedMessage,
+        receivedMessage,
         setSecondChatUser,
         setIsLoggedIn,
         setMessages, lastMessages,
@@ -20,6 +20,12 @@ function Chats(props) {
         profilePictureColors, setProfilePictureColors
     } = props
     // console.log('Chats.js current user', currentUser)
+
+    const closeChat = event => {
+        if (event.code ==='Escape'){
+            setSelectedChat(0)
+        }
+    }
 
 
     let chats = chatsData
@@ -47,7 +53,6 @@ function Chats(props) {
                           setSelectedChat={setSelectedChat}
                           setIsLoggedIn={setIsLoggedIn}
                           setMessages={setMessages}
-                          setReceivedMessage={setReceivedMessage}
                           receivedMessage={receivedMessage}
                           lastMessage={lastMessage}
                           profilePictureColors={profilePictureColors}
@@ -59,7 +64,7 @@ function Chats(props) {
     // console.log(chats)
 
     return (
-        <div className={style.chats}>
+        <div className={style.chats} tabIndex='0' onKeyDown={closeChat}>
             {chats}
         </div>
     )

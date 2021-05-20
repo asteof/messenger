@@ -11,7 +11,7 @@
     margin: 0 0.42vmin;
     /*padding: 10px 20px;*/
     border-radius: 36px;
-    background-color: #60587f;
+    background-color: #75637b;
     width: fit-content;
     max-width: 50%;
     white-space: pre-wrap;
@@ -26,7 +26,7 @@
     top: 3.2em;
     left: 10px;
     transform: rotate(25deg);
-    border-top: 0.8em solid #60587f;
+    border-top: 0.8em solid #75637b;
     border-right: 0.8em solid transparent;
 
     /*box-shadow: 2px 2px 0px 0px #2b2834;*/
@@ -40,7 +40,7 @@
 .messageSentAtWrap {
     font-size: 0.69em;
     font-weight: 400;
-    color: #170031;
+    color: #16002f;
 
     display: flex;
 
@@ -55,7 +55,7 @@
     align-items: center;
 }
 
-.iconWrap span{
+.iconWrap span {
     color: #ffffff;
     opacity: 0.4;
     font-weight: 300;
@@ -75,7 +75,7 @@
     cursor: pointer;
 }
 
-.editIcon{
+.editIcon {
     opacity: 0.4;
     position: relative;
     height: 0.82em;
@@ -135,7 +135,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0.4em 0 ;
+    margin: 0.4em 0;
 }
 
 .dateChange {
@@ -171,7 +171,7 @@ fromMe styles
 }
 
 .fromMe .message {
-    background-color: #2b2834;
+    background-color: #2d2834;
     color: #dddddd;
 }
 
@@ -192,17 +192,17 @@ fromMe styles
     z-index: -1;
 }
 
-
 .fromMe .messageSentAtWrap {
-    color: #8d79bf;
+    color: #9675a1;
 }
+
 /*---------------
 selected
 ---------------*/
 .selected {
     /*color: #ff9e51;*/
     background-color: rgba(255, 158, 81, 0.09);
-    filter: sepia(100%) saturate(120%);
+    filter: sepia(100%) saturate(180%);
 }
 
 .fromMe .messageExactSentAt {
@@ -230,31 +230,4 @@ animations
     100% {
         opacity: 1;
     }
-}
-
-/*-----------------
-scrollbars
-------------------*/
-.messages::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    border-radius: 18px;
-}
-
-.messages::-webkit-scrollbar-track {
-    background: #2b2834;
-    /*box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);*/
-}
-
-.messages::-webkit-scrollbar-thumb {
-    background-color: #756c8f;
-    /*border: 2px solid #F47F3F;*/
-    /*box-shadow: inset 0 0 4px 1px rgba(255, 155, 0, 0.69);*/
-    border-radius: 18px;
-    height: 18px;
-}
-
-.messages::-webkit-scrollbar-corner {
-    box-shadow: inset 0 0 5px rgba(255, 155, 0, 0.69);
-    background: #2b2834;
 }

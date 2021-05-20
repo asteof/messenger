@@ -11,15 +11,14 @@ const SimpleUpdateMessage = (props) => {
 
     const changeMessage = (e) => {
         e.preventDefault()
-        axios.put(`${SECURED_API_PATH}/messages/${msgId}`, {text: msg}, {
-            headers: {authorization: newJWT}
-        })
+        axios.put(`${SECURED_API_PATH}/messages/${msgId}`, {text: msg},
+            {headers: {authorization: newJWT}})
             .then(response => {
                 console.log(response)
             })
             .catch(err => {
-            console.log(err)
-        })
+                console.log(err)
+            })
     }
 
     return (
@@ -29,14 +28,16 @@ const SimpleUpdateMessage = (props) => {
                 <div>
                     <label htmlFor="">Message ID</label>
                     <div>
-                        <input type="number" value={msgId} onChange={e => setMsgId(e.target.value)} className={style.inputField}/>
+                        <input type="number" value={msgId} onChange={e => setMsgId(e.target.value)}
+                               className={style.inputField}/>
                     </div>
                 </div>
 
                 <div>
                     <label htmlFor="">New text</label>
                     <div>
-                        <input type="text" value={msg} onChange={e => setMsg(e.target.value)} className={style.inputField}/>
+                        <input type="text" value={msg} onChange={e => setMsg(e.target.value)}
+                               className={style.inputField}/>
                     </div>
                 </div>
 
@@ -48,4 +49,4 @@ const SimpleUpdateMessage = (props) => {
         </div>
     )
 }
-export default SimpleUpdateMessage
+export default SimpleUpdateMessage;

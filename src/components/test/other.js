@@ -8,7 +8,6 @@ import axios from "axios";
 const Other = ({colour, setColour}) => {
     const [count, setCount] = useState(10)
 
-
     const [x, setX] = useState(0)
     const [y, setY] = useState(0)
 
@@ -27,9 +26,9 @@ const Other = ({colour, setColour}) => {
         }
     }, [])
 
-    const [time, setTime] = useState({
-        hours: 0, minutes: 0, seconds: 0, milliseconds: 0, unix: 0
-    })
+    // const [time, setTime] = useState({
+    //     hours: 0, minutes: 0, seconds: 0, milliseconds: 0, unix: 0
+    // })
     // let d = new Date();
 
     const click = () => {
@@ -67,7 +66,7 @@ const Other = ({colour, setColour}) => {
                 </div>
 
                 {/*<div className={style.cont}>{time.hours}:{time.minutes}:{time.seconds}</div>*/}
-                <p>{time.unix}</p>
+                <p>0</p>
                 <p>timer</p>
                 <div className={style.cont}>
                     <Timer/>

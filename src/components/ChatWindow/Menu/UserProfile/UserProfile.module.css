@@ -20,13 +20,12 @@
 
 .profile {
     position: relative;
-    height: 84vh;
-    min-width: 300px;
+    height: calc(66vh + 8vw);
+    width: 250px;
     min-height: 250px;
     display: grid;
-    /*grid-template-columns: ;*/
     grid-template-rows: repeat(11, 1fr);
-    background-color: #282c34;
+    background-color: #302b36;
     border-radius: 18px;
     z-index: 10;
 }
@@ -87,8 +86,6 @@
     width: inherit;
     min-width: inherit;
     align-items: center;
-    /*justify-content: center;*/
-    /*cursor: pointer;*/
 }
 
 .fieldWrap:hover .icon {
@@ -104,7 +101,7 @@
 }
 
 .fieldWrap:hover {
-    background-color: #333844;
+    background-color: #3c3546;
 }
 
 .field {
@@ -112,9 +109,11 @@
     flex-direction: column;
     width: 100%;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .field span {
+    width: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -128,23 +127,25 @@
 .contactWrap {
     grid-row: 8/11;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.contactBtn {
+.button {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.1em;
+    margin: 0.2em 0;
     padding: 0.6vmin 1.488vmin;
-    background-color: #1b1e23;
+    background-color: #1e1b23;
     border: none;
     border-radius: 10px;
     cursor: pointer;
 }
 
-.contactBtn:hover .contactIcon {
+.button:hover .buttonIcon {
     opacity: 0.9;
 }
 
@@ -156,13 +157,22 @@
     color: rgba(208, 71, 71, 0.7);
 }
 
+.deleteChat {
+    font-size: 0.8em;
+    padding: 0.1vmin 0.8vmin;
+}
+.deleteChat .buttonIcon{
+    width: 1.2em;
+    height: 1.2em;
+}
+
 .contact:active{
     color: #e07b00;
     fill: #e07b00;
     stroke: #e07b00;
 }
 
-.contactIcon {
+.buttonIcon {
     width: 1.7em;
     height: 1.7em;
     padding: 0.2em 0.6vmax;
@@ -190,8 +200,7 @@
 
 @media screen and (max-width: 1500px) {
     .profile {
-        /*width: 40vw;*/
-        min-width: 340px;
+        /*min-width: 340px;*/
         /*height: 56vh;*/
     }
     .field {
@@ -201,9 +210,8 @@
 
 @media screen and (max-width: 800px) {
     .profile {
-        /*width: 40vw;*/
-        min-width: 300px;
-        height: 64vh;
+        /*min-width: 300px;*/
+        /*height: 64vh;*/
     }
 
     .profileData {
@@ -244,10 +252,17 @@
 }
 
 @media screen and (min-width: 320px) {
-    .field {
-        /*font-size: calc(1em + 8 * ((100vw - 320px) / 960));*/
+    .profile{
+        width: calc(250px + 230 * ((100vw - 320px) / 1500));
     }
 }
+
+@media screen and (min-width: 1820px) {
+    .profile{
+        width: 480px;
+    }
+}
+
 
 @media (hover: hover) {
     .add:hover {
@@ -267,6 +282,11 @@
     .profile {
         /*font-size: calc(10px + 0.8vmin + 0.4vmax);*/
         min-width: 300px;
-        height: 80vh;
+        height: calc(70vh + 8vw);
+        /*background-color: #dddddd;*/
+    }
+
+    .deleteChat{
+        display: none;
     }
 }

@@ -1,11 +1,11 @@
 .chatProfileBar {
     display: flex;
     align-items: center;
-    background-color: #2e2834;
-    border-bottom: 2px solid #2e2834;
+    /*background-color: #2e2834;*/
+    background-color: #322834;
+    border-bottom: 2px solid rgba(51, 39, 57, 0.6);
     width: 100%;
 }
-
 
 .chatProfilePicture {
     position: relative;
@@ -37,10 +37,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-/*.nameWrap:hover .phoneNumber {*/
-/*    display: block;*/
-/*}*/
 
 .name{
     cursor: pointer;

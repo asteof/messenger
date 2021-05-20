@@ -12,4 +12,4 @@ const getBearerToken = (filename = '') => {
     return JWT_header
 }
 
-export {getBearerToken}
+export {getBearerToken};

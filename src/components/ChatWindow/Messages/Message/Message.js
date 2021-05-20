@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import style from './message.module.css'
 import getFormattedTime from "../../../constants/getFormattedTime";
 // import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../constants/ChangeDisplayStyle";
@@ -82,6 +82,8 @@ const Message = (props) => {
                         </div>
                     </div>
                 </div>
+                {/*//messagee*/}
+
             </div>
         </>
     )

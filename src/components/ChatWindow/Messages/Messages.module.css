@@ -5,14 +5,13 @@
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    background-color: #38333e;
+    background-color: #3a3340;
 }
 
 .messages {
     display: flex;
     flex-direction: column;
-    /*justify-content: flex-end;*/
-    background-color: #38333e;
+    background-color: #3a3340;
     color: #dddddd;
     height: 100%;
     width: 76vw;
@@ -37,7 +36,7 @@
     padding: 0.3em 1vmax;
     font-size: 1em;
     color: #dedede;
-    background-color: #41354e;
+    background-color: #463649;
     border: none;
     box-shadow: 0 0 5px 0 #ff9e51;
     border-radius: 8px;
@@ -58,19 +57,6 @@
     box-shadow: 0 0 20px 8px #ff9e51;
 }
 
-.messageWrap {
-    display: flex;
-    margin: 12px 0;
-}
-
-.message {
-    padding: 18px 20px;
-    border-radius: calc(8px + 1.2vmax);
-    background-color: #2b2834;
-    width: fit-content;
-    max-width: 50%;
-}
-
 .chatProfileBarWrap {
     height: fit-content;
 }
@@ -86,7 +72,7 @@
 .messageForm {
     position: relative;
     height: 100%;
-    background-color: #2e2834;
+    background-color: #322834;
 }
 
 .messageArea {
@@ -98,7 +84,7 @@
     border: none;
     position: relative;
     bottom: 0;
-    background-color: #2e2834;
+    background-color: #322834;
     box-sizing: border-box;
     resize: none;
 }
@@ -172,12 +158,12 @@ scrollbars
 }
 
 .messages::-webkit-scrollbar-track {
-    background: #2b2834;
+    background: #27232a;
     /*box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);*/
 }
 
 .messages::-webkit-scrollbar-thumb {
-    background-color: #756c8f;
+    background-color: #786280;
     /*border: 2px solid #F47F3F;*/
     /*box-shadow: inset 0 0 4px 1px rgba(255, 155, 0, 0.69);*/
     border-radius: 18px;
@@ -186,5 +172,5 @@ scrollbars
 
 .messages::-webkit-scrollbar-corner {
     box-shadow: inset 0 0 5px rgba(255, 155, 0, 0.69);
-    background: #2b2834;
+    background: #27232a;
 }

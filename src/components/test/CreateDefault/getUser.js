@@ -19,16 +19,12 @@ const get = (newJWT) => {
 }
 
 const getUser = (JWTs) => {
-    // return new Promise(resolve => {
-    //     resolve({
     return {
         voko: get(JWTs.voko),
         kirpich: get(JWTs.kirpich),
         masha_lar: get(JWTs.masha_lar),
         danylo: get(JWTs.danylo)
     }
-    // })
-    // })
 }
 
 export default getUser

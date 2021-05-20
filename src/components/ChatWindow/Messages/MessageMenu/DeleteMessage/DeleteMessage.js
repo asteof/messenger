@@ -1,20 +1,15 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import style from './DeleteMessage.module.css'
-import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import {getBearerToken} from "../../../../constants/getBearerToken";
 import axios from "axios";
 import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
 
 const DeleteMessage = (props) => {
     const {
-        messageMenuData, setShowMessageMenu,
+        messageId, setShowMessageMenu,
         secondChatUser, setMessageChanged
     } = props
-
-    const {
-        fromMe, messageId, messageText,
-        recipientName, senderName, sentAt
-    } = messageMenuData
 
     const deleteMessageRef = useRef(null)
     const fullname = `${secondChatUser.firstname} ${secondChatUser.lastname}`
@@ -28,23 +23,24 @@ const DeleteMessage = (props) => {
                 {headers: {authorization: JWT_header}}
             ).then(response => {
                 console.log(response)
-                if (response.status === 202){
-                    setMessageChanged(prevMsg =>({
+                if (response.status === 202) {
+                    setMessageChanged(prevMsg => ({
                         ...prevMsg,
                         id: messageId,
                         time: Date.now(),
                         deleted: true
                     }))
                 }
-
+                closeMessageMenu()
             }).catch(error => {
                 console.log(error)
+                closeMessageMenu()
             })
         }
-        closeMessageMenu()
+
     }
 
-    const closeMessageMenu = ()=>{
+    const closeMessageMenu = () => {
         toggleBoolean(setShowMessageMenu)
     }
 
@@ -54,7 +50,7 @@ const DeleteMessage = (props) => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         deleteMessageRef.current.focus()
     }, [])
 
