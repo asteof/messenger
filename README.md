@@ -1,7 +1,7 @@
-# This app works with external backend
+# This app works with external backend:
 ## https://github.com/MrAndersonAkaNeo/messenger
 
-  
+## React:  
 ### Available Scripts
 
 In the project directory, you can run:

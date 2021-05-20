@@ -12,6 +12,8 @@ import getMessagesFromChat from "../constants/getMessagesFromChat";
 import {webSocketInstance} from "../constants/webSocketInstance";
 import MenuIcons from "./MenuIcons/MenuIcons";
 import RandomColor from "../constants/RandomColor";
+import useSound from "use-sound";
+import messageSound from '../../media/sounds/1.mp3'
 
 function ChatWindow(props) {
     const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
@@ -56,6 +58,8 @@ function ChatWindow(props) {
     })
     const [chatIsDeleted, setChatIsDeleted] = useState(0)
     // const {message, errorMessage, serverResponse} = sessionResponse
+    const [playSound] = useSound(messageSound,
+        {volume: 0.25})
     const cancelToken = axios.CancelToken
     const source = cancelToken.source()
 
@@ -143,18 +147,26 @@ function ChatWindow(props) {
 
     //rerender component to display messages after receiving a new message
     useEffect(() => {
-        const JWT_header = getBearerToken('ChatWindow message sent')
-        if (isLoggedIn === true && JWT_header !== null) {
-            getLastMessages(JWT_header)
-        }
+        if (receivedMessage.id !== 0) {
 
-        return () => {
-            source.cancel("axios fetch cancelled")
-            setSessionResponse(prevSessionResponse => ({
-                ...prevSessionResponse,
-                message: `axios fetch cancelled`,
-                requestCancelled: true
-            }))
+            const JWT_header = getBearerToken('ChatWindow message sent')
+            if (isLoggedIn === true && JWT_header !== null) {
+                getChats(JWT_header)
+                getLastMessages(JWT_header)
+            }
+            // if (!messageAreaHasFocus) {
+            if (selectedChat === 0 ||
+                selectedChat !== receivedMessage.chatId) {
+                playSound()
+            }
+            return () => {
+                source.cancel("axios fetch cancelled")
+                setSessionResponse(prevSessionResponse => ({
+                    ...prevSessionResponse,
+                    message: `axios fetch cancelled`,
+                    requestCancelled: true
+                }))
+            }
         }
     }, [receivedMessage])
 

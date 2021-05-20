@@ -73,7 +73,7 @@ const phoneValidation = phoneNumber => {
     if (phoneNumber.trim() === '') {
         return null;
     }
-    if (!/^\d$/.test(phoneNumber)) {
+    if (!/^\d*$/.test(phoneNumber)) {
         return 'Only numbers are accepted'
     }
     if (phoneNumber.trim().length < 12) {

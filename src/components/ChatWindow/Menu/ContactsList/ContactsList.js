@@ -110,8 +110,8 @@ const ContactsList = (props) => {
         }
     }, [contactIsRemoved])
 
-    useEffect(()=>{
-        if (selectedUser!==null){
+    useEffect(() => {
+        if (selectedUser !== null) {
             contactsRef.current.style.display = 'none'
             contactsBgRef.current.style.display = 'none'
             toggleBoolean(setShowUserProfile)
@@ -143,7 +143,12 @@ const ContactsList = (props) => {
 
                 <div className={style.contactsList}>
                     <div className={style.separator}/>
-                    {contacts}
+                    {contacts.length > 0 ? contacts :
+                        <div className={style.notFound}>
+                            It looks like you don't have contacts yet.
+                            <br/>Do you want to find someone?
+                        </div>
+                    }
                 </div>
 
                 {showRemove &&

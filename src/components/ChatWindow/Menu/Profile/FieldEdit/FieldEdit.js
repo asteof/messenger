@@ -12,7 +12,7 @@ const FieldEdit = (props) => {
 
     const getUserValueToChange = () => {
         for (const [key, value] of Object.entries(currentUser)) {
-            console.log(`FieldEdit.js ${key}: ${value}`);
+            console.log(`FieldEdit.js`, key, value);
             console.log(editProperty, displayProperty);
             if (key === editProperty) {
                 console.log(value)
@@ -26,7 +26,11 @@ const FieldEdit = (props) => {
     }
 
     useEffect(() => {
-        const valueToChange = getUserValueToChange()
+        let valueToChange = getUserValueToChange()
+        console.log(valueToChange)
+        if (valueToChange === null || valueToChange === undefined) {
+            valueToChange = ''
+        }
         setValue(valueToChange)
         userValueRef.current = valueToChange
     }, [])
@@ -38,46 +42,43 @@ const FieldEdit = (props) => {
 
             const JWT_header = getBearerToken()
             if (JWT_header !== null) {
-                const cancelToken = axios.CancelToken
-                const source = cancelToken.source()
-                await updateUser(JWT_header, source)
+                await updateUser(JWT_header)
             }
         }
         closeEdit()
     }
 
-    const updateUser = async (JWT_header, source) => {
-        try {
-            //first request is PUT, to change user data
-            const updateUser = await axios.put(
-                `${SECURED_API_PATH}/user`,
-                {[editProperty]: value},
-                {headers: {authorization: JWT_header}, cancelToken: source.token}
-            )
-            const updateUserResponse = updateUser.status
-            console.log(updateUserResponse)
+    const updateUser = async (JWT_header) => {
+        if (value !== '') {
+            try {
+                //first request is PUT, to change user data
+                const updateUser = await axios.put(
+                    `${SECURED_API_PATH}/user`,
+                    {[editProperty]: value},
+                    {headers: {authorization: JWT_header}}
+                )
+                const updateUserResponse = updateUser.status
+                console.log(updateUserResponse)
 
-            //when response is received if response.status is 200 fires second request
-            if (updateUserResponse === 202) {
-                try {
-                    //second request gets user with updated data
-                    const setUpdatedUser = await axios.get(
-                        `${SECURED_API_PATH}/user`,
-                        {headers: {authorization: JWT_header}, cancelToken: source.token}
-                    )
-                    const updatedUser = setUpdatedUser.data
-                    console.log(updatedUser)
-                    //after receiving the response user is set for the app
-                    setCurrentUser(updatedUser)
-                } catch (error) {
-                    console.log('setUpdatedUser error', error)
-                    source.cancel()
+                //when response is received if response.status is 200 fires second request
+                if (updateUserResponse === 202) {
+                    try {
+                        //second request gets user with updated data
+                        const setUpdatedUser = await axios.get(
+                            `${SECURED_API_PATH}/user`,
+                            {headers: {authorization: JWT_header}}
+                        )
+                        const updatedUser = setUpdatedUser.data
+                        console.log(updatedUser)
+                        //after receiving the response user is set for the app
+                        setCurrentUser(updatedUser)
+                    } catch (error) {
+                        console.log('setUpdatedUser error', error)
+                    }
                 }
-            } else {
-                source.cancel()
+            } catch (error) {
+                console.log('updateUser', error)
             }
-        } catch (error) {
-            console.log('updateUser', error)
         }
     }
 
@@ -91,6 +92,7 @@ const FieldEdit = (props) => {
                         <input type="text"
                                id='property'
                                value={value}
+                               maxLength={30}
                                className={style.inputField}
                                autoFocus
                                onChange={e => setValue(e.target.value)}

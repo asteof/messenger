@@ -202,7 +202,7 @@ selected
 .selected {
     /*color: #ff9e51;*/
     background-color: rgba(255, 158, 81, 0.09);
-    filter: sepia(100%) saturate(180%);
+    filter: sepia(100%) saturate(160%);
 }
 
 .fromMe .messageExactSentAt {

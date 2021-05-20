@@ -151,9 +151,10 @@
 }
 
 .notFound{
-    width: 100%;
+    /*width: 100%;*/
     display: flex;
-    padding: 1vmax 0;
+    text-align: center;
+    padding: 1vmax 1em;
     justify-content: center;
     align-items: center;
     color: rgba(255, 255, 255, 0.6);

@@ -110,6 +110,7 @@ const Messages = (props) => {
             messagesRef.current.scrollTo({left: 0, top: (messagesRef.current.scrollHeight), behavior: 'smooth'})
             console.log(`messagesMap ${str}`, messagesMap)
             messageAreaRef.current.focus()
+            // (true)
         }
     }
 

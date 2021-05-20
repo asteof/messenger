@@ -4,16 +4,11 @@ import React, {useEffect, useState} from 'react';
 import RegistrationForm from "./components/Authorization/RegistrationForm/RegistrationForm.js"
 import ChatWindow from "./components/ChatWindow/ChatWindow";
 import LoginForm from "./components/Authorization/LoginForm/LoginForm";
-import Test from "./components/test/test"
+// import Test from "./components/test/test"
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import {getLocalWithExpiry} from "./components/constants/localStorage";
 
 function App() {
-
-
-    // const [tokenExpired, setTokenExpired] = useState(false)
-    // tokenExpired={tokenExpired}
-    // setTokenExpired={setTokenExpired}
 
     /* this state defines if the user is logged in
     according to value of this state user is redirected to /chat or to /login pages
@@ -67,9 +62,9 @@ function App() {
                             }
                         </Route>
 
-                        <Route path='/test'>
-                            <Test/>
-                        </Route>
+                        {/*<Route path='/test'>*/}
+                        {/*    <Test/>*/}
+                        {/*</Route>*/}
 
                         {/* this route forbids user to go to /signup page after he had authorized*/}
                         <Route path='/signup'>

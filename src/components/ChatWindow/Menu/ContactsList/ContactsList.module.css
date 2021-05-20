@@ -58,6 +58,16 @@
     color: #7b7b7b;
 }
 
+.notFound{
+    /*width: 100%;*/
+    display: flex;
+    text-align: center;
+    padding: 1vmax 2em;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .closeIcon {
     position: absolute;
     right: 0;
