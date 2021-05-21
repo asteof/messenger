@@ -16,7 +16,7 @@ const Chat = (props) => {
 
     const secondUserId = secondUser.id
 
-    console.log(lastMessage)
+    // console.log(lastMessage)
 
     const [messageTime, setMessageTime] = useState(null)
     const [lastMessageIsFetched, setLastMessageIsFetched] = useState(false)

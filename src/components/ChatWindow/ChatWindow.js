@@ -151,8 +151,10 @@ function ChatWindow(props) {
 
             const JWT_header = getBearerToken('ChatWindow message sent')
             if (isLoggedIn === true && JWT_header !== null) {
-                getChats(JWT_header)
                 getLastMessages(JWT_header)
+                if (chatsData.some(el => el.chatId !== receivedMessage.chatId)) {
+                    getChats(JWT_header)
+                }
             }
             // if (!messageAreaHasFocus) {
             if (selectedChat === 0 ||

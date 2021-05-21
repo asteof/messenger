@@ -4,6 +4,7 @@ import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import axios from "axios";
 import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
 import {getLocalWithExpiry} from "../../../../constants/localStorage";
+import {passwordValidation, confirmPasswordValidation} from "../../../../constants/validation";
 
 import eyeIcon from '../../../../../media/icons/eye-icon.svg'
 import noEyeIcon from '../../../../../media/icons/no-eye-icon.svg'
@@ -12,7 +13,7 @@ const NameEdit = (props) => {
     const {setShowPasswordChange} = props
     const [passwords, setPasswords] = useState({
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
     })
     const {password, confirmPassword} = passwords
     const [showPassword, setShowPassword] = useState({
@@ -21,6 +22,12 @@ const NameEdit = (props) => {
         pp: eyeIcon,
         cp: eyeIcon
     })
+
+    // const [errors, setErrors] = useState({
+    //     password: '',
+    //     confirmPassword: '',
+    // })
+
     const passwordRef = useRef(null)
     const passwordConfirmRef = useRef(null)
     const defaultFieldClass = style.passInputField
@@ -37,17 +44,26 @@ const NameEdit = (props) => {
         toggleBoolean(setShowPasswordChange)
     }
 
+    // const validation = {
+    //     password: passwordValidation(),
+    //     confirmPassword: confirmPasswordValidation(),
+    // }
+
     const edit = event => {
         event.preventDefault()
+        if (password !== ''
+            && confirmPassword !== ''
+            && password === confirmPassword) {
 
-        const JWT = getLocalWithExpiry('token')
-        if (JWT !== null && JWT !== '' && password === confirmPassword) {
-            let JWT_header = `Bearer ${JWT}`
-            const cancelToken = axios.CancelToken
-            const source = cancelToken.source()
+            const JWT = getLocalWithExpiry('token')
+            if (JWT !== null && JWT !== '') {
+                let JWT_header = `Bearer ${JWT}`
+                const cancelToken = axios.CancelToken
+                const source = cancelToken.source()
 
-            changePassword(JWT_header, source)
-            closeEdit()
+                changePassword(JWT_header, source)
+                closeEdit()
+            }
         }
     }
 
@@ -106,7 +122,7 @@ const NameEdit = (props) => {
             && password !== confirmPassword) {
             setFieldClass(`${defaultFieldClass} ${style.noMatch}`)
         } else if (password === ''
-            && confirmPassword === ''){
+            && confirmPassword === '') {
             setFieldClass(defaultFieldClass)
         }
     }, [password, confirmPassword, defaultFieldClass])
