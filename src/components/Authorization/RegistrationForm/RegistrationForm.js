@@ -269,7 +269,7 @@ function RegistrationForm(props) {
                            id='email'
                            name="email"
                            autoComplete='email'
-                           placeholder="adolf-obama48@gmail.com"
+                           placeholder="doge4816@gmail.com"
                            value={formData.email}
                            onChange={handleChange}
                            onBlur={handleBlur}
