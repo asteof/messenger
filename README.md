@@ -1,3 +1,7 @@
+# Try live:
+## https://messenger-memesenger.herokuapp.com
+Heroku server requires several minutes to start
+
 # This app works with external backend:
 ## https://github.com/MrAndersonAkaNeo/messenger
 
