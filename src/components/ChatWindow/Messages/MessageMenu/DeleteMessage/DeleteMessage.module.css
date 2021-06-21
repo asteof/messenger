@@ -1,0 +1,59 @@
+.deleteMessage {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    min-width: 260px;
+    max-width: 26vw;
+    color: #dddddd;
+    padding: 2vmin 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+}
+.deleteMessage:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 18px;
+    background-color: #241d2a;
+    opacity: 0.6;
+    z-index: -1;
+}
+
+.warning{
+    font-size: 0.98em;
+    padding: 0 1vmax;
+    overflow-wrap: break-word;
+}
+
+.warning p {
+    font-size: 0.7em;
+}
+
+.confirmation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 1.6vmax;
+}
+
+.confirmBtn{
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    font-size: 1.1em;
+    color: #d77600;
+    margin: 1vmin 1.488vmin;
+    border: none;
+    border-radius: 10px;
+    /*background-color: #282c34;*/
+    cursor: pointer;
+}
+
+.delete{
+    color: #e33c3c;
+}

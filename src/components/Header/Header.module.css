@@ -1,0 +1,89 @@
+.header {
+    height: 12vh;
+    /*min-height: 80px;*/
+    background-color: #29202d;
+    color: #e0e0e0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    font-size: calc(8px + 0.8vmin + 0.5vmax);
+}
+
+.logoWrap {
+    grid-column: 1/2;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 2vmin;
+}
+
+.logo {
+    font-family: 'bebas_neuebold', sans-serif;
+    font-size: calc(16px + 2vmax);
+    transform: rotate(356deg);
+}
+
+.memogo {
+    font-family: 'bebas_neuebook', sans-serif;
+    font-size: 0.88em;
+}
+
+
+.rightBar {
+    grid-column: 2/3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /*margin: 0 auto;*/
+    padding: 0;
+}
+
+.username {
+    text-align: right;
+    width: 16vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.headerLink, .headerLink:link, .headerLink:visited {
+    color: #FF8C00;
+    margin: 0 1em;
+    padding: 8px;
+    font-size: 1.2em;
+    font-weight: 200;
+}
+
+.headerLink:hover {
+    color: rgba(255, 140, 0, 0.8)
+}
+
+.icon {
+    width: 1.2em;
+    height: 1.2em;
+    padding: 0 0.6em 0 0.4em;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.headerLink:hover .icon{
+    opacity: 1;
+}
+
+.logoutLink{
+    display: flex;
+    align-items: center;
+}
+
+.logoutLink .headerLink {
+    padding: 0 1vmin;
+}
+
+@media screen and (min-width: 320px) {
+    .header {
+        /*font-size: calc(12px + 8 * ((100vw - 320px) / 1000));*/
+    }
+}
+
+@media screen and (min-width: 1320px) {
+    .header {
+        font-size: 20px;
+    }
+}

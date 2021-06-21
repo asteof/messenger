@@ -1,0 +1,128 @@
+.contactsWrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 8;
+}
+
+.background {
+    position: absolute;
+    background-color: rgba(24, 24, 24, 0.6);
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+}
+
+.contacts {
+    position: relative;
+    height: calc(66vh + 8vw);
+    /*height: 84vh;*/
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+    background-color: #302b36;
+    border-radius: 18px;
+    z-index: 10;
+    color: #dddddd;
+    overflow: hidden;
+    user-select: none;
+}
+
+
+.heading {
+    padding: 16px 16px;
+    /*margin: 0 0 0.2em 0;*/
+    border-bottom: 2px solid rgba(36, 29, 42, 0.82);
+    grid-row: 1/2;
+}
+
+.separator {
+    width: inherit;
+    height: 10px;
+}
+
+.contactsList {
+    grid-row: 2/3;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.fieldHint {
+    font-weight: 300;
+    font-size: 0.8em;
+    color: #7b7b7b;
+}
+
+.notFound{
+    /*width: 100%;*/
+    display: flex;
+    text-align: center;
+    padding: 1vmax 2em;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.closeIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1.488em;
+    opacity: 0.48;
+    padding: 1vmin;
+    cursor: pointer;
+}
+
+.closeIcon:hover {
+    opacity: 0.8;
+}
+
+.closeIcon:active {
+    opacity: 0.9;
+}
+
+.contactsList::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 18px;
+}
+
+.contactsList::-webkit-scrollbar-track {
+    background: #27232a;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+}
+
+.contactsList::-webkit-scrollbar-thumb {
+    background-color: #786280;
+    border-radius: 18px;
+    height: 18px;
+}
+
+.contactsList::-webkit-scrollbar-corner {
+    box-shadow: inset 0 0 5px rgba(255, 155, 0, 0.69);
+    background: #27232a;
+}
+
+
+@media screen and (min-width: 320px) {
+    .contacts {
+        width: calc(250px + 230 * ((100vw - 320px) / 1500));
+    }
+}
+
+@media screen and (min-width: 1820px) {
+    .contacts {
+        width: 480px;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .contacts {
+        height: calc(60vh + 8vw);
+    }
+}

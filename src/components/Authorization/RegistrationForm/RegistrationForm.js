@@ -1,37 +1,169 @@
-import React, {useState} from 'react';
-import s from './registrationForm.module.css';
-import g from '../generalAuth.module.css';
-import {NavLink} from "react-router-dom";
-import API_PATH from "../../constants/API_PATH_DEFAULT";
+import React, {useEffect, useRef, useState} from 'react';
+import style from './RegistrationForm.module.css';
+import generalStyle from '../generalAuth.module.css';
+import {NavLink, useHistory} from "react-router-dom";
+import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 import axios from "axios";
+import {
+    usernameValidation, firstnameValidation, lastnameValidation,
+    emailValidation, phoneValidation, passwordValidation, confirmPasswordValidation
+} from "../../constants/validation";
+import eyeIcon from '../../../media/icons/eye-icon.svg'
+import noEyeIcon from '../../../media/icons/no-eye-icon.svg'
 
-// import Sockjs f
+const initialFormData = {
+    firstname: '',
+    lastname: '',
+    username: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
+    passwordConfirm: ''
+}
 
 function RegistrationForm(props) {
-    const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
-        username: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        passwordConfirm: ''
+    const {currentUser, setRegistrationSuccess} = props
+    const [formData, setFormData] = useState(initialFormData)
+        const {password, passwordConfirm} = formData
+    const [showPassword, setShowPassword] = useState({
+        p: 'password',
+        c: 'password',
+        pp: eyeIcon,
+        cp: eyeIcon
     })
+    const [validatingError, setValidatingError] = useState({})
+    const [touched, setTouched] = React.useState({});
+    const defaultPasswordClass = generalStyle.inputField
+    const [passwordClass, setPasswordClass] = useState(defaultPasswordClass)
+    let history = useHistory()
+
+    const passwordRef = useRef(null)
+    const passwordConfirmRef = useRef(null)
+
+    //sets type for input field to make password visible
+    const toggleVisibility = (field, pic) => {
+        if (showPassword[field] === 'password') {
+            setShowPassword(prevShow => ({
+                ...prevShow,
+                [field]: 'text',
+                [pic]: noEyeIcon
+            }))
+        } else {
+            setShowPassword(prevShow => ({
+                ...prevShow,
+                [field]: 'password',
+                [pic]: eyeIcon
+            }))
+        }
+    }
+
+    const togglePassword = () => {
+        toggleVisibility('p', 'pp')
+        passwordRef.current.focus()
+    }
+
+    const toggleConfirmPassword = () => {
+        toggleVisibility('c', 'cp')
+        passwordConfirmRef.current.focus()
+    }
+
+    useEffect(() => {
+        if (password !== '' && password === passwordConfirm) {
+            setPasswordClass(`${defaultPasswordClass} ${generalStyle.match}`)
+        } else if (password !== ''
+            && passwordConfirm !== ''
+            && password !== passwordConfirm) {
+            setPasswordClass(`${defaultPasswordClass} ${generalStyle.noMatch}`)
+        } else if (password === ''
+            && passwordConfirm === '') {
+            setPasswordClass(defaultPasswordClass)
+        }
+    }, [password, passwordConfirm, defaultPasswordClass])
 
     const handleChange = e => {
         setFormData(prevFormData => ({
-            ...prevFormData, [e.target.id]: e.target.value
+            ...prevFormData, [e.target.name]: e.target.value
         }))
+
+        setTouched({
+            ...touched,
+            [e.target.name]: true,
+        });
+        console.log(password, passwordConfirm)
+        // console.log(touched)
+        // console.log(validatingError)
     }
+
+    const handleBlur = evt => {
+        const {name, value} = evt.target;
+        // remove whatever error was there previously
+        const {[name]: removedError, ...rest} = validatingError;
+        // check for a new error
+        const error = validate[name](value);
+        console.log(`${name} ${value}`, error)
+        // validate the field if the value has been touched
+        setValidatingError({
+            ...rest,
+            ...(error && {[name]: touched[name] && error}),
+        });
+    };
+
+
+    useEffect(() => {
+    }, [validatingError])
+
+    const validate = {
+        username: usernameValidation,
+        firstname: firstnameValidation,
+        lastname: lastnameValidation,
+        email: emailValidation,
+        phoneNumber: phoneValidation,
+        password: passwordValidation,
+        passwordConfirm: confirmPasswordValidation
+    };
+
+
     const handleSubmit = e => {
         e.preventDefault();
-        if (formData.password === formData.passwordConfirm) {
-            alert(`hui`)
+        let isValidated = false
+
+        //validate the form
+        const formValidation = Object.keys(formData).reduce(
+            (acc, key) => {
+                const newError = validate[key](formData[key]);
+                const newTouched = {[key]: true};
+                return {
+                    errors: {
+                        ...acc.errors,
+                        ...(newError && {[key]: newError}),
+                    },
+                    touched: {
+                        ...acc.touched,
+                        ...newTouched,
+                    },
+                };
+            },
+            {
+                errors: {...validatingError},
+                touched: {...touched},
+            },
+        );
+        setValidatingError(formValidation.errors);
+        setTouched(formValidation.touched);
+
+        if (
+            !Object.values(formValidation.errors).length && // errors object is empty
+            Object.values(formValidation.touched).length ===
+            Object.values(formData).length && // all fields were touched
+            Object.values(formValidation.touched).every(t => t === true) // every touched field is true
+        ) {
+            isValidated = true
+        }
+        if (isValidated) {
             sendDataToServer()
-        } else {
-            alert('pizda')
         }
     }
+
 
     const sendDataToServer = () => {
         const registrationData = {
@@ -39,130 +171,190 @@ function RegistrationForm(props) {
             lastname: formData.lastname,
             username: formData.username,
             email: formData.email,
+            phoneNumber: formData.phoneNumber,
             password: formData.password
         }
-        // alert(JSON.stringify(registrationData))
-
+        //
         axios.post(`${API_PATH}/sign-up`, registrationData)
             .then(response => {
-                alert(response)
-                console.log(`${response.data} ${response.status} ${response.data}`)
+                console.log(response.status)
+                setRegistrationSuccess(true)
+                currentUser.username = registrationData.username
+                history.push('/login')
             })
             .catch(error => {
                 alert(error)
                 console.log(error)
+                if (error.response.status === 400) {
+                    // setRegistrationResponse(prevRegResp => ({
+                    //     ...prevRegResp,
+                    //     errorMessage: `User with this username or email already exists`
+                    // }))
+                }
             })
 
     }
 
     return (
-        <div className={s.formWrap}>
-            {/*<div style={{margin: 3 + 'vw'}}>*/}
-            {/*    <p>First name {formData.firstname}</p>*/}
-            {/*    <p>Last name {formData.lastname}</p>*/}
-            {/*    <p>Nickname {formData.username}</p>*/}
-            {/*    <p>Email {formData.email}</p>*/}
-            {/*    <p>Phone number {formData.phoneNumber}</p>*/}
-            {/*    <p>Password {formData.password}</p>*/}
-            {/*    <p>Password confirm {formData.passwordConfirm}</p>*/}
-            {/*</div>*/}
-            <form onSubmit={handleSubmit}>
+        <div className={style.formWrap}>
+            <form onSubmit={handleSubmit}
+                  className={generalStyle.authForm}
+                  autoComplete='off'
+                  spellCheck='false'>
                 {/*firstname lastname*/}
-                <div className={s.twoFieldsWrap}>
+                <div className={style.twoFieldsWrap}>
 
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="firstName">First name<span>*</span></label>
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        {touched.firstname && validatingError.firstname ?
+                        <div className={generalStyle.validationError}>{validatingError.firstname}</div>:
+                        <label className={generalStyle.fieldLabel} htmlFor="firstName">First name<span>*</span></label>
+                        }
                         <input type="text"
-                               id="firstname"
+                               name="firstname"
                                placeholder="Adolf"
                                value={formData.firstname}
                                onChange={handleChange}
-                               maxLength={20}
+                               onBlur={handleBlur}
+                               maxLength={30}
+                               className={generalStyle.inputField}
                         />
                     </div>
 
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="lastName">Last name</label>
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        {touched.lastname && validatingError.lastname ?
+                        <div className={generalStyle.validationError}>{validatingError.lastname}</div>:
+                        <label className={generalStyle.fieldLabel} htmlFor="lastName">Last name</label>
+                        }
                         <input type="text"
+                               name="lastname"
                                id="lastname"
                                placeholder="Obama"
                                value={formData.lastname}
                                onChange={handleChange}
-                               maxLength={20}
+                               onBlur={handleBlur}
+                               maxLength={30}
+                               className={generalStyle.inputField}
                         />
                     </div>
 
                 </div>
                 {/*//firstname lastname*/}
-                <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="username">Username</label>
+                <div className={generalStyle.fieldLabelWrapper}>
+                    {touched.username && validatingError.username ?
+                    <div className={generalStyle.validationError}>{validatingError.username}</div>:
+                    <label className={generalStyle.fieldLabel} htmlFor="username">Username<span>*</span></label>
+                    }
                     <input type="text"
-                           id="username"
-                           placeholder="boobaLover69"
+                           id='username'
+                           name="username"
+                           placeholder="doge69"
                            value={formData.username}
                            onChange={handleChange}
-                           maxLength={28}
+                           onBlur={handleBlur}
+                           maxLength={25}
+                           className={generalStyle.inputField}
                     />
-                    <p className={g.hint}>This will be the display name. Other people will be able to find you with
+                    <p className={generalStyle.hint}>This will be the display name. Other people will be able to find
+                        you with
                         this name.</p>
                 </div>
 
-                <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="email">Email address</label>
+                <div className={generalStyle.fieldLabelWrapper}>
+                    {touched.email && validatingError.email ?
+                    <div className={generalStyle.validationError}>{validatingError.email}</div>:
+                    <label className={generalStyle.fieldLabel} htmlFor="email">
+                        Email address<span>*</span></label>
+                    }
                     <input type="email"
-                           id="email"
-                           placeholder="adolf-obama48@gmail.com"
+                           id='email'
+                           name="email"
+                           autoComplete='email'
+                           placeholder="doge4816@gmail.com"
                            value={formData.email}
                            onChange={handleChange}
-                           maxLength={50}
+                           onBlur={handleBlur}
+                           maxLength={40}
+                           className={generalStyle.inputField}
                     />
-                    <p id="emailHelp" className={g.hint}>No one can see your email.</p>
                 </div>
 
 
-                <div className={g.fieldLabelWrapper}>
-                    <label className={g.labelWrap} htmlFor="phoneNumber">Phone number</label>
+                <div className={generalStyle.fieldLabelWrapper}>
+                    {touched.phoneNumber && validatingError.phoneNumber ?
+                        <div className={generalStyle.validationError}>{validatingError.phoneNumber}</div> :
+                        <label className={generalStyle.fieldLabel} htmlFor="phoneNumber">Phone number</label>
+                    }
                     <input type="text"
+                           name="phoneNumber"
                            id="phoneNumber"
                            placeholder="380 000 000 000"
                            value={formData.phoneNumber}
                            onChange={handleChange}
+                           onBlur={handleBlur}
                            maxLength={12}
+                           className={generalStyle.inputField}
                     />
-                    <p id="phoneHelp" className={g.hint}>The phone won't be visible to anyone
-                        unless you allow it to be visible.</p>
                 </div>
 
                 {/*password confirm*/}
-                <div className={s.twoFieldsWrap}>
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="password">Password</label>
-                        <input type="password"
-                               id="password"
-                               placeholder="Password"
-                               value={formData.password}
-                               onChange={handleChange}
-                               maxLength={30}
-                        />
+                <div className={style.twoFieldsWrap}>
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        {touched.password && validatingError.password ?
+                            <div className={generalStyle.validationError}>{validatingError.password}</div> :
+                            <label className={generalStyle.fieldLabel} htmlFor="password">
+                                Password<span>*</span></label>
+                        }
+                        <div className={generalStyle.passwordWrap}>
+                            <input type={showPassword.p}
+                                   name="password"
+                                   id="password"
+                                   ref={passwordRef}
+                                   placeholder="Password"
+                                   value={formData.password}
+                                   onChange={handleChange}
+                                   onBlur={handleBlur}
+                                   maxLength={30}
+                                   className={passwordClass}
+                            />
+                            <img src={showPassword.pp}
+                                 alt="Show password"
+                                 className={generalStyle.passwordIcon}
+                                 onClick={togglePassword}/>
+                        </div>
                     </div>
 
-                    <div className={g.fieldLabelWrapper}>
-                        <label className={g.labelWrap} htmlFor="confirmPassword">Confirm Password</label>
-                        <input type="password"
-                               id="passwordConfirm"
-                               placeholder="Confirm Password"
-                               value={formData.passwordConfirm}
-                               onChange={handleChange}
-                               maxLength={30}
-                        />
+                    <div className={generalStyle.fieldLabelWrapper}>
+                        {touched.passwordConfirm && validatingError.passwordConfirm ?
+                        <div className={generalStyle.validationError}>{validatingError.passwordConfirm}</div>:
+                        <label className={generalStyle.fieldLabel} htmlFor="confirmPassword">
+                            Confirm Password<span>*</span></label>
+                        }
+                        <div className={generalStyle.passwordWrap}>
+                            <input type={showPassword.c}
+                                   name="passwordConfirm"
+                                   id="passwordConfirm"
+                                   ref={passwordConfirmRef}
+                                   placeholder="Confirm Password"
+                                   value={formData.passwordConfirm}
+                                   onChange={handleChange}
+                                   onBlur={handleBlur}
+                                   maxLength={30}
+                                   className={passwordClass}
+                            />
+                            <img src={showPassword.cp}
+                                 alt="Show password"
+                                 className={generalStyle.passwordIcon}
+                                 onClick={toggleConfirmPassword}/>
+                        </div>
                     </div>
                 </div>
                 {/*//password confirm*/}
-                <div className={g.submitBtnWrap}>
-                    <button type="submit" className={g.submitBtn}>Sign Up</button>
+                <div className={generalStyle.submitBtnWrap}>
+                    <button type="submit" className={generalStyle.submitBtn}>Sign Up</button>
                 </div>
 
-                <p className={g.loginHint}>Already have an account? <NavLink to='/login' className={g.loginLink}>Log
+                <p className={generalStyle.loginHint}>Already have an account? <NavLink to='/login'
+                                                                                        className={generalStyle.loginLink}>Log
                     in</NavLink></p>
             </form>
 

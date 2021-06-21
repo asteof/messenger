@@ -1,0 +1,43 @@
+.chats {
+    background-color: #443c4c;
+    width: 24vw;
+    height: 100%;
+    box-sizing: border-box;
+    user-select: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/*------------
+media queries
+------------*/
+
+@media screen and (max-width: 800px) {
+    .chats {
+        width: 100%;
+        /*overflow-y: scroll;*/
+    }
+}
+
+/*-----------------
+scrollbars
+------------------*/
+.chats::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+    border-radius: 18px;
+}
+
+.chats::-webkit-scrollbar-track {
+    background: #332739;
+}
+
+.chats::-webkit-scrollbar-thumb {
+    background-color: #574261;
+    border-radius: 18px;
+    height: 18px;
+}
+
+.chats::-webkit-scrollbar-corner {
+    background: #332739;
+}

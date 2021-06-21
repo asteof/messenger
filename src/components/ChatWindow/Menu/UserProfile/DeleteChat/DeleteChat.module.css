@@ -1,0 +1,72 @@
+.deleteChatWrap{
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+}
+
+.deleteChat {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    color: #dddddd;
+    padding: 2vmin 0;
+    top: 50%;
+    left: 50%;
+    background-color: #302b36;
+    transform: translate(-50%, -50%);
+    border-radius: 18px;
+    z-index: 15;
+}
+
+.background {
+    position: absolute;
+    background-color: rgba(24, 24, 24, 0.6);
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    z-index: 10;
+}
+
+.warning{
+    font-size: 0.8em;
+    padding: 0 1vmax;
+    overflow-wrap: break-word;
+}
+
+.warning span{
+    color: #ffd1b0;
+}
+
+.warn{
+    color: #e33c3c;
+}
+
+.confirmation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 1vmax;
+}
+
+.confirmBtn{
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    font-size: calc(0.8em + 0.2vmax);
+    color: #d77600;
+    margin: 0.8vmin 1vmin;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 800px){
+    .confirmation {
+        justify-content: center;
+    }
+}

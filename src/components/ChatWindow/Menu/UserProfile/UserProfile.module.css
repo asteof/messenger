@@ -1,0 +1,292 @@
+.userProfileWrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 8;
+}
+
+.background {
+    position: absolute;
+    background-color: rgba(24, 24, 24, 0.6);
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+}
+
+.profile {
+    position: relative;
+    height: calc(66vh + 8vw);
+    width: 250px;
+    min-height: 250px;
+    display: grid;
+    grid-template-rows: repeat(11, 1fr);
+    background-color: #302b36;
+    border-radius: 18px;
+    z-index: 10;
+}
+
+.profilePictureWrap {
+    grid-row: 1/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: inherit;
+    min-width: inherit;
+}
+
+.profilePicture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    height: calc(20px + 7vmax);
+    width: calc(20px + 7vmax);
+    margin: 1vmin;
+    padding: 0.2em;
+    filter: contrast(122%);
+    cursor: pointer;
+}
+
+.initials {
+    filter: contrast(100%);
+    font-weight: 500;
+    font-size: calc(20px + 4vmax);
+}
+
+.profileData {
+    width: inherit;
+    min-width: inherit;
+    grid-row: 4/12;
+    color: #dedede;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    /*grid-template-columns: 2fr 8fr;*/
+    cursor: default;
+}
+
+.name {
+    grid-row: 1/3;
+}
+
+.username {
+    grid-row: 3/5;
+}
+
+.email {
+    grid-row: 5/7;
+}
+
+.fieldWrap {
+    display: flex;
+    width: inherit;
+    min-width: inherit;
+    align-items: center;
+}
+
+.fieldWrap:hover .icon {
+    opacity: 0.9;
+}
+
+.fieldWrap:hover .fieldHint {
+    color: #999999;
+}
+
+.fieldWrap:hover .editIcon {
+    visibility: visible;
+}
+
+.fieldWrap:hover {
+    background-color: #3c3546;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.field span {
+    width: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fieldHint {
+    font-weight: 300;
+    font-size: 0.8em;
+    color: #7b7b7b;
+}
+
+.contactWrap {
+    grid-row: 8/11;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+    margin: 0.2em 0;
+    padding: 0.6vmin 1.488vmin;
+    background-color: #1e1b23;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.button:hover .buttonIcon {
+    opacity: 0.9;
+}
+
+.add {
+    color: rgba(119, 208, 71, 0.7);
+}
+
+.remove {
+    color: rgba(208, 71, 71, 0.7);
+}
+
+.deleteChat {
+    font-size: 0.8em;
+    padding: 0.1vmin 0.8vmin;
+}
+.deleteChat .buttonIcon{
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.contact:active{
+    color: #e07b00;
+    fill: #e07b00;
+    stroke: #e07b00;
+}
+
+.buttonIcon {
+    width: 1.7em;
+    height: 1.7em;
+    padding: 0.2em 0.6vmax;
+    opacity: 0.48;
+}
+
+.icon {
+    width: 1.8em;
+    height: 1.8em;
+    padding: 0 2.6vmax;
+    opacity: 0.48;
+}
+
+
+.closeIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1.488em;
+    opacity: 0.48;
+    padding: 1vmin;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 1500px) {
+    .profile {
+        /*min-width: 340px;*/
+        /*height: 56vh;*/
+    }
+    .field {
+        font-size: calc(10px + 0.6vmin + 0.3vmax + 0.1em);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .profile {
+        /*min-width: 300px;*/
+        /*height: 64vh;*/
+    }
+
+    .profileData {
+        grid-template-rows: repeat(8, 1fr);
+    }
+
+    .fieldWrap {
+        padding: 0.2em 0;
+    }
+
+    .field {
+        font-size: calc(11px + 0.8vmin + 0.4vmax);
+    }
+
+    .icon {
+        width: 28px;
+    }
+
+    .name {
+        grid-row: 1/2;
+    }
+
+    .username {
+        grid-row: 2/3;
+    }
+
+    .email {
+        grid-row: 3/4;
+    }
+
+    .phone {
+        grid-row: 4/5;
+    }
+
+    .contactWrap {
+        grid-row: 6/8;
+    }
+}
+
+@media screen and (min-width: 320px) {
+    .profile{
+        width: calc(250px + 230 * ((100vw - 320px) / 1500));
+    }
+}
+
+@media screen and (min-width: 1820px) {
+    .profile{
+        width: 480px;
+    }
+}
+
+
+@media (hover: hover) {
+    .add:hover {
+        color: #77d047;
+    }
+
+    .remove:hover {
+        color: #d04747;
+    }
+
+    .closeIcon:hover {
+        opacity: 0.9;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-width: 800px) {
+    .profile {
+        /*font-size: calc(10px + 0.8vmin + 0.4vmax);*/
+        min-width: 300px;
+        height: calc(70vh + 8vw);
+        /*background-color: #dddddd;*/
+    }
+
+    .deleteChat{
+        display: none;
+    }
+}

@@ -1,23 +1,62 @@
-import React from 'react';
-import s from './header.module.css'
+import React, {useEffect, useState} from 'react';
+import style from './Header.module.css'
 import {NavLink} from "react-router-dom";
+import logoutOrange from '../../media/icons/logout-orange.svg'
+import loginOrange from '../../media/icons/login.svg'
 
 const Header = (props) => {
-    return (
-        <header className={s.header}>
 
-            <div className={s.logoWrap}>
-                <p className={s.logo}>Messenger <span>huiessenger</span></p>
+    const {isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser} = props
+    const [logoutLink, setLogoutLink] = useState({
+        link: 'Logout',
+        pic: logoutOrange,
+    })
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            setLogoutLink(prev => ({
+                ...prev,
+                link: 'Logout',
+                pic: logoutOrange
+            }))
+        } else {
+            setLogoutLink(prev => ({
+                ...prev,
+                link: 'Login',
+                pic: loginOrange
+            }))
+        }
+    }, [isLoggedIn])
+
+    const logout = () => {
+        if (isLoggedIn === true) {
+            setIsLoggedIn(false)
+            localStorage.removeItem('token')
+            setCurrentUser({})
+        }
+    }
+
+    return (
+        <header className={style.header}>
+
+            <div className={style.logoWrap}>
+                <p className={style.logo}>Messenger <span className={style.memogo}>memessenger</span></p>
             </div>
-            {/*<div className={s.mess}>*/}
-            <nav className={s.navigation}>
-                <NavLink to='/signup' className={s.headerLink}>Sign Up</NavLink>
-                <NavLink to='/login' className={s.headerLink}>Login</NavLink>
-                <NavLink to='/chat' className={s.headerLink}>Chat</NavLink>
-                <NavLink to='/test' className={s.headerLink}>Test</NavLink>
-            </nav>
-            {/*<a href="#" onClick='document.history.go(0)'>Logout</a>*/}
-            {/*</div>*/}
+
+
+            <div className={style.rightBar}>
+                <div className={style.username}>
+                    {currentUser.username || ''}
+                </div>
+                <NavLink to='/login'
+                         className={`${style.logoutLink} ${style.headerLink}`}
+                         onClick={logout}>
+                    {logoutLink.link}
+                    <img src={logoutLink.pic}
+                         className={style.icon}
+                         alt="Logout"/>
+                </NavLink>
+            </div>
 
         </header>
     )

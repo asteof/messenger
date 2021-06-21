@@ -1,0 +1,134 @@
+.profileBar {
+    display: flex;
+    align-items: center;
+    background-color: #443c4c;
+    border-bottom: 2px solid rgba(51, 39, 57, 0.6);
+    /*height: 5vmax;*/
+    /*box-shadow: 0 0 4px 1px rgba(80, 100, 100, 0.69);*/
+}
+
+.profilePicture {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(48px + 1vmax);
+    width: calc(48px + 1vmax);
+    border-radius: 50%;
+    margin: 1vmin;
+    /*background-color: ;*/
+    filter: contrast(122%);
+    cursor: pointer;
+}
+
+.initials {
+    filter: contrast(100%);
+    font-weight: 500;
+    font-size: calc(1.1em + 0.9vmax);
+}
+
+.nameWrap {
+    position: relative;
+    padding: 1vmin;
+    width: calc(88% - (48px + 1vmax - 1vmin));
+    /*margin: 0 0 0 1vmin;*/
+    /*font-size: calc(0.8em + 1vmin);*/
+    /*font-size: calc(0.4em + 0.6vw + 0.8vh);*/
+    /*font-size: calc(0.4em + 0.6vw + 0.8vh);*/
+    color: #dddddd;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.nameWrap:hover {
+    text-decoration: underline;
+}
+
+.nameWrap:hover .phoneNumber {
+    /*display: block;*/
+}
+
+.name {
+    /*font-weight: 500;*/
+    color: #dddddd;
+    overflow: hidden;
+    width: 100%;
+}
+
+.phoneNumber {
+    display: none;
+    position: relative;
+    top: -5px;
+    font-size: 0.5em;
+    /*transform: translateX(-50%);*/
+    /*left: 50%;*/
+    text-decoration: none;
+    /*padding: 0.69vmin 1.488vmin;*/
+    padding: -2px 1.488vmin;
+    border-radius: 54px;
+    cursor: default;
+}
+
+.phoneNumber:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(80, 100, 100, 0.54);
+    border-radius: 54px;
+    z-index: -1;
+}
+
+@media screen and (max-aspect-ratio: 16/9) {
+    .nameWrap:hover .phoneNumber {
+        display: none;
+    }
+
+    .phoneNumber {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 1024px) {
+    .nameWrap {
+        /*font-size: calc(0.4em + 0.69vw + 0.88vh);*/
+        padding: 0.69vmin 0 0.69vmin 1vmin;
+    }
+
+    .phoneNumber {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .profileBar {
+        display: flex;
+        justify-content: center;
+    }
+
+    .profilePicture {
+        height: 48px;
+        width: 48px;
+    }
+
+    .initials {
+        font-size: 24px;
+    }
+
+    .nameWrap {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 320px) {
+    .nameWrap {
+        font-size: calc(0.8em + 8 * ((100vw - 320px) / 960));
+    }
+}

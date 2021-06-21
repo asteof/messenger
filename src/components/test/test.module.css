@@ -1,0 +1,175 @@
+.testForm {
+    /*width: 90%;*/
+    /*display: flex;*/
+    height: fit-content;
+    background-color: #ecffec;
+    padding: 0 1vw 1vw 1vw;
+    /*top right bottom left*/
+
+    /*margin: 1vw 0;*/
+    box-sizing: border-box;
+    border-radius: 18px;
+    box-shadow: #55a563 0 0 18px;
+}
+
+.content {
+    height: fit-content;
+    margin: 0;
+}
+
+.fieldLabel {
+    font-size: 21px;
+    font-weight: 500;
+    margin: 0;
+    padding: 15px 0 8px;
+    width: fit-content;
+}
+
+.fieldLabelWrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    /*min-width: 10vw;*/
+    /*max-width: 16vw;*/
+}
+
+
+.inputField {
+    font-size: 16px;
+    padding: 4px 8px;
+    width: inherit;
+    background-color: #f8fff8;
+    border: 2px solid #55a563;
+    border-radius: 6px;
+
+}
+
+::placeholder {
+    color: #375822;
+}
+
+.submitBtnWrap {
+    text-align: center;
+}
+
+.submitBtn {
+    font-size: 25px;
+    font-weight: 500;
+    padding: 0.2vmin 48px;
+    margin: 0.8vmax;
+    background-color: #a5caa5;
+    border: 2px solid #45794d;
+    border-radius: 8px;
+}
+
+.submitBtn:hover {
+    background-color: #93cb93;
+}
+
+.submitBtn:active {
+    background-color: #b2ff81;
+}
+
+.wrap {
+    /*border: 1px solid #000;*/
+    border: inherit;
+    padding: 18px 16px;
+    margin: 8px;
+    background-color: #eecccc;
+    color: #000000;
+    overflow-wrap: break-word;
+}
+
+.wrap p {
+    margin: 0;
+}
+
+.hi {
+    position: relative;
+    padding: 1vw 4vw;
+    /*overflow: scroll;*/
+}
+
+.flex {
+    display: flex;
+}
+
+.hi3 {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.c {
+    width: 30vw;
+}
+
+.flex, .flex * {
+    margin: 16px 8px;
+}
+
+.cont {
+    width: 10%;
+    box-sizing: content-box;
+    padding: 1vw;
+}
+
+.hold {
+    margin: 2vw;
+    width: 24vw;
+    height: 10vw;
+    overflow-wrap: break-word;
+}
+
+.hint {
+    font-size: 15px;
+    font-weight: 300;
+    margin: 0 0 18px 0;
+}
+
+.btnCreateWrap {
+    margin: 4px;
+
+}
+
+.btnCreateWrap span {
+    height: fit-content;
+    width: fit-content;
+}
+
+.btnCreateWrap span div {
+    width: inherit;
+    text-align: center;
+}
+
+.flex2 {
+    display: flex;
+}
+
+.flex2 div div {
+    text-align: center;
+}
+
+.redSpan {
+    color: darkred;
+    margin: 0;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.padding {
+    padding: 2vw;
+}
+.nopadding {
+    padding: 0;
+}
+.extraSmall {
+    font-size: 10px;
+    overflow-wrap: break-word;
+}
+
+.break {
+    overflow-wrap: break-word;
+}
