@@ -1,9 +1,9 @@
 import React, {useEffect, useRef} from 'react';
 import style from './DeleteMessage.module.css'
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
-import {getBearerToken} from "../../../../constants/getBearerToken";
+import {toggleBoolean} from "../../../../../constants/ChangeDisplayStyle";
+import {getBearerToken} from "../../../../../constants/getBearerToken";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../../../constants/API_PATH_DEFAULT";
 
 const DeleteMessage = (props) => {
     const {

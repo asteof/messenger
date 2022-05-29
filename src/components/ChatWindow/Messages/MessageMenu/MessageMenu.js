@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './MessageMenu.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import DeleteMessage from "./DeleteMessage/DeleteMessage";
 import EditMessage from "./EditMessage/EditMessage";
 

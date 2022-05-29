@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './FieldEdit.module.css'
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../../constants/ChangeDisplayStyle";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
-import {getLocalWithExpiry} from "../../../../constants/localStorage";
-import {passwordValidation, confirmPasswordValidation} from "../../../../constants/validation";
+import {SECURED_API_PATH} from "../../../../../constants/API_PATH_DEFAULT";
+import {getLocalWithExpiry} from "../../../../../constants/localStorage";
+import {passwordValidation, confirmPasswordValidation} from "../../../../../constants/validation";
 
 import eyeIcon from '../../../../../media/icons/eye-icon.svg'
 import noEyeIcon from '../../../../../media/icons/no-eye-icon.svg'

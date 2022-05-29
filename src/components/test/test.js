@@ -7,7 +7,7 @@ import Other from "./other";
 import CreateDefaultUsers from "./CreateDefault/createDefaultUsers2";
 import ChatFetch from "./ChatFetch";
 import Simpler from "./Simpler";
-import RandomColor from "../constants/RandomColor";
+import RandomColor from "../../constants/RandomColor";
 import Socket from "./socket";
 import SendN from "./sendN";
 import TestSearch from "./testSearch";

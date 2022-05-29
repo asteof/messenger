@@ -3,10 +3,10 @@ import style from './Messages.module.css'
 import Message from "./Message/Message";
 import ChatProfileBar from "./ChatProfileBar/ChatProfileBar";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
 import MessageMenu from "./MessageMenu/MessageMenu";
-import {getBearerToken} from "../../constants/getBearerToken";
-import getMessagesFromChat from "../../constants/getMessagesFromChat";
+import {getBearerToken} from "../../../constants/getBearerToken";
+import getMessagesFromChat from "../../../constants/getMessagesFromChat";
 import loadMessage from '../../../media/icons/load-message.svg'
 
 const Messages = (props) => {

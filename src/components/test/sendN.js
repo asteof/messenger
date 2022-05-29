@@ -1,8 +1,8 @@
 import React, {useState, useRef} from 'react';
 import axios from "axios";
 import style from './test.module.css'
-import {getBearerToken} from "../constants/getBearerToken";
-import {SECURED_API_PATH} from "../constants/API_PATH_DEFAULT";
+import {getBearerToken} from "../../constants/getBearerToken";
+import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
 
 const SendN = () => {
 

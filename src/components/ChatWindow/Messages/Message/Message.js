@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import style from './message.module.css'
-import getFormattedTime from "../../../constants/getFormattedTime";
+import getFormattedTime from "../../../../constants/getFormattedTime";
 // import {setFalseBoolean, setTrueBoolean, toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 
 import optionIcon from '../../../../media/icons/options-white.svg'

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './Menu.module.css'
-import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import Profile from "./Profile/Profile";
 import ContactsList from "./ContactsList/ContactsList";
 import Search from '../Menu/Search/Search'

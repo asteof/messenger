@@ -4,10 +4,10 @@ import style from './FoundUser.module.css'
 import sendMessage from '../../../../../media/icons/send-message.svg'
 import addContactIcon from '../../../../../media/icons/add-contact.svg'
 import removeContact from '../../../../../media/icons/remove-contact.svg'
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
-import {getBearerToken} from "../../../../constants/getBearerToken";
+import {toggleBoolean} from "../../../../../constants/ChangeDisplayStyle";
+import {getBearerToken} from "../../../../../constants/getBearerToken";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../../../constants/API_PATH_DEFAULT";
 
 
 const FoundUser = (props) => {

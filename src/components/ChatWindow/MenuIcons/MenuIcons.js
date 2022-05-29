@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import style from './MenuIcons.module.css'
-import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
 import ContactsList from "../Menu/ContactsList/ContactsList";
 
 import searchIcon from '../../../media/icons/search.svg'

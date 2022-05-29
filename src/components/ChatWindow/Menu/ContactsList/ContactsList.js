@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './ContactsList.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 
 import Contact from "./Contact/Contact";
-import RandomColor from "../../../constants/RandomColor";
-import {getBearerToken} from "../../../constants/getBearerToken";
+import RandomColor from "../../../../constants/RandomColor";
+import {getBearerToken} from "../../../../constants/getBearerToken";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
 import RemoveContact from "./RemoveContact/RemoveContact";
 import MessageForm from "../MessageForm/MessageForm";
 import UserProfile from "../UserProfile/UserProfile";

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import style from './test.module.css'
 import SockJS from 'sockjs-client'
 import {Client} from '@stomp/stompjs'
-import {API_PATH} from "../constants/API_PATH_DEFAULT";
+import {API_PATH} from "../../constants/API_PATH_DEFAULT";
 
 const Socket = () => {
 

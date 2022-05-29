@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import style from './ChatProfileBar.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 import UserProfile from "../../Menu/UserProfile/UserProfile";
 
 const ChatProfileBar = (props) => {

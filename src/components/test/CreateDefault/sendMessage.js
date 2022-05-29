@@ -1,5 +1,5 @@
 import axios from "axios";
-import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
 
 const message = (newJWT, currentUser, secondUser) => {
     let JWT_header, message = ''

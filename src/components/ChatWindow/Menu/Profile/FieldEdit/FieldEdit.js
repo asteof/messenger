@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './FieldEdit.module.css'
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../../constants/ChangeDisplayStyle";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
-import {getBearerToken} from "../../../../constants/getBearerToken";
+import {SECURED_API_PATH} from "../../../../../constants/API_PATH_DEFAULT";
+import {getBearerToken} from "../../../../../constants/getBearerToken";
 
 const FieldEdit = (props) => {
     const {currentUser, setCurrentUser, setShowEdit, options: {editProperty, displayProperty}} = props

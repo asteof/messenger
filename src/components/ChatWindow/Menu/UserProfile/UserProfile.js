@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './UserProfile.module.css'
-import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
 import axios from "axios";
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 
 import userIcon from '../../../../media/icons/user.svg'
 import email from '../../../../media/icons/email.svg'
@@ -10,7 +10,7 @@ import username from '../../../../media/icons/username.svg'
 import addContactIcon from '../../../../media/icons/add-contact.svg'
 import removeContactIcon from '../../../../media/icons/remove-contact.svg'
 import deleteChatIcon from '../../../../media/icons/delete-chat.svg'
-import {getBearerToken} from "../../../constants/getBearerToken";
+import {getBearerToken} from "../../../../constants/getBearerToken";
 import DeleteChat from "./DeleteChat/DeleteChat";
 
 const UserProfile = (props) => {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import style from './test.module.css'
 import Timer from "./timer";
-import RandomColor from "../constants/RandomColor";
+import RandomColor from "../../constants/RandomColor";
 import axios from "axios";
 
 

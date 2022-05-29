@@ -6,7 +6,7 @@ import ChatWindow from "./components/ChatWindow/ChatWindow";
 import LoginForm from "./components/Authorization/LoginForm/LoginForm";
 // import Test from "./components/test/test"
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
-import {getLocalWithExpiry} from "./components/constants/localStorage";
+import {getLocalWithExpiry} from "./constants/localStorage";
 
 function App() {
 

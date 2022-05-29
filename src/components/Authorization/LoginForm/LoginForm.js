@@ -3,12 +3,12 @@ import style from './LoginForm.module.css';
 import generalStyle from '../generalAuth.module.css';
 import {NavLink, useHistory} from "react-router-dom";
 import axios from "axios";
-import {API_PATH} from "../../constants/API_PATH_DEFAULT";
-import {setLocalWithExpiry} from "../../constants/localStorage";
+import {API_PATH} from "../../../constants/API_PATH_DEFAULT";
+import {setLocalWithExpiry} from "../../../constants/localStorage";
 import eyeIcon from '../../../media/icons/eye-icon.svg'
 import noEyeIcon from '../../../media/icons/no-eye-icon.svg'
-import {toggleBoolean} from "../../constants/ChangeDisplayStyle";
-import {loginUsernameValidation} from "../../constants/validation";
+import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {loginUsernameValidation} from "../../../constants/validation";
 
 function LoginForm(props) {
     const {setIsLoggedIn, currentUser, registrationSuccess} = props

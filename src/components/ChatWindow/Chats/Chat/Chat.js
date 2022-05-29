@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import style from './chat.module.css'
-import getFormattedTime from "../../../constants/getFormattedTime";
-import RandomColor from "../../../constants/RandomColor";
-import getMessagesFromChat from '../../../constants/getMessagesFromChat'
-import {getBearerToken} from "../../../constants/getBearerToken";
+import getFormattedTime from "../../../../constants/getFormattedTime";
+import RandomColor from "../../../../constants/RandomColor";
+import getMessagesFromChat from '../../../../constants/getMessagesFromChat'
+import {getBearerToken} from "../../../../constants/getBearerToken";
 
 const Chat = (props) => {
     const {

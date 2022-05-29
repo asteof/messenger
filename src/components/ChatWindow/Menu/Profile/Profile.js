@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './Profile.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
 
 import user from '../../../../media/icons/user.svg'
 import phone from '../../../../media/icons/phone.svg'

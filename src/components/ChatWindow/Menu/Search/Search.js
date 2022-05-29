@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import style from './Search.module.css'
-import {toggleBoolean} from "../../../constants/ChangeDisplayStyle";
-import RandomColor from "../../../constants/RandomColor";
-import {getBearerToken} from "../../../constants/getBearerToken";
+import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import RandomColor from "../../../../constants/RandomColor";
+import {getBearerToken} from "../../../../constants/getBearerToken";
 import axios from "axios";
-import {SECURED_API_PATH} from "../../../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
 import MessageForm from "../MessageForm/MessageForm";
 import RemoveContact from "../ContactsList/RemoveContact/RemoveContact";
 

@@ -3,15 +3,15 @@ import style from './ChatWindow.module.css'
 import Messages from "./Messages/Messages";
 import Chats from "./Chats/Chats";
 import axios from "axios";
-import {SECURED_API_PATH} from "../constants/API_PATH_DEFAULT";
+import {SECURED_API_PATH} from "../../constants/API_PATH_DEFAULT";
 import {Redirect} from "react-router-dom";
 import ProfileBar from "./ProfileBar/ProfileBar";
 import DefaultMessageWindow from "./Messages/DefaultMessageWindow/DefaultMessageWindow";
-import {getBearerToken} from "../constants/getBearerToken";
-import getMessagesFromChat from "../constants/getMessagesFromChat";
-import {webSocketInstance} from "../constants/webSocketInstance";
+import {getBearerToken} from "../../constants/getBearerToken";
+import getMessagesFromChat from "../../constants/getMessagesFromChat";
+import {webSocketInstance} from "../../constants/webSocketInstance";
 import MenuIcons from "./MenuIcons/MenuIcons";
-import RandomColor from "../constants/RandomColor";
+import RandomColor from "../../constants/RandomColor";
 import useSound from "use-sound";
 import messageSound from '../../media/sounds/1.mp3'
 

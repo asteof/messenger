@@ -1,9 +1,9 @@
 import React, {useEffect, useRef} from 'react';
 import style from './DeleteChat.module.css'
-import {toggleBoolean} from "../../../../constants/ChangeDisplayStyle";
+import {toggleBoolean} from "../../../../../constants/ChangeDisplayStyle";
 import axios from "axios";
-import {getBearerToken} from "../../../../constants/getBearerToken";
-import {SECURED_API_PATH} from "../../../../constants/API_PATH_DEFAULT";
+import {getBearerToken} from "../../../../../constants/getBearerToken";
+import {SECURED_API_PATH} from "../../../../../constants/API_PATH_DEFAULT";
 
 
 const DeleteChat = (props) => {

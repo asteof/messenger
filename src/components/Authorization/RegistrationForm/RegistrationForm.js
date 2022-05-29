@@ -2,12 +2,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import style from './RegistrationForm.module.css';
 import generalStyle from '../generalAuth.module.css';
 import {NavLink, useHistory} from "react-router-dom";
-import {API_PATH} from "../../constants/API_PATH_DEFAULT";
+import {API_PATH} from "../../../constants/API_PATH_DEFAULT";
 import axios from "axios";
 import {
     usernameValidation, firstnameValidation, lastnameValidation,
     emailValidation, phoneValidation, passwordValidation, confirmPasswordValidation
-} from "../../constants/validation";
+} from "../../../constants/validation";
 import eyeIcon from '../../../media/icons/eye-icon.svg'
 import noEyeIcon from '../../../media/icons/no-eye-icon.svg'
 
