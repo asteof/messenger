@@ -185,12 +185,6 @@ function RegistrationForm(props) {
             .catch(error => {
                 alert(error)
                 console.log(error)
-                if (error.response.status === 400) {
-                    // setRegistrationResponse(prevRegResp => ({
-                    //     ...prevRegResp,
-                    //     errorMessage: `User with this username or email already exists`
-                    // }))
-                }
             })
 
     }
@@ -357,15 +351,6 @@ function RegistrationForm(props) {
                                                                                         className={generalStyle.loginLink}>Log
                     in</NavLink></p>
             </form>
-
-            {/*<div className="alert alert-success mt-2" style={{display: formData.successMessage ? 'block' : 'none' }} role="alert">*/}
-            {/*    {formData.successMessage}*/}
-            {/*</div>*/}
-            {/*<div className="mt-2">*/}
-            {/*    <span>Already have an account? </span>*/}
-            {/*    <span className="loginText" onClick={() => redirectToLogin()}>Login here</span>*/}
-            {/*</div>*/}
-
         </div>
     )
 }
