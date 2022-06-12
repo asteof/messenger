@@ -205,7 +205,7 @@ function RegistrationForm(props) {
                         }
                         <input type="text"
                                name="firstname"
-                               placeholder="Adolf"
+                               placeholder="tsehla"
                                value={formData.firstname}
                                onChange={handleChange}
                                onBlur={handleBlur}
@@ -222,7 +222,7 @@ function RegistrationForm(props) {
                         <input type="text"
                                name="lastname"
                                id="lastname"
-                               placeholder="Obama"
+                               placeholder="from the dungeon"
                                value={formData.lastname}
                                onChange={handleChange}
                                onBlur={handleBlur}
